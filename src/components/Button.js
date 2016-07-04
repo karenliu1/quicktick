@@ -19,7 +19,8 @@ export default class Button extends Component {
   };
 
   render() {
-    let buttonStyle = {};
+    let buttonStyle = {}
+    let textStyle = {};
     switch (this.props.type) {
       case 'start':
         buttonStyle.backgroundColor = Constants.COLOR_GREEN;
@@ -28,14 +29,14 @@ export default class Button extends Component {
         buttonStyle.backgroundColor = Constants.COLOR_RED;
         break;
       case 'cancel':
-        buttonStyle.borderColor = Constants.COLOR_GRAY;
+        textStyle.color = Constants.COLOR_GRAY;
         break;
     }
 
     return (
       <TouchableOpacity style={ [styles.button, buttonStyle] }
         onPress={ this.props.onPress }>
-        <Text style={ styles.text }>
+        <Text style={ [styles.text, textStyle] }>
           { this.props.text }
         </Text>
       </TouchableOpacity>

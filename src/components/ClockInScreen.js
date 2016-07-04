@@ -13,21 +13,21 @@ import { formatTime } from '../Utilities';
 
 export default class ClockInScreen extends Component {
   static propTypes = {
-    lastSessionStart: PropTypes.string,
-    lastSessionEnd: PropTypes.string,
+    prevStartTime: PropTypes.string,
+    prevEndTime: PropTypes.string,
     currentTime: PropTypes.string.isRequired,
     onClockIn: PropTypes.func.isRequired,
   };
 
   render() {
-    const { currentTime, lastSessionStart, lastSessionEnd } = this.props;
+    const { currentTime, prevStartTime, prevEndTime } = this.props;
     const formattedTime = formatTime(currentTime);
 
-    let lastSessionEl;
-    if (lastSessionStart && lastSessionEnd) {
-      const start = formatTime(lastSessionStart);
-      const end = formatTime(lastSessionEnd);
-      lastSessionEl = (
+    let prevEl;
+    if (prevStartTime && prevEndTime) {
+      const start = formatTime(prevStartTime);
+      const end = formatTime(prevEndTime);
+      prevEl = (
         <View style={ styles.section }>
           <TitleText text="Last Session" />
           <Text style={ Constants.STYLES.text }>
@@ -39,7 +39,7 @@ export default class ClockInScreen extends Component {
 
     return (
       <View style={ styles.container }>
-        { lastSessionEl }
+        { prevEl }
         <View style={ styles.section }>
           <TitleText text="Current Time" />
           <Text style={ [Constants.STYLES.text, styles.largeText] }>
