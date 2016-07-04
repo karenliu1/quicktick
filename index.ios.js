@@ -7,6 +7,7 @@
 import React, { Component } from 'react';
 import {
   AppRegistry,
+  Navigator,
   Text,
   View
 } from 'react-native';
@@ -17,12 +18,14 @@ import ClockInScreen from './src/components/ClockInScreen';
 import ClockOutScreen from './src/components/ClockOutScreen';
 import ConfirmScreen from './src/components/ConfirmScreen';
 import HistoryScreen from './src/components/HistoryScreen';
+import Menu from './src/components/Menu';
 
 class QuickTick extends Component {
   state = {
-    screen: Constants.SCREENS.CLOCK_IN,
-    startTime: null,
+    isMenuExpanded: false,
     sessions: [],
+    startTime: null,
+    endTime: null,
   };
 
   async componentDidMount() {
@@ -36,22 +39,30 @@ class QuickTick extends Component {
     this.setState({sessions});
   }
 
-  onClockIn = () => {
+  onClockIn = (route, navigator) => {
+    const now = new Date().toISOString();
     this.setState({
-      screen: Constants.SCREENS.CLOCK_OUT,
-      startTime: new Date().toISOString(),
+      startTime: now,
       endTime: null,
     });
-  };
-
-  onClockOut = () => {
-    this.setState({
-      screen: Constants.SCREENS.CONFIRM,
-      endTime: new Date().toISOString(),
+    navigator.push({
+      name: Constants.SCREENS.CLOCK_OUT,
+      index: route.index + 1,
     });
   };
 
-  onConfirm = async (notes) => {
+  onClockOut = (route, navigator) => {
+    const now = new Date().toISOString();
+    this.setState({
+      endTime: now,
+    });
+    navigator.push({
+      name: Constants.SCREENS.CONFIRM,
+      index: route.index + 1,
+    });
+  };
+
+  onConfirm = async (route, navigator, notes) => {
     try {
       await Storage.saveSession(this.state.startTime, this.state.endTime, notes);
     } catch (error) {
@@ -59,48 +70,69 @@ class QuickTick extends Component {
       console.error(error);
     }
     this.setState({
-      screen: Constants.SCREENS.CLOCK_IN,
       startTime: null,
       endTime: null,
     });
+    navigator.popToTop();
   };
 
-  onCancel = () => {
+  onCancel = (route, navigator) => {
     this.setState({
-      screen: Constants.SCREENS.CLOCK_IN,
       startTime: null,
       endTime: null,
+    });
+    navigator.popToTop();
+  };
+
+  onToggleMenu = () => {
+    this.setState({
+      isMenuExpanded: !this.state.isMenuExpanded
     });
   };
 
   render() {
+    const menuEl = (
+      <Menu
+        onToggle={ this.onToggleMenu }
+        isExpanded={ this.state.isMenuExpanded }
+      />
+    );
+    return (
+      <Navigator initialRoute={{ name: Constants.SCREENS.CLOCK_IN, index: 0 }}
+        renderScene={(route, navigator) => this.renderScreen(route, navigator)}
+        navigationBar={ menuEl }
+      />
+    );
+  }
+
+  renderScreen(route, navigator) {
     let fakeDate = new Date();
     fakeDate.setHours(fakeDate.getHours() - 4);
     fakeDate.setMinutes(fakeDate.getMinutes() - 2);
 
-    switch (this.state.screen) {
+    switch (route.name) {
       case Constants.SCREENS.CLOCK_IN:
         return (
           <ClockInScreen currentTime={ new Date().toISOString() }
             prevStartTime={ new Date().toISOString() }
             prevEndTime={ new Date().toISOString() }
-            onClockIn={ this.onClockIn }
+            onClockIn={ () => this.onClockIn(route, navigator) }
           />
         );
       case Constants.SCREENS.CLOCK_OUT:
         return (
           <ClockOutScreen currentTime={ new Date().toISOString() }
             startTime={ this.state.startTime }
-            onClockOut={ this.onClockOut }
-            onCancel={ this.onCancel }
+            onClockOut={ () => this.onClockOut(route, navigator) }
+            onCancel={ () => this.onCancel(route, navigator) }
           />
         );
       case Constants.SCREENS.CONFIRM:
         return (
           <ConfirmScreen startTime={ this.state.startTime }
             endTime={ this.state.endTime }
-            onConfirm={ this.onConfirm }
-            onCancel={ this.onCancel }
+            onConfirm={ (notes) => this.onConfirm(route, navigator, notes) }
+            onCancel={ () => this.onCancel(route, navigator) }
           />
         );
       case Constants.SCREENS.HISTORY:

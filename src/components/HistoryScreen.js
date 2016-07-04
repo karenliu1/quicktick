@@ -56,7 +56,7 @@ export default class HistoryScreen extends Component {
     });
     const rows = datasource.cloneWithRowsAndSections(this.convertRowsToMap());
     return (
-      <View>
+      <View style={ Constants.STYLES.screen }>
         <ListView dataSource={ datasource.cloneWithRows(this.props.sessions) }
           renderSectionHeader={ this.renderSectionHeader }
           renderRow={ this.renderRow }
@@ -72,7 +72,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderBottomWidth: 1,
     borderColor: Constants.COLOR_GRAY,
-    marginHorizontal: Constants.GUTTER_LG,
     paddingVertical: Constants.GUTTER_MD,
   },
   sectionHeaderText: {
@@ -81,7 +80,6 @@ const styles = StyleSheet.create({
   row: {
     borderBottomWidth: 1,
     borderColor: Constants.COLOR_GRAY,
-    marginHorizontal: Constants.GUTTER_LG,
     paddingVertical: Constants.GUTTER_MD,
   },
 });

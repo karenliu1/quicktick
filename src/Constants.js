@@ -13,6 +13,8 @@ export const COLOR_DARK_GRAY = '#4A4A4A';
 export const GUTTER_MD = 20;
 export const GUTTER_LG = 40;
 
+export const IMG_MENU = require('../images/menu.png');
+
 export const STYLES = StyleSheet.create({
   text: {
     color: COLOR_DARK_GRAY,
@@ -30,13 +32,13 @@ export const STYLES = StyleSheet.create({
     padding: GUTTER_MD,
   },
   screen: {
+    backgroundColor: 'white',
     flex: 1,
     justifyContent: 'space-between',
     padding: GUTTER_LG,
   },
 });
 
-// TODO: maybe move this to a router?
 export const SCREENS = {
   CLOCK_IN: 'CLOCK_IN',
   CLOCK_OUT: 'CLOCK_OUT',

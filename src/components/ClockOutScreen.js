@@ -33,7 +33,7 @@ export default class ClockOutScreen extends Component {
           sectionText={ formatTime(this.props.startTime) }
         />
         <SectionText isLarge
-          titleText="Current Time"
+          titleText="Now"
           sectionText={ formatTime(this.props.currentTime) }
         />
         <View style={ Constants.STYLES.section }>
