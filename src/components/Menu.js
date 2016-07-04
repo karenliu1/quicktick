@@ -25,17 +25,6 @@ export default class Menu extends Component {
     const routes = navigator.getCurrentRoutes();
     const currentRoute = routes[routes.length - 1];
 
-    // Special case: clock-in should route to the correct clock screen.
-    // TODO: Can this be less complicated if clocking is just one screen?
-    if (screen === Constants.SCREENS.CLOCK_IN) {
-      const routeNames = routes.map((route) => route.name);
-      const lastClockIn = routeNames.indexOf(Constants.SCREENS.CLOCK_IN);
-      const lastClockOut = routeNames.indexOf(Constants.SCREENS.CLOCK_OUT);
-      const lastConfirm = routeNames.indexOf(Constants.SCREENS.CONFIRM);
-      const lastClockScreen = Math.max(Math.max(lastClockIn, lastClockOut), lastConfirm);
-      return navigator.popToRoute(routes[lastClockScreen]);
-    }
-
     if (currentRoute.name !== screen) {
       navigator.push({ name: screen });
     }
@@ -68,7 +57,7 @@ export default class Menu extends Component {
     return (
       <View style={ [Constants.STYLES.screen, styles.menu] }>
         { menuIconEl }
-        { this.renderRow(Constants.SCREENS.CLOCK_IN, 'Clock') }
+        { this.renderRow(Constants.SCREENS.CLOCK, 'Clock') }
         { this.renderRow(Constants.SCREENS.HISTORY, 'Log') }
       </View>
     );

@@ -40,8 +40,7 @@ export const STYLES = StyleSheet.create({
 });
 
 export const SCREENS = {
-  CLOCK_IN: 'CLOCK_IN',
-  CLOCK_OUT: 'CLOCK_OUT',
-  CONFIRM: 'CONFIRM',
+  CLOCK: 'CLOCK',
   HISTORY: 'HISTORY',
+  GRAPHS: 'GRAPHS',
 };
