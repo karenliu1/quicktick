@@ -19,7 +19,7 @@ export default class Button extends Component {
   };
 
   render() {
-    let buttonStyle = {}
+    let buttonStyle = {};
     let textStyle = {};
     switch (this.props.type) {
       case 'start':
