@@ -14,14 +14,14 @@ import { formatTime, getElapsedDisplay } from '../Utilities';
 
 export default class ClockOutScreen extends Component {
   static propTypes = {
-    clockedInTime: PropTypes.string.isRequired,
+    startTime: PropTypes.string.isRequired,
     currentTime: PropTypes.string.isRequired,
     onClockOut: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
   };
 
   render() {
-    const elapsedDisplay = getElapsedDisplay(this.props.clockedInTime, this.props.currentTime);
+    const elapsedDisplay = getElapsedDisplay(this.props.startTime, this.props.currentTime);
 
     return (
       <View style={ styles.container }>
@@ -30,7 +30,7 @@ export default class ClockOutScreen extends Component {
           sectionText={ elapsedDisplay } />
         <SectionText isLarge
           titleText="Clocked In"
-          sectionText={ formatTime(this.props.clockedInTime) }
+          sectionText={ formatTime(this.props.startTime) }
         />
         <SectionText isLarge
           titleText="Current Time"

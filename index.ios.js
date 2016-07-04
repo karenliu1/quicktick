@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 
 import * as Constants from './src/Constants';
+import Storage from './src/Storage';
 import ClockInScreen from './src/components/ClockInScreen';
 import ClockOutScreen from './src/components/ClockOutScreen';
 import ConfirmScreen from './src/components/ConfirmScreen';
@@ -19,25 +20,43 @@ import ConfirmScreen from './src/components/ConfirmScreen';
 class QuickTick extends Component {
   state = {
     screen: Constants.SCREENS.CLOCK_IN,
-    clockInTime: null,
+    startTime: null,
   };
 
   onClockIn = () => {
     this.setState({
       screen: Constants.SCREENS.CLOCK_OUT,
-      clockInTime: new Date().toISOString(),
+      startTime: new Date().toISOString(),
+      endTime: null,
     });
   };
 
   onClockOut = () => {
     this.setState({
       screen: Constants.SCREENS.CONFIRM,
+      endTime: new Date().toISOString(),
+    });
+  };
+
+  onConfirm = async (notes) => {
+    try {
+      await Storage.saveSession(this.state.startTime, this.state.endTime, notes);
+    } catch (error) {
+      // TODO: Display this error
+      console.error(error);
+    }
+    this.setState({
+      screen: Constants.SCREENS.CLOCK_IN,
+      startTime: null,
+      endTime: null,
     });
   };
 
   onCancel = () => {
     this.setState({
       screen: Constants.SCREENS.CLOCK_IN,
+      startTime: null,
+      endTime: null,
     });
   };
 
@@ -58,16 +77,16 @@ class QuickTick extends Component {
       case Constants.SCREENS.CLOCK_OUT:
         return (
           <ClockOutScreen currentTime={ new Date().toISOString() }
-            clockedInTime={ fakeDate.toISOString() }
+            startTime={ this.state.startTime }
             onClockOut={ this.onClockOut }
             onCancel={ this.onCancel }
           />
         );
       case Constants.SCREENS.CONFIRM:
         return (
-          <ConfirmScreen clockedInTime={ fakeDate.toISOString() }
-            clockedOutTime={ new Date().toISOString() }
-            onConfirm={ this.onCancel }
+          <ConfirmScreen startTime={ this.state.startTime }
+            endTime={ this.state.endTime }
+            onConfirm={ this.onConfirm }
             onCancel={ this.onCancel }
           />
         );

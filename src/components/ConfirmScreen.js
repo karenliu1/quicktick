@@ -16,17 +16,29 @@ import { formatTime, getElapsedDisplay } from '../Utilities';
 
 export default class ConfirmScreen extends Component {
   static propTypes = {
-    clockedInTime: PropTypes.string.isRequired,
-    clockedOutTime: PropTypes.string.isRequired,
+    startTime: PropTypes.string.isRequired,
+    endTime: PropTypes.string.isRequired,
     onConfirm: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
   };
 
+  state = {
+    notes: null,
+  };
+
+  onChangeNotes = (notes) => {
+    this.setState({ notes });
+  };
+
+  onConfirm = () => {
+    this.props.onConfirm(this.state.notes);
+  };
+
   render() {
     const elapsedDisplay = getElapsedDisplay(
-      this.props.clockedInTime, this.props.currentTime);
-    const startTime = formatTime(this.props.clockedInTime);
-    const endTime = formatTime(this.props.clockedOutTime);
+      this.props.startTime, this.props.currentTime);
+    const startTime = formatTime(this.props.startTime);
+    const endTime = formatTime(this.props.endTime);
 
     return (
       <View style={ styles.container }>
@@ -44,10 +56,11 @@ export default class ConfirmScreen extends Component {
             autoFocus
             multiline
             style={ [Constants.STYLES.input, styles.input] }
+            onChangeText={ this.onChangeNotes }
           />
         </View>
         <View style={ Constants.STYLES.section }>
-          <Button type="start" text="Done" onPress={ this.props.onConfirm } />
+          <Button type="start" text="Done" onPress={ this.onConfirm } />
           <Button type="cancel" text="Cancel" onPress={ this.props.onCancel } />
         </View>
       </View>
