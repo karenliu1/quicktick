@@ -1,6 +1,7 @@
 import moment from 'moment';
 import React, { Component, PropTypes } from 'react';
 import {
+  Image,
   ListView,
   StyleSheet,
   Text,
@@ -19,6 +20,9 @@ export default class HistoryScreen extends Component {
     const date = moment(session.startTime).format('MMM D');
     return (
       <View style={ styles.sectionHeader }>
+        <Image source={ Constants.IMG_SUN }
+          style={ Constants.STYLES.icon }
+        />
         <Text style={ [Constants.STYLES.text, styles.sectionHeaderText] }>
           { date }
         </Text>
@@ -29,12 +33,22 @@ export default class HistoryScreen extends Component {
   renderRow = (session) => {
     return (
       <View style={ styles.row }>
-        <Text style={ Constants.STYLES.text }>
-          { `${formatTime(session.startTime)} — ${formatTime(session.endTime)}` }
-        </Text>
-        <Text style={ Constants.STYLES.text }>
-          { session.notes }
-        </Text>
+        <View style={ styles.rowText }>
+          <Text style={ Constants.STYLES.text }>
+            { `${formatTime(session.startTime)} — ${formatTime(session.endTime)}` }
+          </Text>
+          <Text style={ Constants.STYLES.text } numberOfLines={ 1 }>
+            { session.notes }
+          </Text>
+        </View>
+        <Image
+          style={ [Constants.STYLES.icon, styles.icon] }
+          source={ Constants.IMG_EDIT }
+        />
+        <Image
+          style={ [Constants.STYLES.icon, styles.icon] }
+          source={ Constants.IMG_DELETE }
+        />
       </View>
     );
   };
@@ -73,13 +87,27 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: Constants.COLOR_GRAY,
     paddingVertical: Constants.GUTTER_MD,
+
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   sectionHeaderText: {
+    flex: 1,
     fontSize: Constants.FONT_SIZE_LG,
+    paddingLeft: Constants.GUTTER_SM,
   },
   row: {
     borderBottomWidth: 1,
     borderColor: Constants.COLOR_GRAY,
     paddingVertical: Constants.GUTTER_MD,
+
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  rowText: {
+    flex: 1,
+  },
+  icon: {
+    marginLeft: Constants.GUTTER_SM,
   },
 });

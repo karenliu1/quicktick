@@ -10,10 +10,14 @@ export const COLOR_RED = '#ED7272';
 export const COLOR_GRAY = '#B4B4B4';
 export const COLOR_DARK_GRAY = '#4A4A4A';
 
+export const GUTTER_SM = 10;
 export const GUTTER_MD = 20;
 export const GUTTER_LG = 40;
 
 export const IMG_MENU = require('../images/menu.png');
+export const IMG_SUN = require('../images/sun.png');
+export const IMG_EDIT = require('../images/edit.png');
+export const IMG_DELETE = require('../images/delete.png');
 
 export const STYLES = StyleSheet.create({
   text: {
@@ -23,6 +27,11 @@ export const STYLES = StyleSheet.create({
   section: {
     flex: 1,
     justifyContent: 'center',
+  },
+  icon: {
+    width: 30,
+    height: 30,
+    resizeMode: 'contain',
   },
   input: {
     borderColor: COLOR_GRAY,

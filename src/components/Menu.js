@@ -86,5 +86,6 @@ const styles = StyleSheet.create({
     padding: Constants.GUTTER_MD,
     borderBottomWidth: 1,
     borderColor: Constants.COLOR_GRAY,
+    flexDirection: 'column',
   },
 });
