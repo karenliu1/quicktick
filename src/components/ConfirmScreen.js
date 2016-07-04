@@ -12,17 +12,17 @@ import TitleText from './TitleText';
 import * as Constants from '../Constants';
 import { formatTime } from '../Utilities';
 
-export default class ClockOutScreen extends Component {
+export default class ConfirmScreen extends Component {
   static propTypes = {
     clockedInTime: PropTypes.string.isRequired,
-    currentTime: PropTypes.string.isRequired,
-    onClockOut: PropTypes.func.isRequired,
+    clockedOutTime: PropTypes.string.isRequired,
+    onConfirm: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
   };
 
   render() {
     const elapsedDuration = moment.duration(
-      moment(this.props.currentTime).diff(moment(this.props.clockedInTime)));
+      moment(this.props.clockedOutTime).diff(moment(this.props.clockedInTime)));
     const elapsedHours = elapsedDuration.hours();
     const elapsedMinutes = elapsedDuration.minutes();
 
@@ -43,14 +43,14 @@ export default class ClockOutScreen extends Component {
         </View>
 
         <View style={ styles.section }>
-          <TitleText text="Current Time" />
+          <TitleText text="Clocked Out" />
           <Text style={ [Constants.STYLES.text, styles.largeText] }>
-            { formatTime(this.props.currentTime) }
+            { formatTime(this.props.clockedOutTime) }
           </Text>
         </View>
 
         <View style={ styles.section }>
-          <Button type="stop" text="Clock Out" onPress={ this.props.onClockOut } />
+          <Button type="start" text="Done" onPress={ this.props.onConfirm } />
           <Button type="cancel" text="Cancel" onPress={ this.props.onCancel } />
         </View>
       </View>

@@ -11,9 +11,10 @@ import {
   View
 } from 'react-native';
 
-import * as Constants from './src/Constants.js';
-import ClockInScreen from './src/components/ClockInScreen.js';
-import ClockOutScreen from './src/components/ClockOutScreen.js';
+import * as Constants from './src/Constants';
+import ClockInScreen from './src/components/ClockInScreen';
+import ClockOutScreen from './src/components/ClockOutScreen';
+import ConfirmScreen from './src/components/ConfirmScreen';
 
 class QuickTick extends Component {
   state = {
@@ -30,7 +31,7 @@ class QuickTick extends Component {
 
   onClockOut = () => {
     this.setState({
-      screen: Constants.SCREENS.CLOCK_IN,
+      screen: Constants.SCREENS.CONFIRM,
     });
   };
 
@@ -59,6 +60,14 @@ class QuickTick extends Component {
           <ClockOutScreen currentTime={ new Date().toISOString() }
             clockedInTime={ fakeDate.toISOString() }
             onClockOut={ this.onClockOut }
+            onCancel={ this.onCancel }
+          />
+        );
+      case Constants.SCREENS.CONFIRM:
+        return (
+          <ConfirmScreen clockedInTime={ fakeDate.toISOString() }
+            clockedOutTime={ new Date().toISOString() }
+            onConfirm={ this.onCancel }
             onCancel={ this.onCancel }
           />
         );
