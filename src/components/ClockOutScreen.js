@@ -24,7 +24,7 @@ export default class ClockOutScreen extends Component {
     const elapsedDisplay = getElapsedDisplay(this.props.startTime, this.props.currentTime);
 
     return (
-      <View style={ styles.container }>
+      <View style={ Constants.STYLES.screen }>
         <SectionText isLarge
           titleText="Total Time"
           sectionText={ elapsedDisplay } />
@@ -44,11 +44,3 @@ export default class ClockOutScreen extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-    padding: Constants.GUTTER_LG,
-  },
-});

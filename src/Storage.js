@@ -20,4 +20,15 @@ export default class Storage {
       throw new Error('Error saving sessions in storage:', error);
     }
   }
+
+  static async getSessions() {
+    let sessions;
+    try {
+      sessions = await AsyncStorage.getItem(SESSIONS_KEY);
+    } catch (error) {
+      throw new Error('Error getting sessions from storage:', error);
+    }
+
+    return sessions ? JSON.parse(sessions) : [];
+  }
 }

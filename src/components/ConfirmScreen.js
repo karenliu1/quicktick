@@ -41,7 +41,7 @@ export default class ConfirmScreen extends Component {
     const endTime = formatTime(this.props.endTime);
 
     return (
-      <View style={ styles.container }>
+      <View style={ Constants.STYLES.screen }>
         <SectionText
           titleText="Session"
           sectionText={ `${startTime} — ${endTime}` }
@@ -69,11 +69,6 @@ export default class ConfirmScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-    padding: Constants.GUTTER_LG,
-  },
   input: {
     flex: 1,
   },

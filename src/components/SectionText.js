@@ -30,6 +30,6 @@ export default class SectionText extends Component {
 
 const styles = StyleSheet.create({
   largeText: {
-    fontSize: Constants.FONT_SIZE_LG,
+    fontSize: Constants.FONT_SIZE_XL,
   },
 });

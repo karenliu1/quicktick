@@ -16,12 +16,25 @@ import Storage from './src/Storage';
 import ClockInScreen from './src/components/ClockInScreen';
 import ClockOutScreen from './src/components/ClockOutScreen';
 import ConfirmScreen from './src/components/ConfirmScreen';
+import HistoryScreen from './src/components/HistoryScreen';
 
 class QuickTick extends Component {
   state = {
     screen: Constants.SCREENS.CLOCK_IN,
     startTime: null,
+    sessions: [],
   };
+
+  async componentDidMount() {
+    let sessions;
+    try {
+      sessions = await Storage.getSessions();
+    } catch (error) {
+      // TODO: Display this error
+      console.error(error);
+    }
+    this.setState({sessions});
+  }
 
   onClockIn = () => {
     this.setState({
@@ -90,6 +103,8 @@ class QuickTick extends Component {
             onCancel={ this.onCancel }
           />
         );
+      case Constants.SCREENS.HISTORY:
+        return <HistoryScreen sessions={this.state.sessions} />;
     }
   }
 }

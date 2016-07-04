@@ -33,30 +33,15 @@ export default class ClockInScreen extends Component {
     }
 
     return (
-      <View style={ styles.container }>
+      <View style={ Constants.STYLES.screen }>
         { prevEl }
         <SectionText isLarge
           titleText="Current Time"
           sectionText={ formattedTime } />
-        <View style={ styles.section }>
+        <View style={ Constants.STYLES.section }>
           <Button type="start" text="Clock In" onPress={ this.props.onClockIn } />
         </View>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-    padding: Constants.GUTTER_LG,
-  },
-  section: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  largeText: {
-    fontSize: Constants.FONT_SIZE_LG,
-  },
-});
