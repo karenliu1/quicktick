@@ -3,11 +3,13 @@ import React, { Component, PropTypes } from 'react';
 import {
   StyleSheet,
   Text,
+  TextInput,
   View,
 } from 'react-native';
 
 import Button from './Button';
 import SectionText from './SectionText';
+import TitleText from './TitleText';
 
 import * as Constants from '../Constants';
 import { formatTime, getElapsedDisplay } from '../Utilities';
@@ -37,6 +39,14 @@ export default class ConfirmScreen extends Component {
           sectionText={ elapsedDisplay }
         />
         <View style={ Constants.STYLES.section }>
+          <TitleText text="Notes" />
+          <TextInput
+            autoFocus
+            multiline
+            style={ [Constants.STYLES.input, styles.input] }
+          />
+        </View>
+        <View style={ Constants.STYLES.section }>
           <Button type="start" text="Done" onPress={ this.props.onConfirm } />
           <Button type="cancel" text="Cancel" onPress={ this.props.onCancel } />
         </View>
@@ -50,5 +60,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     padding: Constants.GUTTER_LG,
+  },
+  input: {
+    flex: 1,
   },
 });

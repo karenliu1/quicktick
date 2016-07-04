@@ -7,19 +7,26 @@ export const FONT_SIZE_LG = 60;
 export const COLOR_GREEN = '#82C686';
 export const COLOR_RED = '#ED7272';
 export const COLOR_GRAY = '#979797';
-export const COLOR_TEXT = '#4A4A4A';
+export const COLOR_DARK_GRAY = '#4A4A4A';
 
 export const GUTTER_MD = 15;
 export const GUTTER_LG = 40;
 
 export const STYLES = StyleSheet.create({
   text: {
-    color: COLOR_TEXT,
+    color: COLOR_DARK_GRAY,
     fontSize: FONT_SIZE_MD,
   },
   section: {
     flex: 1,
     justifyContent: 'center',
+  },
+  input: {
+    borderColor: COLOR_GRAY,
+    borderRadius: 5,
+    borderWidth: 1,
+    fontSize: FONT_SIZE_MD,
+    padding: GUTTER_MD,
   },
 });
 
