@@ -17,6 +17,10 @@ export const STYLES = StyleSheet.create({
     color: COLOR_TEXT,
     fontSize: FONT_SIZE_MD,
   },
+  section: {
+    flex: 1,
+    justifyContent: 'center',
+  },
 });
 
 // TODO: maybe move this to a router?

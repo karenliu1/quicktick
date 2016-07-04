@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 
 import Button from './Button';
-import TitleText from './TitleText';
+import SectionText from './SectionText';
 
 import * as Constants from '../Constants';
 import { formatTime } from '../Utilities';
@@ -27,25 +27,17 @@ export default class ClockInScreen extends Component {
     if (prevStartTime && prevEndTime) {
       const start = formatTime(prevStartTime);
       const end = formatTime(prevEndTime);
-      prevEl = (
-        <View style={ styles.section }>
-          <TitleText text="Last Session" />
-          <Text style={ Constants.STYLES.text }>
-            { start } — { end }
-          </Text>
-        </View>
-      );
+      prevEl = <SectionText titleText="Last Session"
+        sectionText={ `${start} — ${end}` }
+      />;
     }
 
     return (
       <View style={ styles.container }>
         { prevEl }
-        <View style={ styles.section }>
-          <TitleText text="Current Time" />
-          <Text style={ [Constants.STYLES.text, styles.largeText] }>
-            { formattedTime }
-          </Text>
-        </View>
+        <SectionText isLarge
+          titleText="Current Time"
+          sectionText={ formattedTime } />
         <View style={ styles.section }>
           <Button type="start" text="Clock In" onPress={ this.props.onClockIn } />
         </View>

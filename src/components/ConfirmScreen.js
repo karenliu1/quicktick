@@ -7,10 +7,10 @@ import {
 } from 'react-native';
 
 import Button from './Button';
-import TitleText from './TitleText';
+import SectionText from './SectionText';
 
 import * as Constants from '../Constants';
-import { formatTime } from '../Utilities';
+import { formatTime, getElapsedDisplay } from '../Utilities';
 
 export default class ConfirmScreen extends Component {
   static propTypes = {
@@ -21,35 +21,22 @@ export default class ConfirmScreen extends Component {
   };
 
   render() {
-    const elapsedDuration = moment.duration(
-      moment(this.props.clockedOutTime).diff(moment(this.props.clockedInTime)));
-    const elapsedHours = elapsedDuration.hours();
-    const elapsedMinutes = elapsedDuration.minutes();
+    const elapsedDisplay = getElapsedDisplay(
+      this.props.clockedInTime, this.props.currentTime);
+    const startTime = formatTime(this.props.clockedInTime);
+    const endTime = formatTime(this.props.clockedOutTime);
 
     return (
       <View style={ styles.container }>
-        <View style={ styles.section }>
-          <TitleText text="Total Time" />
-          <Text style={ [Constants.STYLES.text, styles.largeText] }>
-            { `${elapsedHours}hr ${elapsedMinutes}m` }
-          </Text>
-        </View>
-
-        <View style={ styles.section }>
-          <TitleText text="Clocked In" />
-          <Text style={ [Constants.STYLES.text, styles.largeText] }>
-            { formatTime(this.props.clockedInTime) }
-          </Text>
-        </View>
-
-        <View style={ styles.section }>
-          <TitleText text="Clocked Out" />
-          <Text style={ [Constants.STYLES.text, styles.largeText] }>
-            { formatTime(this.props.clockedOutTime) }
-          </Text>
-        </View>
-
-        <View style={ styles.section }>
+        <SectionText
+          titleText="Session"
+          sectionText={ `${startTime} — ${endTime}` }
+        />
+        <SectionText isLarge
+          titleText="Total Time"
+          sectionText={ elapsedDisplay }
+        />
+        <View style={ Constants.STYLES.section }>
           <Button type="start" text="Done" onPress={ this.props.onConfirm } />
           <Button type="cancel" text="Cancel" onPress={ this.props.onCancel } />
         </View>
@@ -63,12 +50,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     padding: Constants.GUTTER_LG,
-  },
-  section: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  largeText: {
-    fontSize: Constants.FONT_SIZE_LG,
   },
 });
