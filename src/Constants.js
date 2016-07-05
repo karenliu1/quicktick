@@ -43,12 +43,15 @@ export const STYLES = StyleSheet.create({
     padding: GUTTER_MD,
   },
   screen: {
-    backgroundColor: 'white',
     flex: 1,
     justifyContent: 'space-between',
-    marginHorizontal: GUTTER_LG,
-    marginBottom: GUTTER_LG,
-    marginTop: GUTTER_LG + MENU_SIZE + GUTTER_MD,
+
+    // NOTE: Use padding instead of margin, so white background covers previous
+    // screen when navigating forward/back
+    backgroundColor: 'white',
+    paddingHorizontal: GUTTER_LG,
+    paddingBottom: GUTTER_LG,
+    paddingTop: GUTTER_LG + MENU_SIZE + GUTTER_MD,
   },
 });
 
