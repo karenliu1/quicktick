@@ -28,9 +28,17 @@ export default class ClockScreen extends Component {
     notes: null,
   };
 
-  componentDidMount() {
-    // TODO: Refresh current time periodically
+  updateTime = () => {
     this.setState({ currentTime: new Date().toISOString() });
+  };
+
+  componentDidMount() {
+    this.updateTime();
+    this.updateInterval = setInterval(this.updateTime, 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.updateInterval);
   }
 
   onChangeNotes = (notes) => this.setState({ notes });
@@ -74,7 +82,7 @@ export default class ClockScreen extends Component {
 
   renderConfirm() {
     const elapsedDisplay = getElapsedDisplay(
-      this.props.startTime, this.state.currentTime);
+      this.props.startTime, this.props.endTime);
     const startTime = formatTime(this.props.startTime);
     const endTime = formatTime(this.props.endTime);
 
