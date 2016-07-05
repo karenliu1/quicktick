@@ -11,11 +11,10 @@ import * as Constants from '../Constants';
 
 export default class Menu extends Component {
   static propTypes = {
-    navigator: React.PropTypes.object,
-    navState: React.PropTypes.object,
-    isExpanded: React.PropTypes.bool,
-
-    onToggle: React.PropTypes.func.isRequired,
+    navigator: PropTypes.object,
+    navState: PropTypes.object,
+    isExpanded: PropTypes.bool,
+    onToggle: PropTypes.func.isRequired,
   };
 
   onNavigateTo(screen) {
@@ -91,7 +90,7 @@ const styles = StyleSheet.create({
   },
   row: {
     padding: Constants.GUTTER_MD,
-    borderBottomWidth: 1,
+    borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: Constants.COLOR_GRAY,
     flexDirection: 'column',
   },

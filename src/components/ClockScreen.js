@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import {
   StyleSheet,
-  Text,
   TextInput,
   View,
 } from 'react-native';
@@ -11,7 +10,7 @@ import SectionText from './SectionText';
 import TitleText from './TitleText';
 
 import * as Constants from '../Constants';
-import { formatTime, getElapsedDisplay } from '../Utilities';
+import { formatRange, formatTime, formatTotal } from '../Utilities';
 
 export default class ClockScreen extends Component {
   static propTypes = {
@@ -28,9 +27,7 @@ export default class ClockScreen extends Component {
     notes: null,
   };
 
-  updateTime = () => {
-    this.setState({ currentTime: new Date().toISOString() });
-  };
+  updateTime = () => this.setState({ currentTime: new Date().toISOString() });
 
   componentDidMount() {
     this.updateTime();
@@ -42,15 +39,14 @@ export default class ClockScreen extends Component {
   }
 
   onChangeNotes = (notes) => this.setState({ notes });
-  onConfirm = () => {
-    console.log('notes are', this.state.notes);
-    this.props.onConfirm(this.state.notes);
-  }
+  onConfirm = () => this.props.onConfirm(this.state.notes);
 
   renderClockIn() {
     return (
       <View style={ Constants.STYLES.screen }>
-        <SectionText isLarge
+        <SectionText
+          isLarge
+          style={ Constants.STYLES.section }
           titleText="Now"
           sectionText={ formatTime(this.state.currentTime) } />
         <View style={ Constants.STYLES.section }>
@@ -61,14 +57,18 @@ export default class ClockScreen extends Component {
   }
 
   renderClockOut() {
-    const elapsedDisplay = getElapsedDisplay(this.props.startTime, this.state.currentTime);
+    const total = formatTotal(this.props.startTime, this.state.currentTime);
 
     return (
       <View style={ Constants.STYLES.screen }>
-        <SectionText isLarge
+        <SectionText
+          isLarge
+          style={ Constants.STYLES.section }
           titleText="Total Time"
-          sectionText={ elapsedDisplay } />
-        <SectionText isLarge
+          sectionText={ total } />
+        <SectionText
+          isLarge
+          style={ Constants.STYLES.section }
           titleText="Clocked In"
           sectionText={ formatTime(this.props.startTime) }
         />
@@ -81,20 +81,21 @@ export default class ClockScreen extends Component {
   }
 
   renderConfirm() {
-    const elapsedDisplay = getElapsedDisplay(
-      this.props.startTime, this.props.endTime);
-    const startTime = formatTime(this.props.startTime);
-    const endTime = formatTime(this.props.endTime);
+    const total = formatTotal(this.props.startTime, this.props.endTime);
+    const range = formatRange(this.props.startTime, this.props.endTime);
 
     return (
       <View style={ Constants.STYLES.screen }>
         <SectionText
+          style={ Constants.STYLES.section }
           titleText="Session"
-          sectionText={ `${startTime} — ${endTime}` }
+          sectionText={ range }
         />
-        <SectionText isLarge
+        <SectionText
+          isLarge
+          style={ Constants.STYLES.section }
           titleText="Total Time"
-          sectionText={ elapsedDisplay }
+          sectionText={ total }
         />
         <View style={ Constants.STYLES.section }>
           <TitleText text="Notes" />

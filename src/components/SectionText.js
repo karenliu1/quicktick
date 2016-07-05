@@ -14,11 +14,12 @@ export default class SectionText extends Component {
     titleText: PropTypes.string.isRequired,
     sectionText: PropTypes.string.isRequired,
     isLarge: PropTypes.bool,
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
   };
 
   render() {
     return (
-      <View style={ Constants.STYLES.section }>
+      <View style={ this.props.style }>
         <TitleText text={ this.props.titleText } />
         <Text style={ [Constants.STYLES.text, this.props.isLarge && styles.largeText] }>
           { this.props.sectionText }

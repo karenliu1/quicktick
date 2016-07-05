@@ -5,26 +5,27 @@ import {
   ListView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 
 import * as Constants from '../Constants';
-import { formatTime } from '../Utilities';
+import { formatDate, formatRange } from '../Utilities';
 
 export default class HistoryScreen extends Component {
   static propTypes = {
     sessions: PropTypes.array.isRequired,
+    onEdit: PropTypes.func.isRequired,
   };
 
   renderSectionHeader = (session) => {
-    const date = moment(session.startTime).format('MMM D');
     return (
       <View style={ styles.sectionHeader }>
         <Image source={ Constants.IMG_SUN }
           style={ Constants.STYLES.icon }
         />
         <Text style={ [Constants.STYLES.text, styles.sectionHeaderText] }>
-          { date }
+          { formatDate(session[0].startTime) }
         </Text>
       </View>
     );
@@ -35,16 +36,18 @@ export default class HistoryScreen extends Component {
       <View style={ styles.row }>
         <View style={ styles.rowText }>
           <Text style={ Constants.STYLES.text }>
-            { `${formatTime(session.startTime)} — ${formatTime(session.endTime)}` }
+            { formatRange(session.startTime, session.endTime) }
           </Text>
           <Text style={ Constants.STYLES.text } numberOfLines={ 1 }>
             { session.notes }
           </Text>
         </View>
-        <Image
-          style={ [Constants.STYLES.icon, styles.icon] }
-          source={ Constants.IMG_EDIT }
-        />
+        <TouchableOpacity onPress={ () => this.props.onEdit(session) }>
+          <Image
+            style={ [Constants.STYLES.icon, styles.icon] }
+            source={ Constants.IMG_EDIT }
+          />
+        </TouchableOpacity>
         <Image
           style={ [Constants.STYLES.icon, styles.icon] }
           source={ Constants.IMG_DELETE }
@@ -71,7 +74,7 @@ export default class HistoryScreen extends Component {
     const rows = datasource.cloneWithRowsAndSections(this.convertRowsToMap());
     return (
       <View style={ Constants.STYLES.screen }>
-        <ListView dataSource={ datasource.cloneWithRows(this.props.sessions) }
+        <ListView dataSource={ rows }
           renderSectionHeader={ this.renderSectionHeader }
           renderRow={ this.renderRow }
           enableEmptySections
@@ -84,7 +87,7 @@ export default class HistoryScreen extends Component {
 const styles = StyleSheet.create({
   sectionHeader: {
     backgroundColor: 'white',
-    borderBottomWidth: 1,
+    borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: Constants.COLOR_GRAY,
     paddingVertical: Constants.GUTTER_MD,
 
@@ -97,7 +100,7 @@ const styles = StyleSheet.create({
     paddingLeft: Constants.GUTTER_SM,
   },
   row: {
-    borderBottomWidth: 1,
+    borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: Constants.COLOR_GRAY,
     paddingVertical: Constants.GUTTER_MD,
 

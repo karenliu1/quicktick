@@ -8,20 +8,18 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   Navigator,
-  Text,
-  View
 } from 'react-native';
 
 import * as Constants from './src/Constants';
 import Storage from './src/Storage';
 import ClockScreen from './src/components/ClockScreen';
+import DetailScreen from './src/components/DetailScreen';
 import HistoryScreen from './src/components/HistoryScreen';
 import Menu from './src/components/Menu';
 
 class QuickTick extends Component {
   state = {
     isMenuExpanded: false,
-    sessions: [],
 
     // Times for the current session (if any)
     startTime: null,
@@ -36,7 +34,7 @@ class QuickTick extends Component {
       // TODO: Display this error
       console.error(error);
     }
-    this.setState({sessions});
+    this.sessions = sessions;
   }
 
   onClockIn = () => this.setState({ startTime: new Date().toISOString() });
@@ -55,6 +53,10 @@ class QuickTick extends Component {
 
   onToggleMenu = () => this.setState({ isMenuExpanded: !this.state.isMenuExpanded });
 
+  onEditSession(navigator, session) {
+    navigator.push({ name: Constants.SCREENS.DETAIL, session: session });
+  }
+
   render() {
     const menuEl = (
       <Menu
@@ -63,7 +65,8 @@ class QuickTick extends Component {
       />
     );
     return (
-      <Navigator initialRoute={{ name: Constants.SCREENS.CLOCK }}
+      <Navigator
+        initialRoute={{ name: Constants.SCREENS.CLOCK }}
         renderScene={(route, navigator) => this.renderScreen(route, navigator)}
         navigationBar={ menuEl }
       />
@@ -88,7 +91,22 @@ class QuickTick extends Component {
           />
         );
       case Constants.SCREENS.HISTORY:
-        return <HistoryScreen sessions={ this.state.sessions } />;
+        return (
+          <HistoryScreen
+            sessions={ this.sessions }
+            onEdit={ (session) => this.onEditSession(navigator, session) }
+          />
+        );
+      case Constants.SCREENS.DETAIL:
+        return (
+          <DetailScreen
+            startTime={ route.session.startTime }
+            endTime={ route.session.endTime }
+            notes={ route.session.notes }
+            onSave={ () => {} }
+            onCancel={ () => {} }
+          />
+        );
     }
   }
 }

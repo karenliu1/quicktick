@@ -56,4 +56,5 @@ export const SCREENS = {
   CLOCK: 'CLOCK',
   HISTORY: 'HISTORY',
   GRAPHS: 'GRAPHS',
+  DETAIL: 'DETAIL',
 };
