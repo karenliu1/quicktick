@@ -19,6 +19,8 @@ export const IMG_SUN = require('../images/sun.png');
 export const IMG_EDIT = require('../images/edit.png');
 export const IMG_DELETE = require('../images/delete.png');
 
+export const MENU_SIZE = 30;
+
 export const STYLES = StyleSheet.create({
   text: {
     color: COLOR_DARK_GRAY,
@@ -44,7 +46,9 @@ export const STYLES = StyleSheet.create({
     backgroundColor: 'white',
     flex: 1,
     justifyContent: 'space-between',
-    padding: GUTTER_LG,
+    marginHorizontal: GUTTER_LG,
+    marginBottom: GUTTER_LG,
+    marginTop: GUTTER_LG + MENU_SIZE + GUTTER_MD,
   },
 });
 

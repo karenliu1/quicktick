@@ -55,31 +55,38 @@ export default class Menu extends Component {
     }
 
     return (
-      <View style={ [Constants.STYLES.screen, styles.menu] }>
+      <View style={ styles.container }>
         { menuIconEl }
-        { this.renderRow(Constants.SCREENS.CLOCK, 'Clock') }
-        { this.renderRow(Constants.SCREENS.HISTORY, 'Log') }
+        <View style={ styles.menu }>
+          { this.renderRow(Constants.SCREENS.CLOCK, 'Clock') }
+          { this.renderRow(Constants.SCREENS.HISTORY, 'Log') }
+        </View>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  menu: {
+  container: {
+    backgroundColor: 'white',
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    justifyContent: 'flex-start',
+  },
+  menu: {
+    marginTop: Constants.GUTTER_LG + Constants.MENU_SIZE + Constants.GUTTER_MD,
+    marginBottom: Constants.GUTTER_LG,
+    marginHorizontal: Constants.GUTTER_LG,
   },
   menuTouchable: {
     position: 'absolute',
-    top: Constants.GUTTER_LG / 2,
-    right: Constants.GUTTER_LG / 2,
+    top: Constants.GUTTER_MD,
+    left: Constants.GUTTER_LG,
   },
   menuIcon: {
-    width: Constants.GUTTER_LG,
+    width: Constants.MENU_SIZE,
     resizeMode: 'contain',
   },
   row: {
