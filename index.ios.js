@@ -43,7 +43,10 @@ class QuickTick extends Component {
 
   onConfirm = async (notes) => {
     try {
-      await Storage.createSession(this.state.startTime, this.state.endTime, notes);
+      const session = await Storage.createSession(
+        this.state.startTime, this.state.endTime, notes);
+      this.sessions.push(session);
+
       this.setState({ startTime: null, endTime: null });
     } catch (error) {
       // TODO: Display this error
@@ -58,7 +61,14 @@ class QuickTick extends Component {
   }
 
   async onEditSave(navigator, session) {
-    await Storage.editSession(session);
+    try {
+      await Storage.editSession(session);
+    } catch (error) {
+      // TODO: Display this error
+      throw error;
+    }
+    const sessionIndex = this.sessions.findIndex((s) => s.id === session.id);
+    this.sessions[sessionIndex] = session;
     navigator.pop();
   }
 
