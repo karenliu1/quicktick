@@ -57,8 +57,8 @@ class QuickTick extends Component {
     navigator.push({ name: Constants.SCREENS.DETAIL, session: session });
   }
 
-  async onEditSave(navigator, sessionId, startTime, endTime, notes) {
-    await Storage.editSession(sessionId, startTime, endTime, notes);
+  async onEditSave(navigator, session) {
+    await Storage.editSession(session);
     navigator.pop();
   }
 
@@ -109,11 +109,8 @@ class QuickTick extends Component {
       case Constants.SCREENS.DETAIL:
         return (
           <DetailScreen
-            sessionId={ route.session.id }
-            startTime={ route.session.startTime }
-            endTime={ route.session.endTime }
-            notes={ route.session.notes }
-            onSave={ (id, startTime, endTime, notes) => this.onEditSave(navigator, id, startTime, endTime, notes) }
+            initialSession={ route.session }
+            onSave={ (session) => this.onEditSave(navigator, session) }
             onCancel={ () => this.onEditCancel(navigator) }
           />
         );

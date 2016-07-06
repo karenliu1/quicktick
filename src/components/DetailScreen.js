@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 import * as Constants from '../Constants';
+import { SessionPropType } from '../PropTypes';
 import { formatDate, formatRange, formatTotal } from '../Utilities';
 
 import Button from './Button';
@@ -17,10 +18,7 @@ import TitleText from './TitleText';
 
 export default class DetailScreen extends Component {
   static propTypes = {
-    sessionId: PropTypes.number.isRequired,
-    startTime: PropTypes.string.isRequired,
-    endTime: PropTypes.string.isRequired,
-    notes: PropTypes.string,
+    initialSession: SessionPropType.isRequired,
     onSave: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
   };
@@ -28,11 +26,11 @@ export default class DetailScreen extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.timeZoneOffsetInHours = (-1) * (new Date()).getTimezoneOffset() / 60
+    this.timeZoneOffset = -1 * (new Date()).getTimezoneOffset()
     this.state = {
-      notes: this.props.notes,
-      startTime: new Date(this.props.startTime),
-      endTime: new Date(this.props.endTime),
+      notes: this.props.initialSession.notes,
+      startTime: new Date(this.props.initialSession.startTime),
+      endTime: new Date(this.props.initialSession.endTime),
     };
   }
 
@@ -41,12 +39,12 @@ export default class DetailScreen extends Component {
   onChangeEndTime = (endTime) => this.setState({ endTime });
 
   onSave = () => {
-    this.props.onSave(
-      this.props.sessionId,
-      this.state.startTime,
-      this.state.endTime,
-      this.state.notes
-    );
+    this.props.onSave({
+      id: this.props.initialSession.id,
+      startTime: this.state.startTime.toISOString(),
+      endTime: this.state.endTime.toISOString(),
+      notes: this.state.notes,
+    });
   };
 
   render() {
@@ -76,7 +74,7 @@ export default class DetailScreen extends Component {
             <DatePickerIOS
               date={ this.state.startTime }
               mode="datetime"
-              timeZoneOffsetInMinutes={ this.timeZoneOffsetInHours * 60 }
+              timeZoneOffsetInMinutes={ this.timeZoneOffset }
               onDateChange={ this.onChangeStartTime }
             />
           </View>
@@ -86,7 +84,7 @@ export default class DetailScreen extends Component {
             <DatePickerIOS
               date={ this.state.endTime }
               mode="datetime"
-              timeZoneOffsetInMinutes={ this.timeZoneOffsetInHours * 60 }
+              timeZoneOffsetInMinutes={ this.timeZoneOffset }
               onDateChange={ this.onChangeEndTime }
             />
           </View>

@@ -32,17 +32,15 @@ export default class Storage {
   }
 
 
-  static async editSession(sessionId, startTime, endTime, notes) {
+  static async editSession(session) {
     const sessions = await Storage.getSessions();
-    const sessionIndex = sessions.findIndex((session) => session.id === sessionId);
+    const sessionIndex = sessions.findIndex((s) => s.id === session.id);
 
     if (sessionIndex < 0) {
       throw new Error(`Could not find session ${sessionId}`);
     }
 
-    sessions[sessionIndex].startTime = startTime;
-    sessions[sessionIndex].endTime = endTime;
-    sessions[sessionIndex].notes = notes;
+    sessions[sessionIndex] = session;
 
     try {
       await AsyncStorage.setItem(SESSIONS_KEY, JSON.stringify(sessions));
