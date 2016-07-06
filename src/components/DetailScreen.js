@@ -1,9 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import {
+  ActionSheetIOS,
+  Image,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
 
@@ -63,6 +66,18 @@ export default class DetailScreen extends Component {
     });
   };
 
+  onDelete = () => {
+    ActionSheetIOS.showActionSheetWithOptions({
+      options: ['Delete session', 'Cancel'],
+      destructiveButtonIndex: 0,
+      cancelButtonIndex: 1,
+    }, (buttonIndex) => {
+      if (buttonIndex === 0) {
+        this.props.onDelete();
+      }
+    });
+  };
+
   render() {
     return (
       <View style={ Constants.STYLES.screen }>
@@ -76,11 +91,18 @@ export default class DetailScreen extends Component {
             </Text>
           </View>
 
-          <SectionText
-            titleText="Total Time"
-            sectionText={ formatTotal(this.state.startTime, this.state.endTime) }
-            style={ styles.section }
-          />
+          <View style={ [styles.section, styles.row] }>
+            <SectionText
+              titleText="Total Time"
+              sectionText={ formatTotal(this.state.startTime, this.state.endTime) }
+            />
+            <TouchableOpacity onPress={ this.onDelete }>
+              <Image
+                source={ Constants.IMG_DELETE }
+                style={ Constants.STYLES.icon }
+              />
+            </TouchableOpacity>
+          </View>
 
           <SectionText
             titleText="Clock In"
@@ -108,13 +130,10 @@ export default class DetailScreen extends Component {
           </View>
 
           <View style={ styles.section }>
-            <Button type="subdued" text="Cancel" onPress={ this.props.onCancel } />
-          </View>
-          <View style={ styles.section }>
             <Button type="primary" text="Save" onPress={ this.onSave } />
           </View>
           <View style={ styles.section }>
-            <Button type="warning" text="Delete" onPress={ this.props.onDelete } />
+            <Button type="subdued" text="Cancel" onPress={ this.props.onCancel } />
           </View>
         </ScrollView>
       </View>
@@ -125,6 +144,11 @@ export default class DetailScreen extends Component {
 const styles = StyleSheet.create({
   section: {
     marginTop: Constants.GUTTER_MD,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   title: {
     flexDirection: 'row',
