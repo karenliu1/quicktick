@@ -21,6 +21,7 @@ export const IMG_MENU = require('../images/menu.png');
 export const IMG_SUN = require('../images/sun.png');
 export const IMG_EDIT = require('../images/edit.png');
 export const IMG_DELETE = require('../images/delete.png');
+export const IMG_ADD = require('../images/add.png');
 
 export const MENU_SIZE = 30;
 

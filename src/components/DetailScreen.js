@@ -34,10 +34,12 @@ export default class DetailScreen extends Component {
       notes: this.props.initialSession.notes,
       startTime: this.props.initialSession.startTime,
       endTime: this.props.initialSession.endTime,
+      newTag: null,
     };
   }
 
   onChangeNotes = (notes) => this.setState({ notes });
+  onChangeNewTag = (newTag) => this.setState({ newTag });
 
   onChangeStartTime = () => {
     this.props.navigator.push({
@@ -123,10 +125,25 @@ export default class DetailScreen extends Component {
             <TextInput
               multiline
               numberOfLines={ 3 }
-              style={ [Constants.STYLES.input, styles.input] }
+              style={ [Constants.STYLES.input, styles.notesInput] }
               onChangeText={ this.onChangeNotes }
               value={ this.state.notes }
             />
+          </View>
+
+          <View style={ styles.section }>
+            <TitleText text="Tags" />
+            <View style={ [styles.row, styles.tagRow] }>
+              <TextInput
+                style={ [Constants.STYLES.input, styles.tagInput] }
+                onChangeText={ this.onChangeNewTag }
+                value={ this.state.newTag }
+              />
+              <Image
+                source={ Constants.IMG_ADD }
+                style={ Constants.STYLES.icon }
+              />
+            </View>
           </View>
 
           <View style={ styles.section }>
@@ -165,8 +182,16 @@ const styles = StyleSheet.create({
   range: {
     flex: 1,
   },
-  input: {
+  notesInput: {
     height: Constants.FONT_SIZE_MD * 4 + Constants.GUTTER_MD * 2,
     marginTop: Constants.GUTTER_MD,
+  },
+  tagRow: {
+    marginTop: Constants.GUTTER_MD,
+  },
+  tagInput: {
+    height: Constants.FONT_SIZE_MD + Constants.GUTTER_MD * 2,
+    flex: 1,
+    marginRight: Constants.GUTTER_MD,
   },
 });
