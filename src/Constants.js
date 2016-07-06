@@ -1,3 +1,5 @@
+/*global require*/
+
 import { StyleSheet } from 'react-native';
 
 export const FONT_FAMILY = 'Avenir';

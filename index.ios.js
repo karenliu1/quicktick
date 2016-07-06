@@ -32,7 +32,7 @@ class QuickTick extends Component {
       sessions = await Storage.getSessions();
     } catch (error) {
       // TODO: Display this error
-      console.error(error);
+      throw error;
     }
     this.sessions = sessions;
   }
@@ -47,7 +47,7 @@ class QuickTick extends Component {
       this.setState({ startTime: null, endTime: null });
     } catch (error) {
       // TODO: Display this error
-      console.error(error);
+      throw error;
     }
   };
 
