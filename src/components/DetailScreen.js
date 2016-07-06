@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import {
+  DatePickerIOS,
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   View,
 } from 'react-native';
 
@@ -10,6 +12,7 @@ import * as Constants from '../Constants';
 import { formatDate, formatRange, formatTotal } from '../Utilities';
 
 import SectionText from './SectionText';
+import TitleText from './TitleText';
 
 export default class DetailScreen extends Component {
   static propTypes = {
@@ -20,10 +23,25 @@ export default class DetailScreen extends Component {
     onCancel: PropTypes.func.isRequired,
   };
 
+  constructor(props, context) {
+    super(props, context);
+
+    this.timeZoneOffsetInHours = (-1) * (new Date()).getTimezoneOffset() / 60
+    this.state = {
+      notes: this.props.notes,
+      startTime: new Date(this.props.startTime),
+      endTime: new Date(this.props.endTime),
+    };
+  }
+
+  onChangeNotes = (notes) => this.setState({ notes });
+  onChangeStartTime = (startTime) => this.setState({ startTime });
+  onChangeEndTime = (endTime) => this.setState({ endTime });
+
   render() {
-    const date = formatDate(this.props.startTime);
-    const total = formatTotal(this.props.startTime, this.props.endTime);
-    const range = formatRange(this.props.startTime, this.props.endTime);
+    const date = formatDate(this.state.startTime);
+    const total = formatTotal(this.state.startTime, this.state.endTime);
+    const range = formatRange(this.state.startTime, this.state.endTime);
 
     return (
       <View style={ Constants.STYLES.screen }>
@@ -36,10 +54,42 @@ export default class DetailScreen extends Component {
               { range }
             </Text>
           </View>
+
           <SectionText
             titleText="Total Time" sectionText={ total }
             style={ styles.section }
           />
+
+          <View style={ styles.section }>
+            <TitleText text="Clock In" />
+            <DatePickerIOS
+              date={ this.state.startTime }
+              mode="datetime"
+              timeZoneOffsetInMinutes={ this.timeZoneOffsetInHours * 60 }
+              onDateChange={ this.onChangeStartTime }
+            />
+          </View>
+
+          <View style={ styles.section }>
+            <TitleText text="Clock Out" />
+            <DatePickerIOS
+              date={ this.state.endTime }
+              mode="datetime"
+              timeZoneOffsetInMinutes={ this.timeZoneOffsetInHours * 60 }
+              onDateChange={ this.onChangeEndTime }
+            />
+          </View>
+
+          <View style={ styles.section }>
+            <TitleText text="Notes" />
+            <TextInput
+              multiline
+              numberOfLines={ 3 }
+              style={ [Constants.STYLES.input, styles.input] }
+              onChangeText={ this.onChangeNotes }
+              value={ this.state.notes }
+            />
+          </View>
         </ScrollView>
       </View>
     );
@@ -64,5 +114,9 @@ const styles = StyleSheet.create({
   },
   range: {
     flex: 1,
+  },
+  input: {
+    height: Constants.FONT_SIZE_MD * 4 + Constants.GUTTER_MD * 2,
+    marginTop: Constants.GUTTER_MD,
   },
 });
