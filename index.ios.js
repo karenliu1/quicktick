@@ -58,6 +58,10 @@ class QuickTick extends Component {
     navigator.push({ name: Constants.SCREENS.DETAIL, session: session });
   }
 
+  onEditCancel(navigator) {
+    navigator.pop();
+  }
+
   async onEditSave(navigator, session) {
     try {
       await Storage.editSession(session);
@@ -76,7 +80,20 @@ class QuickTick extends Component {
     navigator.pop();
   }
 
-  onEditCancel(navigator) {
+  async onEditDelete(navigator, session) {
+    try {
+      await Storage.deleteSession(session);
+    } catch (error) {
+      // TODO: Display this error
+      throw error;
+    }
+    const sessionIndex = this.state.sessions.findIndex((s) => s.id === session.id);
+    this.setState({
+      sessions: [
+        ...this.state.sessions.slice(0, sessionIndex),
+        ...this.state.sessions.slice(sessionIndex + 1)
+      ],
+    });
     navigator.pop();
   }
 
@@ -124,8 +141,9 @@ class QuickTick extends Component {
           <DetailScreen
             navigator={ navigator }
             initialSession={ route.session }
-            onSave={ (session) => this.onEditSave(navigator, session) }
             onCancel={ () => this.onEditCancel(navigator) }
+            onSave={ (session) => this.onEditSave(navigator, session) }
+            onDelete={ () => this.onEditDelete(navigator, route.session) }
           />
         );
       case Constants.SCREENS.DATE_PICKER:

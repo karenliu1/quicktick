@@ -33,7 +33,9 @@ export default class HistoryScreen extends Component {
 
   renderRow = (session) => {
     return (
-      <View style={ styles.row }>
+      <TouchableOpacity
+        onPress={ () => this.props.onEdit(session) }
+        style={ styles.row }>
         <View style={ styles.rowText }>
           <Text style={ Constants.STYLES.text }>
             { formatRange(session.startTime, session.endTime) }
@@ -42,17 +44,7 @@ export default class HistoryScreen extends Component {
             { session.notes }
           </Text>
         </View>
-        <TouchableOpacity onPress={ () => this.props.onEdit(session) }>
-          <Image
-            style={ [Constants.STYLES.icon, styles.icon] }
-            source={ Constants.IMG_EDIT }
-          />
-        </TouchableOpacity>
-        <Image
-          style={ [Constants.STYLES.icon, styles.icon] }
-          source={ Constants.IMG_DELETE }
-        />
-      </View>
+      </TouchableOpacity>
     );
   };
 
@@ -109,8 +101,5 @@ const styles = StyleSheet.create({
   },
   rowText: {
     flex: 1,
-  },
-  icon: {
-    marginLeft: Constants.GUTTER_SM,
   },
 });

@@ -36,10 +36,14 @@ export default class Storage {
       startTime,
       endTime,
     };
-    sessions.push(session);
+
+    const newSessions = [
+      ...sessions,
+      session
+    ];
 
     try {
-      await AsyncStorage.setItem(SESSIONS_KEY, JSON.stringify(sessions));
+      await AsyncStorage.setItem(SESSIONS_KEY, JSON.stringify(newSessions));
     } catch (error) {
       throw new Error('Could not save sessions:', error);
     }
@@ -56,10 +60,34 @@ export default class Storage {
       throw new Error(`Could not find session ${session.id}`);
     }
 
-    sessions[sessionIndex] = session;
+    const newSessions = [
+      ...sessions.slice(0, sessionIndex),
+      session,
+      ...sessions.slice(sessionIndex + 1),
+    ];
 
     try {
-      await AsyncStorage.setItem(SESSIONS_KEY, JSON.stringify(sessions));
+      await AsyncStorage.setItem(SESSIONS_KEY, JSON.stringify(newSessions));
+    } catch (error) {
+      throw new Error(`Could not save session ${session.id}:`, error);
+    }
+  }
+
+  static async deleteSession(session) {
+    const sessions = await Storage.getSessions();
+    const sessionIndex = sessions.findIndex((s) => s.id === session.id);
+
+    if (sessionIndex < 0) {
+      throw new Error(`Could not find session ${session.id}`);
+    }
+
+    const newSessions = [
+      ...sessions.slice(0, sessionIndex),
+      ...sessions.slice(sessionIndex + 1),
+    ];
+
+    try {
+      await AsyncStorage.setItem(SESSIONS_KEY, JSON.stringify(newSessions));
     } catch (error) {
       throw new Error(`Could not save session ${session.id}:`, error);
     }
