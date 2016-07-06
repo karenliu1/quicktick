@@ -49,12 +49,20 @@ export default class HistoryScreen extends Component {
   };
 
   convertRowsToMap() {
-    let sessionMap = {}; // key is the date, value is all sessions within that date
+    let sessionMap = {};
+
+    // Map dates to sessions that begin on that date
     this.props.sessions.forEach((session) => {
       const key = moment(session.startTime).format('MMM D YY');
       if (!sessionMap[key]) { sessionMap[key] = []; }
       sessionMap[key].push(session);
     });
+
+    // Sort each list by reverse chronological order
+    for (let key in sessionMap) {
+      sessionMap[key].sort((s1, s2) => s2.startTime - s1.startTime);
+    }
+
     return sessionMap;
   }
 
