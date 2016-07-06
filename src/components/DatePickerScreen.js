@@ -36,7 +36,7 @@ export default class DatePickerScreen extends Component {
         </View>
 
         <View style={ Constants.STYLES.section }>
-          <Button type="start" text="Done" onPress={ this.onSave } />
+          <Button type="primary" text="Done" onPress={ this.onSave } />
         </View>
       </View>
     );

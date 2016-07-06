@@ -10,25 +10,27 @@ import * as Constants from '../Constants';
 export default class Button extends Component {
   static propTypes = {
     text: PropTypes.string.isRequired,
-    type: PropTypes.oneOf(['start', 'stop', 'cancel']),
+    type: PropTypes.oneOf(['primary', 'warning', 'subdued']),
     onPress: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
-    type: 'cancel',
+    type: 'subdued',
   };
 
   render() {
     let buttonStyle = {};
     let textStyle = {};
     switch (this.props.type) {
-      case 'start':
+      case 'primary':
         buttonStyle.backgroundColor = Constants.COLOR_GREEN;
         break;
-      case 'stop':
+      case 'warning':
         buttonStyle.backgroundColor = Constants.COLOR_RED;
         break;
-      case 'cancel':
+      case 'subdued':
+        buttonStyle.borderWidth = StyleSheet.hairlineWidth;
+        buttonStyle.borderColor = Constants.COLOR_GRAY;
         textStyle.color = Constants.COLOR_GRAY;
         break;
     }

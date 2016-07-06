@@ -65,7 +65,7 @@ export default class ClockScreen extends Component {
           titleText="Now"
           sectionText={ formatTime(this.state.currentTime) } />
         <View style={ Constants.STYLES.section }>
-          <Button type="start" text="Clock In" onPress={ this.props.onClockIn } />
+          <Button type="primary" text="Clock In" onPress={ this.props.onClockIn } />
         </View>
       </View>
     );
@@ -88,7 +88,7 @@ export default class ClockScreen extends Component {
           sectionText={ formatTime(this.props.startTime) }
         />
         <View style={ Constants.STYLES.section }>
-          <Button type="stop" text="Clock Out" onPress={ this.props.onClockOut } />
+          <Button type="warning" text="Clock Out" onPress={ this.props.onClockOut } />
         </View>
       </View>
     );

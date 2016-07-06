@@ -108,9 +108,13 @@ export default class DetailScreen extends Component {
           </View>
 
           <View style={ styles.section }>
-            <Button type="cancel" text="Cancel" onPress={ this.props.onCancel } />
-            <Button type="start" text="Save" onPress={ this.onSave } />
-            <Button type="stop" text="Delete" onPress={ this.props.onDelete } />
+            <Button type="subdued" text="Cancel" onPress={ this.props.onCancel } />
+          </View>
+          <View style={ styles.section }>
+            <Button type="primary" text="Save" onPress={ this.onSave } />
+          </View>
+          <View style={ styles.section }>
+            <Button type="warning" text="Delete" onPress={ this.props.onDelete } />
           </View>
         </ScrollView>
       </View>
