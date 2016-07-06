@@ -13,7 +13,13 @@ export function formatTotal(startTime, endTime) {
   const duration = moment.duration(elapsedMs);
   const hours = duration.hours();
   const minutes = duration.minutes();
-  return `${hours}hr ${minutes}m`;
+  const days = duration.days();
+
+  let total = '';
+  if (days > 0) { total = `${days}d`; }
+  if (hours > 0) { total = `${total} ${hours}hr`; }
+  total = `${total} ${minutes}m`;
+  return total.trim();
 }
 
 export function formatRange(startTime, endTime) {
