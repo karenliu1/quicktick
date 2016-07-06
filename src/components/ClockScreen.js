@@ -14,8 +14,8 @@ import { formatRange, formatTime, formatTotal } from '../Utilities';
 
 export default class ClockScreen extends Component {
   static propTypes = {
-    startTime: PropTypes.string,
-    endTime: PropTypes.string,
+    startTime: PropTypes.instanceOf(Date),
+    endTime: PropTypes.instanceOf(Date),
     onClockIn: PropTypes.func.isRequired,
     onClockOut: PropTypes.func.isRequired,
     onConfirm: PropTypes.func.isRequired,
@@ -27,7 +27,7 @@ export default class ClockScreen extends Component {
     notes: null,
   };
 
-  updateTime = () => this.setState({ currentTime: new Date().toISOString() });
+  updateTime = () => this.setState({ currentTime: new Date() });
 
   componentDidMount() {
     this.updateTime();

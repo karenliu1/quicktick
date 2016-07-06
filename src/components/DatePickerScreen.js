@@ -10,7 +10,7 @@ import Button from './Button';
 
 export default class DatePickerScreen extends Component {
   static propTypes = {
-    initialTime: PropTypes.string.isRequired,
+    initialTime: PropTypes.instanceOf(Date).isRequired,
     onSave: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
   };
@@ -18,11 +18,11 @@ export default class DatePickerScreen extends Component {
   constructor(props, context) {
     super(props, context);
     this.timeZoneOffset = -1 * (new Date()).getTimezoneOffset();
-    this.state = { time: new Date(this.props.initialTime) };
+    this.state = { time: this.props.initialTime };
   }
 
   onChangeTime = (time) => this.setState({ time });
-  onSave = () => this.props.onSave(this.state.time.toISOString());
+  onSave = () => this.props.onSave(this.state.time);
 
   render() {
     return (

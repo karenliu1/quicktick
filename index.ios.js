@@ -38,8 +38,8 @@ class QuickTick extends Component {
     this.sessions = sessions;
   }
 
-  onClockIn = () => this.setState({ startTime: new Date().toISOString() });
-  onClockOut = () => this.setState({ endTime: new Date().toISOString() });
+  onClockIn = () => this.setState({ startTime: new Date() });
+  onClockOut = () => this.setState({ endTime: new Date() });
   onCancel = () => this.setState({ startTime: null, endTime: null });
 
   onConfirm = async (notes) => {

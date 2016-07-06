@@ -29,8 +29,8 @@ export default class DetailScreen extends Component {
 
     this.state = {
       notes: this.props.initialSession.notes,
-      startTime: new Date(this.props.initialSession.startTime),
-      endTime: new Date(this.props.initialSession.endTime),
+      startTime: this.props.initialSession.startTime,
+      endTime: this.props.initialSession.endTime,
     };
   }
 
@@ -39,7 +39,7 @@ export default class DetailScreen extends Component {
   onChangeStartTime = () => {
     this.props.navigator.push({
       name: Constants.SCREENS.DATE_PICKER,
-      initialTime: this.state.startTime.toISOString(),
+      initialTime: this.state.startTime,
       onSave: (time) => {
         this.setState({ startTime: new Date(time) });
       },
@@ -49,7 +49,7 @@ export default class DetailScreen extends Component {
   onChangeEndTime = () => {
     this.props.navigator.push({
       name: Constants.SCREENS.DATE_PICKER,
-      initialTime: this.state.endTime.toISOString(),
+      initialTime: this.state.endTime,
       onSave: (time) => this.setState({ endTime: new Date(time) }),
     });
   }
@@ -57,8 +57,8 @@ export default class DetailScreen extends Component {
   onSave = () => {
     this.props.onSave({
       id: this.props.initialSession.id,
-      startTime: this.state.startTime.toISOString(),
-      endTime: this.state.endTime.toISOString(),
+      startTime: this.state.startTime,
+      endTime: this.state.endTime,
       notes: this.state.notes,
     });
   };
