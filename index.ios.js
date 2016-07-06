@@ -43,7 +43,7 @@ class QuickTick extends Component {
 
   onConfirm = async (notes) => {
     try {
-      await Storage.saveSession(this.state.startTime, this.state.endTime, notes);
+      await Storage.createSession(this.state.startTime, this.state.endTime, notes);
       this.setState({ startTime: null, endTime: null });
     } catch (error) {
       // TODO: Display this error
@@ -53,8 +53,17 @@ class QuickTick extends Component {
 
   onToggleMenu = () => this.setState({ isMenuExpanded: !this.state.isMenuExpanded });
 
-  onEditSession(navigator, session) {
+  onEditBegin(navigator, session) {
     navigator.push({ name: Constants.SCREENS.DETAIL, session: session });
+  }
+
+  async onEditSave(navigator, sessionId, startTime, endTime, notes) {
+    await Storage.editSession(sessionId, startTime, endTime, notes);
+    navigator.pop();
+  }
+
+  onEditCancel(navigator) {
+    navigator.pop();
   }
 
   render() {
@@ -94,17 +103,18 @@ class QuickTick extends Component {
         return (
           <HistoryScreen
             sessions={ this.sessions }
-            onEdit={ (session) => this.onEditSession(navigator, session) }
+            onEdit={ (session) => this.onEditBegin(navigator, session) }
           />
         );
       case Constants.SCREENS.DETAIL:
         return (
           <DetailScreen
+            sessionId={ route.session.id }
             startTime={ route.session.startTime }
             endTime={ route.session.endTime }
             notes={ route.session.notes }
-            onSave={ () => {} }
-            onCancel={ () => {} }
+            onSave={ (id, startTime, endTime, notes) => this.onEditSave(navigator, id, startTime, endTime, notes) }
+            onCancel={ () => this.onEditCancel(navigator) }
           />
         );
     }

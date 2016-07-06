@@ -11,11 +11,13 @@ import {
 import * as Constants from '../Constants';
 import { formatDate, formatRange, formatTotal } from '../Utilities';
 
+import Button from './Button';
 import SectionText from './SectionText';
 import TitleText from './TitleText';
 
 export default class DetailScreen extends Component {
   static propTypes = {
+    sessionId: PropTypes.number.isRequired,
     startTime: PropTypes.string.isRequired,
     endTime: PropTypes.string.isRequired,
     notes: PropTypes.string,
@@ -37,6 +39,15 @@ export default class DetailScreen extends Component {
   onChangeNotes = (notes) => this.setState({ notes });
   onChangeStartTime = (startTime) => this.setState({ startTime });
   onChangeEndTime = (endTime) => this.setState({ endTime });
+
+  onSave = () => {
+    this.props.onSave(
+      this.props.sessionId,
+      this.state.startTime,
+      this.state.endTime,
+      this.state.notes
+    );
+  };
 
   render() {
     const date = formatDate(this.state.startTime);
@@ -89,6 +100,11 @@ export default class DetailScreen extends Component {
               onChangeText={ this.onChangeNotes }
               value={ this.state.notes }
             />
+          </View>
+
+          <View style={ styles.section }>
+            <Button type="start" text="Save" onPress={ this.onSave } />
+            <Button type="cancel" text="Cancel" onPress={ this.props.onCancel } />
           </View>
         </ScrollView>
       </View>
