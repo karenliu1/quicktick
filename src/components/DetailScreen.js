@@ -1,16 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 import {
-  DatePickerIOS,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
 
 import * as Constants from '../Constants';
 import { SessionPropType } from '../PropTypes';
-import { formatDate, formatRange, formatTotal } from '../Utilities';
+import { formatDate, formatRange, formatTime, formatTotal } from '../Utilities';
 
 import Button from './Button';
 import SectionText from './SectionText';
@@ -18,6 +18,7 @@ import TitleText from './TitleText';
 
 export default class DetailScreen extends Component {
   static propTypes = {
+    navigator: PropTypes.object,
     initialSession: SessionPropType.isRequired,
     onSave: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
@@ -26,7 +27,6 @@ export default class DetailScreen extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.timeZoneOffset = -1 * (new Date()).getTimezoneOffset()
     this.state = {
       notes: this.props.initialSession.notes,
       startTime: new Date(this.props.initialSession.startTime),
@@ -35,8 +35,24 @@ export default class DetailScreen extends Component {
   }
 
   onChangeNotes = (notes) => this.setState({ notes });
-  onChangeStartTime = (startTime) => this.setState({ startTime });
-  onChangeEndTime = (endTime) => this.setState({ endTime });
+
+  onChangeStartTime = () => {
+    this.props.navigator.push({
+      name: Constants.SCREENS.DATE_PICKER,
+      initialTime: this.state.startTime.toISOString(),
+      onSave: (time) => {
+        this.setState({ startTime: new Date(time) });
+      },
+    });
+  }
+
+  onChangeEndTime = () => {
+    this.props.navigator.push({
+      name: Constants.SCREENS.DATE_PICKER,
+      initialTime: this.state.endTime.toISOString(),
+      onSave: (time) => this.setState({ endTime: new Date(time) }),
+    });
+  }
 
   onSave = () => {
     this.props.onSave({
@@ -48,46 +64,45 @@ export default class DetailScreen extends Component {
   };
 
   render() {
-    const date = formatDate(this.state.startTime);
-    const total = formatTotal(this.state.startTime, this.state.endTime);
-    const range = formatRange(this.state.startTime, this.state.endTime);
-
     return (
       <View style={ Constants.STYLES.screen }>
         <ScrollView>
           <View style={ styles.title }>
             <Text style={ [Constants.STYLES.text, styles.date] }>
-              { date }
+              { formatDate(this.state.startTime) }
             </Text>
             <Text style={ [Constants.STYLES.text, styles.range] }>
-              { range }
+              { formatRange(this.state.startTime, this.state.endTime) }
             </Text>
           </View>
 
           <SectionText
-            titleText="Total Time" sectionText={ total }
+            titleText="Total Time"
+            sectionText={ formatTotal(this.state.startTime, this.state.endTime) }
             style={ styles.section }
           />
 
-          <View style={ styles.section }>
-            <TitleText text="Clock In" />
-            <DatePickerIOS
-              date={ this.state.startTime }
-              mode="datetime"
-              timeZoneOffsetInMinutes={ this.timeZoneOffset }
-              onDateChange={ this.onChangeStartTime }
-            />
-          </View>
+          <SectionText
+            titleText="Clock In"
+            sectionText={ formatTime(this.state.startTime) }
+            style={ styles.section }
+          />
+          <TouchableOpacity onPress={ this.onChangeStartTime }>
+            <Text style={ Constants.STYLES.linkText }>
+              EDIT
+            </Text>
+          </TouchableOpacity>
 
-          <View style={ styles.section }>
-            <TitleText text="Clock Out" />
-            <DatePickerIOS
-              date={ this.state.endTime }
-              mode="datetime"
-              timeZoneOffsetInMinutes={ this.timeZoneOffset }
-              onDateChange={ this.onChangeEndTime }
-            />
-          </View>
+          <SectionText
+            titleText="Clock Out"
+            sectionText={ formatTime(this.state.endTime) }
+            style={ styles.section }
+          />
+          <TouchableOpacity onPress={ this.onChangeEndTime }>
+            <Text style={ Constants.STYLES.linkText }>
+              EDIT
+            </Text>
+          </TouchableOpacity>
 
           <View style={ styles.section }>
             <TitleText text="Notes" />

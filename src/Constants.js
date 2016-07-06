@@ -11,6 +11,7 @@ export const COLOR_GREEN = '#82C686';
 export const COLOR_RED = '#ED7272';
 export const COLOR_GRAY = '#B4B4B4';
 export const COLOR_DARK_GRAY = '#4A4A4A';
+export const COLOR_BLUE = '#54B6EE';
 
 export const GUTTER_SM = 10;
 export const GUTTER_MD = 20;
@@ -55,6 +56,10 @@ export const STYLES = StyleSheet.create({
     paddingBottom: GUTTER_LG,
     paddingTop: GUTTER_LG + MENU_SIZE + GUTTER_MD,
   },
+  linkText: {
+    color: COLOR_BLUE,
+    fontSize: FONT_SIZE_MD,
+  },
 });
 
 export const SCREENS = {
@@ -62,4 +67,5 @@ export const SCREENS = {
   HISTORY: 'HISTORY',
   GRAPHS: 'GRAPHS',
   DETAIL: 'DETAIL',
+  DATE_PICKER: 'DATE_PICKER',
 };

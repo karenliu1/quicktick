@@ -13,6 +13,7 @@ import {
 import * as Constants from './src/Constants';
 import Storage from './src/Storage';
 import ClockScreen from './src/components/ClockScreen';
+import DatePickerScreen from './src/components/DatePickerScreen';
 import DetailScreen from './src/components/DetailScreen';
 import HistoryScreen from './src/components/HistoryScreen';
 import Menu from './src/components/Menu';
@@ -119,9 +120,21 @@ class QuickTick extends Component {
       case Constants.SCREENS.DETAIL:
         return (
           <DetailScreen
+            navigator={ navigator }
             initialSession={ route.session }
             onSave={ (session) => this.onEditSave(navigator, session) }
             onCancel={ () => this.onEditCancel(navigator) }
+          />
+        );
+      case Constants.SCREENS.DATE_PICKER:
+        return (
+          <DatePickerScreen
+            initialTime={ route.initialTime }
+            onSave={ (time) => {
+              route.onSave(time);
+              navigator.pop();
+            } }
+            onCancel={ navigator.pop }
           />
         );
     }
