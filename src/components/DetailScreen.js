@@ -4,7 +4,6 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
   View,
 } from 'react-native';
 
@@ -18,7 +17,7 @@ import TitleText from './TitleText';
 
 export default class DetailScreen extends Component {
   static propTypes = {
-    navigator: PropTypes.object,
+    navigator: PropTypes.object.isRequired,
     initialSession: SessionPropType.isRequired,
     onSave: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
@@ -86,23 +85,15 @@ export default class DetailScreen extends Component {
             titleText="Clock In"
             sectionText={ formatTime(this.state.startTime) }
             style={ styles.section }
+            onEdit={ this.onChangeStartTime }
           />
-          <TouchableOpacity onPress={ this.onChangeStartTime }>
-            <Text style={ Constants.STYLES.linkText }>
-              EDIT
-            </Text>
-          </TouchableOpacity>
 
           <SectionText
             titleText="Clock Out"
             sectionText={ formatTime(this.state.endTime) }
             style={ styles.section }
+            onEdit={ this.onChangeEndTime }
           />
-          <TouchableOpacity onPress={ this.onChangeEndTime }>
-            <Text style={ Constants.STYLES.linkText }>
-              EDIT
-            </Text>
-          </TouchableOpacity>
 
           <View style={ styles.section }>
             <TitleText text="Notes" />

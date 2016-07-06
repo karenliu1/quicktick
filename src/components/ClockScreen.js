@@ -1,25 +1,23 @@
 import React, { Component, PropTypes } from 'react';
 import {
-  StyleSheet,
-  TextInput,
   View,
 } from 'react-native';
 
 import Button from './Button';
 import SectionText from './SectionText';
-import TitleText from './TitleText';
 
 import * as Constants from '../Constants';
+import { SessionPropType } from '../PropTypes';
 import { formatRange, formatTime, formatTotal } from '../Utilities';
 
 export default class ClockScreen extends Component {
   static propTypes = {
+    navigator: PropTypes.object.isRequired,
+    lastSession: SessionPropType,
     startTime: PropTypes.instanceOf(Date),
     endTime: PropTypes.instanceOf(Date),
     onClockIn: PropTypes.func.isRequired,
     onClockOut: PropTypes.func.isRequired,
-    onConfirm: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired,
   };
 
   state = {
@@ -39,11 +37,28 @@ export default class ClockScreen extends Component {
   }
 
   onChangeNotes = (notes) => this.setState({ notes });
-  onConfirm = () => this.props.onConfirm(this.state.notes);
 
   renderClockIn() {
+    let { lastSession } = this.props;
+    let lastSessionEl;
+    if (lastSession) {
+      lastSessionEl = (
+        <SectionText
+          style={ Constants.STYLES.section }
+          titleText="Last Session"
+          sectionText={ formatRange(lastSession.startTime, lastSession.endTime) }
+          onEdit={ () => {
+            this.props.navigator.push({
+              name: Constants.SCREENS.DETAIL,
+              session: lastSession,
+            });
+          } }
+        />
+      );
+    }
     return (
       <View style={ Constants.STYLES.screen }>
+        { lastSessionEl }
         <SectionText
           isLarge
           style={ Constants.STYLES.section }
@@ -74,59 +89,12 @@ export default class ClockScreen extends Component {
         />
         <View style={ Constants.STYLES.section }>
           <Button type="stop" text="Clock Out" onPress={ this.props.onClockOut } />
-          <Button type="cancel" text="Cancel" onPress={ this.props.onCancel } />
-        </View>
-      </View>
-    );
-  }
-
-  renderConfirm() {
-    const total = formatTotal(this.props.startTime, this.props.endTime);
-    const range = formatRange(this.props.startTime, this.props.endTime);
-
-    return (
-      <View style={ Constants.STYLES.screen }>
-        <SectionText
-          style={ Constants.STYLES.section }
-          titleText="Session"
-          sectionText={ range }
-        />
-        <SectionText
-          isLarge
-          style={ Constants.STYLES.section }
-          titleText="Total Time"
-          sectionText={ total }
-        />
-        <View style={ Constants.STYLES.section }>
-          <TitleText text="Notes" />
-          <TextInput
-            autoFocus
-            multiline
-            style={ [Constants.STYLES.input, styles.input] }
-            onChangeText={ this.onChangeNotes }
-          />
-        </View>
-        <View style={ Constants.STYLES.section }>
-          <Button type="start" text="Done" onPress={ this.onConfirm } />
-          <Button type="cancel" text="Cancel" onPress={ this.props.onCancel } />
         </View>
       </View>
     );
   }
 
   render() {
-    if (this.props.startTime && this.props.endTime) {
-      return this.renderConfirm();
-    }
-    if (this.props.startTime) {
-      return this.renderClockOut();
-    }
-    return this.renderClockIn();
+    return this.props.startTime ? this.renderClockOut() : this.renderClockIn();
   }
 }
-
-const styles = StyleSheet.create({
-  input: {
-    flex: 1,
-  },
-});

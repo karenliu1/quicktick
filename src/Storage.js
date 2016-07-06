@@ -9,6 +9,14 @@ function getUniqueId(sessions) {
   return Math.max(...sessions.map((s) => s.id)) + 1;
 }
 
+function parseSession(session) {
+  return {
+    ...session,
+    startTime: new Date(session.startTime),
+    endTime: new Date(session.endTime),
+  };
+}
+
 export default class Storage {
   static async getSessions() {
     let sessions;
@@ -18,16 +26,15 @@ export default class Storage {
       throw new Error('Could not get sessions:', error);
     }
 
-    return sessions ? JSON.parse(sessions) : [];
+    return sessions ? JSON.parse(sessions).map(parseSession) : [];
   }
 
-  static async createSession(startTime, endTime, notes) {
+  static async createSession(startTime, endTime) {
     const sessions = await Storage.getSessions();
     const session = {
       id: getUniqueId(sessions),
       startTime,
       endTime,
-      notes
     };
     sessions.push(session);
 

@@ -24,36 +24,33 @@ class QuickTick extends Component {
 
     // Times for the current session (if any)
     startTime: null,
-    endTime: null,
+    sessions: [],
   };
 
-  async componentDidMount() {
-    let sessions;
+  constructor(props, context) {
+    super(props, context);
+    this.fetchSessions();
+  }
+
+  async fetchSessions() {
     try {
-      sessions = await Storage.getSessions();
+      const sessions = await Storage.getSessions();
+      this.setState({ sessions });
     } catch (error) {
       // TODO: Display this error
       throw error;
     }
-    this.sessions = sessions;
   }
 
   onClockIn = () => this.setState({ startTime: new Date() });
-  onClockOut = () => this.setState({ endTime: new Date() });
-  onCancel = () => this.setState({ startTime: null, endTime: null });
 
-  onConfirm = async (notes) => {
-    try {
-      const session = await Storage.createSession(
-        this.state.startTime, this.state.endTime, notes);
-      this.sessions.push(session);
-
-      this.setState({ startTime: null, endTime: null });
-    } catch (error) {
-      // TODO: Display this error
-      throw error;
-    }
-  };
+  // TODO: Display any errors from this operation
+  onClockOut = async () => {
+    const endTime = new Date();
+    const session = await Storage.createSession(this.state.startTime, endTime);
+    this.state.sessions.push(session);
+    this.setState({ startTime: null });
+  }
 
   onToggleMenu = () => this.setState({ isMenuExpanded: !this.state.isMenuExpanded });
 
@@ -68,8 +65,14 @@ class QuickTick extends Component {
       // TODO: Display this error
       throw error;
     }
-    const sessionIndex = this.sessions.findIndex((s) => s.id === session.id);
-    this.sessions[sessionIndex] = session;
+    const sessionIndex = this.state.sessions.findIndex((s) => s.id === session.id);
+    this.setState({
+      sessions: [
+        ...this.state.sessions.slice(0, sessionIndex),
+        session,
+        ...this.state.sessions.slice(sessionIndex + 1)
+      ],
+    });
     navigator.pop();
   }
 
@@ -94,26 +97,25 @@ class QuickTick extends Component {
   }
 
   renderScreen(route, navigator) {
-    let fakeDate = new Date();
-    fakeDate.setHours(fakeDate.getHours() - 4);
-    fakeDate.setMinutes(fakeDate.getMinutes() - 2);
+    const sessions = this.state.sessions;
+    const lastSession = sessions && sessions.length > 0 ?
+      sessions[sessions.length - 1] : null;
 
     switch (route.name) {
       case Constants.SCREENS.CLOCK:
         return (
           <ClockScreen
+            navigator={ navigator }
+            lastSession={ lastSession }
             startTime={ this.state.startTime }
-            endTime={ this.state.endTime }
             onClockIn={ this.onClockIn }
             onClockOut={ this.onClockOut }
-            onConfirm={ this.onConfirm }
-            onCancel={ this.onCancel }
           />
         );
       case Constants.SCREENS.HISTORY:
         return (
           <HistoryScreen
-            sessions={ this.sessions }
+            sessions={ this.state.sessions }
             onEdit={ (session) => this.onEditBegin(navigator, session) }
           />
         );
@@ -134,7 +136,6 @@ class QuickTick extends Component {
               route.onSave(time);
               navigator.pop();
             } }
-            onCancel={ navigator.pop }
           />
         );
     }

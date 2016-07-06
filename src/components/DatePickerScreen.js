@@ -12,7 +12,6 @@ export default class DatePickerScreen extends Component {
   static propTypes = {
     initialTime: PropTypes.instanceOf(Date).isRequired,
     onSave: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired,
   };
 
   constructor(props, context) {
@@ -37,8 +36,7 @@ export default class DatePickerScreen extends Component {
         </View>
 
         <View style={ Constants.STYLES.section }>
-          <Button type="start" text="Save" onPress={ this.onSave } />
-          <Button type="cancel" text="Cancel" onPress={ this.props.onCancel } />
+          <Button type="start" text="Done" onPress={ this.onSave } />
         </View>
       </View>
     );
