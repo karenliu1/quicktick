@@ -34,12 +34,36 @@ export default class DetailScreen extends Component {
       notes: this.props.initialSession.notes,
       startTime: this.props.initialSession.startTime,
       endTime: this.props.initialSession.endTime,
-      newTag: null,
+      tags: this.props.initialSession.tags || ['one', 'two', 'threeeeeeeee', 'four'],
+      newTag: '',
     };
   }
 
   onChangeNotes = (notes) => this.setState({ notes });
   onChangeNewTag = (newTag) => this.setState({ newTag });
+
+  onAddTag = () => {
+    const newTag = this.state.newTag.trim();
+    if (newTag) {
+      let tagSet = new Set(this.state.tags);
+      tagSet.add(newTag);
+      this.setState({
+        newTag: '',
+        tags: Array.from(tagSet),
+      });
+    }
+  };
+
+  onRemoveTag = (tag) => {
+    const { tags } = this.state;
+    const tagIndex = tags.indexOf(tag);
+    this.setState({
+      tags: [
+        ...tags.slice(0, tagIndex),
+        ...tags.slice(tagIndex + 1),
+      ],
+    });
+  };
 
   onChangeStartTime = () => {
     this.props.navigator.push({
@@ -79,6 +103,24 @@ export default class DetailScreen extends Component {
       }
     });
   };
+
+  renderTags() {
+    return (
+      <View style={ styles.tagContainer }>
+        { this.state.tags.map((tag) => (
+          <View style={ styles.tag } key={ tag }>
+            <Text style={ styles.tagText }>{ tag }</Text>
+            <TouchableOpacity onPress={ () => this.onRemoveTag(tag) }>
+              <Image
+                source={ Constants.IMG_X }
+                style={ styles.tagDeleteIcon }
+              />
+            </TouchableOpacity>
+          </View>
+        )) }
+      </View>
+    );
+  }
 
   render() {
     return (
@@ -133,16 +175,20 @@ export default class DetailScreen extends Component {
 
           <View style={ styles.section }>
             <TitleText text="Tags" />
+            { this.renderTags() }
             <View style={ [styles.row, styles.tagRow] }>
               <TextInput
+                autoCapitalize="none"
                 style={ [Constants.STYLES.input, styles.tagInput] }
                 onChangeText={ this.onChangeNewTag }
                 value={ this.state.newTag }
               />
-              <Image
-                source={ Constants.IMG_ADD }
-                style={ Constants.STYLES.icon }
-              />
+              <TouchableOpacity onPress={ this.onAddTag }>
+                <Image
+                  source={ Constants.IMG_ADD }
+                  style={ Constants.STYLES.icon }
+                />
+              </TouchableOpacity>
             </View>
           </View>
 
@@ -193,5 +239,32 @@ const styles = StyleSheet.create({
     height: Constants.FONT_SIZE_MD + Constants.GUTTER_MD * 2,
     flex: 1,
     marginRight: Constants.GUTTER_MD,
+  },
+  tagContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  tag: {
+    backgroundColor: Constants.COLOR_BLUE,
+    borderRadius: 10,
+    marginTop: Constants.GUTTER_SM,
+    marginRight: Constants.GUTTER_SM,
+    padding: 5,
+
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  tagText: {
+    color: 'white',
+    marginRight: Constants.GUTTER_SM,
+  },
+  tagDeleteIcon: {
+    backgroundColor: Constants.COLOR_BLUE,
+    borderTopRightRadius: 5,
+    borderBottomRightRadius: 5,
+
+    height: Constants.FONT_SIZE_MD,
+    width: Constants.FONT_SIZE_MD,
+    resizeMode: 'contain',
   },
 });
