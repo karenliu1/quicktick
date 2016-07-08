@@ -15,7 +15,7 @@ export default class SectionText extends Component {
     titleText: PropTypes.string.isRequired,
     sectionText: PropTypes.string.isRequired,
     isLarge: PropTypes.bool,
-    style: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     onEdit: PropTypes.func,
   };
 

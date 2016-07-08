@@ -32,8 +32,10 @@ export const STYLES = StyleSheet.create({
     fontSize: FONT_SIZE_MD,
   },
   section: {
+    marginTop: GUTTER_MD,
+  },
+  sectionExpand: {
     flex: 1,
-    justifyContent: 'center',
   },
   icon: {
     width: 30,
@@ -49,7 +51,7 @@ export const STYLES = StyleSheet.create({
   },
   screen: {
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
 
     marginHorizontal: GUTTER_LG,
     marginBottom: GUTTER_LG,

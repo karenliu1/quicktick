@@ -44,7 +44,7 @@ export default class ClockScreen extends Component {
     if (lastSession) {
       lastSessionEl = (
         <SectionText
-          style={ Constants.STYLES.section }
+          style={ [Constants.STYLES.section, Constants.STYLES.sectionExpand] }
           titleText="Last Session"
           sectionText={ formatRange(lastSession.startTime, lastSession.endTime) }
           onEdit={ () => {
@@ -79,14 +79,20 @@ export default class ClockScreen extends Component {
         <SectionText
           isLarge
           style={ Constants.STYLES.section }
-          titleText="Total Time"
-          sectionText={ total } />
-        <SectionText
-          isLarge
-          style={ Constants.STYLES.section }
           titleText="Clocked In"
           sectionText={ formatTime(this.props.startTime) }
         />
+        <SectionText
+          isLarge
+          style={ Constants.STYLES.section }
+          titleText="Now"
+          sectionText={ formatTime(this.state.currentTime) }
+        />
+        <SectionText
+          isLarge
+          style={ Constants.STYLES.section }
+          titleText="Total Time"
+          sectionText={ total } />
         <View style={ Constants.STYLES.section }>
           <Button type="warning" text="Clock Out" onPress={ this.props.onClockOut } />
         </View>
