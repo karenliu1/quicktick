@@ -51,12 +51,18 @@ export const STYLES = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
 
-    // NOTE: Use padding instead of margin, so white background covers previous
-    // screen when navigating forward/back
-    backgroundColor: 'white',
+    marginHorizontal: GUTTER_LG,
+    marginBottom: GUTTER_LG,
+    marginTop: GUTTER_LG + MENU_SIZE + GUTTER_MD,
+  },
+  scrollableScreen: {
+    flex: 1,
+
+    // Use padding so scrollbar hits the edge
     paddingHorizontal: GUTTER_LG,
-    paddingBottom: GUTTER_LG,
-    paddingTop: GUTTER_LG + MENU_SIZE + GUTTER_MD,
+
+    marginBottom: GUTTER_LG,
+    marginTop: GUTTER_LG + MENU_SIZE + GUTTER_MD,
   },
   linkText: {
     color: COLOR_BLUE,

@@ -80,9 +80,11 @@ const styles = StyleSheet.create({
     marginHorizontal: Constants.GUTTER_LG,
   },
   menuTouchable: {
+    backgroundColor: 'white',
     position: 'absolute',
     top: Constants.GUTTER_MD,
     left: Constants.GUTTER_LG,
+    right: Constants.GUTTER_LG,
   },
   menuIcon: {
     width: Constants.MENU_SIZE,

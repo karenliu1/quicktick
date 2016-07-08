@@ -3,6 +3,7 @@ import {
   ActionSheetIOS,
   Image,
   ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
   TextInput,
@@ -125,83 +126,84 @@ export default class DetailScreen extends Component {
 
   render() {
     return (
-      <View style={ Constants.STYLES.screen }>
-        <ScrollView>
-          <View style={ styles.title }>
-            <Text style={ [Constants.STYLES.text, styles.date] }>
-              { formatDate(this.state.startTime) }
-            </Text>
-            <Text style={ [Constants.STYLES.text, styles.range] }>
-              { formatRange(this.state.startTime, this.state.endTime) }
-            </Text>
-          </View>
+      <ScrollView style={[
+        Constants.STYLES.scrollableScreen,
+        { top: StatusBar.currentHeight },
+      ]}>
+        <View style={ styles.title }>
+          <Text style={ [Constants.STYLES.text, styles.date] }>
+            { formatDate(this.state.startTime) }
+          </Text>
+          <Text style={ [Constants.STYLES.text, styles.range] }>
+            { formatRange(this.state.startTime, this.state.endTime) }
+          </Text>
+        </View>
 
-          <View style={ [styles.section, styles.row] }>
-            <SectionText
-              titleText="Total Time"
-              sectionText={ formatTotal(this.state.startTime, this.state.endTime) }
+        <View style={ [styles.section, styles.row] }>
+          <SectionText
+            titleText="Total Time"
+            sectionText={ formatTotal(this.state.startTime, this.state.endTime) }
+          />
+          <TouchableOpacity onPress={ this.onDelete }>
+            <Image
+              source={ Constants.IMG_DELETE }
+              style={ Constants.STYLES.icon }
             />
-            <TouchableOpacity onPress={ this.onDelete }>
+          </TouchableOpacity>
+        </View>
+
+        <SectionText
+          titleText="Clock In"
+          sectionText={ formatTime(this.state.startTime) }
+          style={ styles.section }
+          onEdit={ this.onChangeStartTime }
+        />
+
+        <SectionText
+          titleText="Clock Out"
+          sectionText={ formatTime(this.state.endTime) }
+          style={ styles.section }
+          onEdit={ this.onChangeEndTime }
+        />
+
+        <View style={ styles.section }>
+          <TitleText text="Notes" />
+          <TextInput
+            multiline
+            numberOfLines={ 3 }
+            style={ [Constants.STYLES.input, styles.notesInput] }
+            onChangeText={ this.onChangeNotes }
+            value={ this.state.notes }
+          />
+        </View>
+
+        <View style={ styles.section }>
+          <TitleText text="Tags" />
+          { this.renderTags() }
+          <View style={ [styles.row, styles.tagRow] }>
+            <TextInput
+              autoCapitalize="none"
+              style={ [Constants.STYLES.input, styles.tagInput] }
+              onChangeText={ this.onChangeNewTag }
+              value={ this.state.newTag }
+              returnKeyType="done"
+            />
+            <TouchableOpacity onPress={ this.onAddTag }>
               <Image
-                source={ Constants.IMG_DELETE }
+                source={ Constants.IMG_ADD }
                 style={ Constants.STYLES.icon }
               />
             </TouchableOpacity>
           </View>
+        </View>
 
-          <SectionText
-            titleText="Clock In"
-            sectionText={ formatTime(this.state.startTime) }
-            style={ styles.section }
-            onEdit={ this.onChangeStartTime }
-          />
-
-          <SectionText
-            titleText="Clock Out"
-            sectionText={ formatTime(this.state.endTime) }
-            style={ styles.section }
-            onEdit={ this.onChangeEndTime }
-          />
-
-          <View style={ styles.section }>
-            <TitleText text="Notes" />
-            <TextInput
-              multiline
-              numberOfLines={ 3 }
-              style={ [Constants.STYLES.input, styles.notesInput] }
-              onChangeText={ this.onChangeNotes }
-              value={ this.state.notes }
-            />
-          </View>
-
-          <View style={ styles.section }>
-            <TitleText text="Tags" />
-            { this.renderTags() }
-            <View style={ [styles.row, styles.tagRow] }>
-              <TextInput
-                autoCapitalize="none"
-                style={ [Constants.STYLES.input, styles.tagInput] }
-                onChangeText={ this.onChangeNewTag }
-                value={ this.state.newTag }
-                returnKeyType="done"
-              />
-              <TouchableOpacity onPress={ this.onAddTag }>
-                <Image
-                  source={ Constants.IMG_ADD }
-                  style={ Constants.STYLES.icon }
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-
-          <View style={ styles.section }>
-            <Button type="primary" text="Save" onPress={ this.onSave } />
-          </View>
-          <View style={ styles.section }>
-            <Button type="subdued" text="Cancel" onPress={ this.props.onCancel } />
-          </View>
-        </ScrollView>
-      </View>
+        <View style={ styles.section }>
+          <Button type="primary" text="Save" onPress={ this.onSave } />
+        </View>
+        <View style={ styles.section }>
+          <Button type="subdued" text="Cancel" onPress={ this.props.onCancel } />
+        </View>
+      </ScrollView>
     );
   }
 }

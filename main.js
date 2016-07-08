@@ -8,6 +8,8 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   Navigator,
+  StyleSheet,
+  View,
 } from 'react-native';
 
 import * as Constants from './src/Constants';
@@ -107,7 +109,11 @@ class QuickTick extends Component {
     return (
       <Navigator
         initialRoute={{ name: Constants.SCREENS.CLOCK }}
-        renderScene={(route, navigator) => this.renderScreen(route, navigator)}
+        renderScene={(route, navigator) => (
+          <View style={ styles.background }>
+            { this.renderScreen(route, navigator) }
+          </View>
+        )}
         navigationBar={ menuEl }
       />
     );
@@ -159,5 +165,12 @@ class QuickTick extends Component {
     }
   }
 }
+
+const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+});
 
 AppRegistry.registerComponent('main', () => QuickTick);
