@@ -34,7 +34,7 @@ export default class DetailScreen extends Component {
       notes: this.props.initialSession.notes,
       startTime: this.props.initialSession.startTime,
       endTime: this.props.initialSession.endTime,
-      tags: this.props.initialSession.tags || ['one', 'two', 'threeeeeeeee', 'four'],
+      tags: this.props.initialSession.tags || [],
       newTag: '',
     };
   }
@@ -89,6 +89,7 @@ export default class DetailScreen extends Component {
       startTime: this.state.startTime,
       endTime: this.state.endTime,
       notes: this.state.notes,
+      tags: this.state.tags,
     });
   };
 
