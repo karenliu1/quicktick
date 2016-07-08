@@ -183,6 +183,7 @@ export default class DetailScreen extends Component {
                 style={ [Constants.STYLES.input, styles.tagInput] }
                 onChangeText={ this.onChangeNewTag }
                 value={ this.state.newTag }
+                returnKeyType="done"
               />
               <TouchableOpacity onPress={ this.onAddTag }>
                 <Image
