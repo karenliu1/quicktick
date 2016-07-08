@@ -74,21 +74,22 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
   },
-  menu: {
-    marginTop: Constants.GUTTER_LG + Constants.MENU_SIZE + Constants.GUTTER_MD,
-    marginBottom: Constants.GUTTER_LG,
-    marginHorizontal: Constants.GUTTER_LG,
-  },
   menuTouchable: {
-    backgroundColor: 'white',
     position: 'absolute',
-    top: Constants.GUTTER_MD,
+    justifyContent: 'center',
+    top: Constants.GUTTER_LG,
     left: Constants.GUTTER_LG,
     right: Constants.GUTTER_LG,
+    height: Constants.MENU_TOTAL_HEIGHT - Constants.GUTTER_LG,
   },
   menuIcon: {
     width: Constants.MENU_SIZE,
     resizeMode: 'contain',
+  },
+  menu: {
+    marginTop: Constants.MENU_TOTAL_HEIGHT,
+    marginBottom: Constants.GUTTER_MD,
+    marginHorizontal: Constants.GUTTER_LG,
   },
   row: {
     padding: Constants.GUTTER_MD,

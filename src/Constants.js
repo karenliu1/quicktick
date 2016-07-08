@@ -25,6 +25,7 @@ export const IMG_ADD = require('../images/add.png');
 export const IMG_X = require('../images/x.png');
 
 export const MENU_SIZE = 30;
+export const MENU_TOTAL_HEIGHT = MENU_SIZE + GUTTER_MD + GUTTER_LG;
 
 export const STYLES = StyleSheet.create({
   text: {
@@ -55,7 +56,7 @@ export const STYLES = StyleSheet.create({
 
     marginHorizontal: GUTTER_LG,
     marginBottom: GUTTER_LG,
-    marginTop: GUTTER_LG + MENU_SIZE + GUTTER_MD,
+    marginTop: MENU_TOTAL_HEIGHT,
   },
   scrollableScreen: {
     flex: 1,
@@ -64,7 +65,7 @@ export const STYLES = StyleSheet.create({
     paddingHorizontal: GUTTER_LG,
 
     marginBottom: GUTTER_LG,
-    marginTop: GUTTER_LG + MENU_SIZE + GUTTER_MD,
+    marginTop: MENU_TOTAL_HEIGHT,
   },
   linkText: {
     color: COLOR_BLUE,
