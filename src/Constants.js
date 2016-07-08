@@ -5,7 +5,7 @@ import { StyleSheet } from 'react-native';
 export const FONT_FAMILY = 'Avenir';
 export const FONT_SIZE_MD = 20;
 export const FONT_SIZE_LG = 30;
-export const FONT_SIZE_XL = 60;
+export const FONT_SIZE_XL = 50;
 
 export const COLOR_GREEN = '#82C686';
 export const COLOR_RED = '#ED7272';
