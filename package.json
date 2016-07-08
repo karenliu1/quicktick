@@ -1,8 +1,9 @@
 {
   "name": "QuickTick",
-  "main": "index.js",
-  "version": "0.0.1",
+  "version": "0.0.0",
+  "author": "Karen Liu <karenliu1@gmail.com>",
   "private": true,
+  "main": "main.js",
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "lint": "node_modules/.bin/eslint src index.ios.js"
@@ -10,7 +11,7 @@
   "dependencies": {
     "moment": "^2.13.0",
     "react": "15.2.0",
-    "react-native": "^0.28.0"
+    "react-native": "exponentjs/react-native#sdk-6.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^6.1.0",

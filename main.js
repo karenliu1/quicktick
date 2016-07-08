@@ -160,4 +160,4 @@ class QuickTick extends Component {
   }
 }
 
-AppRegistry.registerComponent('QuickTick', () => QuickTick);
+AppRegistry.registerComponent('main', () => QuickTick);
