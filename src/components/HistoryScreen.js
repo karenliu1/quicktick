@@ -12,6 +12,8 @@ import {
 import * as Constants from '../Constants';
 import { formatDate, formatRange } from '../Utilities';
 
+import TagList from './TagList';
+
 export default class HistoryScreen extends Component {
   static propTypes = {
     navigator: PropTypes.object.isRequired,
@@ -48,6 +50,7 @@ export default class HistoryScreen extends Component {
           <Text style={ Constants.STYLES.text } numberOfLines={ 1 }>
             { session.notes }
           </Text>
+          <TagList tags={ session.tags } />
         </View>
       </TouchableOpacity>
     );

@@ -17,6 +17,7 @@ import { formatDate, formatRange, formatTime, formatTotal } from '../Utilities';
 
 import Button from './Button';
 import SectionText from './SectionText';
+import TagList from './TagList';
 import TitleText from './TitleText';
 
 export default class DetailScreen extends Component {
@@ -35,7 +36,7 @@ export default class DetailScreen extends Component {
       notes: this.props.initialSession.notes,
       startTime: this.props.initialSession.startTime,
       endTime: this.props.initialSession.endTime,
-      tags: this.props.initialSession.tags || [],
+      tags: this.props.initialSession.tags,
       newTag: '',
     };
   }
@@ -55,7 +56,7 @@ export default class DetailScreen extends Component {
     }
   };
 
-  onRemoveTag = (tag) => {
+  onDeleteTag = (tag) => {
     const { tags } = this.state;
     const tagIndex = tags.indexOf(tag);
     this.setState({
@@ -105,24 +106,6 @@ export default class DetailScreen extends Component {
       }
     });
   };
-
-  renderTags() {
-    return (
-      <View style={ styles.tagContainer }>
-        { this.state.tags.map((tag) => (
-          <View style={ styles.tag } key={ tag }>
-            <Text style={ styles.tagText }>{ tag }</Text>
-            <TouchableOpacity onPress={ () => this.onRemoveTag(tag) }>
-              <Image
-                source={ Constants.IMG_X }
-                style={ styles.tagDeleteIcon }
-              />
-            </TouchableOpacity>
-          </View>
-        )) }
-      </View>
-    );
-  }
 
   render() {
     return (
@@ -179,7 +162,7 @@ export default class DetailScreen extends Component {
 
         <View style={ styles.section }>
           <TitleText text="Tags" />
-          { this.renderTags() }
+          <TagList tags={ this.state.tags } onDeleteTag={ this.onDeleteTag } />
           <View style={ [styles.row, styles.tagRow] }>
             <TextInput
               autoCapitalize="none"
@@ -243,32 +226,5 @@ const styles = StyleSheet.create({
     height: Constants.FONT_SIZE_MD + Constants.GUTTER_MD * 2,
     flex: 1,
     marginRight: Constants.GUTTER_MD,
-  },
-  tagContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  tag: {
-    backgroundColor: Constants.COLOR_BLUE,
-    borderRadius: 10,
-    marginTop: Constants.GUTTER_SM,
-    marginRight: Constants.GUTTER_SM,
-    padding: 5,
-
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  tagText: {
-    color: 'white',
-    marginRight: Constants.GUTTER_SM,
-  },
-  tagDeleteIcon: {
-    backgroundColor: Constants.COLOR_BLUE,
-    borderTopRightRadius: 5,
-    borderBottomRightRadius: 5,
-
-    height: Constants.FONT_SIZE_MD,
-    width: Constants.FONT_SIZE_MD,
-    resizeMode: 'contain',
   },
 });

@@ -35,6 +35,7 @@ export default class Storage {
       id: getUniqueId(sessions),
       startTime,
       endTime,
+      tags: [],
     };
 
     const newSessions = [
