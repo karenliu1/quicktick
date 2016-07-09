@@ -120,7 +120,13 @@ export default class HistoryScreen extends Component {
   }
 
   renderFilter() {
-    return <InputField onSubmit={ this.onChangeFilter } icon={ Constants.IMG_SEARCH } />;
+    return (
+      <InputField
+        onSubmit={ this.onChangeFilter }
+        icon={ Constants.IMG_SEARCH }
+        returnKeyType="search"
+      />
+    );
   }
 
   render() {

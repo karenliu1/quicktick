@@ -13,6 +13,11 @@ export default class InputField extends Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
     icon: PropTypes.number.isRequired,
+    returnKeyType: PropTypes.string,
+  };
+
+  static defaultProps = {
+    returnKeyType: 'go',
   };
 
   constructor(props, context) {
@@ -39,7 +44,8 @@ export default class InputField extends Component {
           style={ [Constants.STYLES.input, styles.input] }
           onChangeText={ this.onChangeText }
           value={ this.state.text }
-          returnKeyType="done"
+          returnKeyType={ this.props.returnKeyType }
+          onSubmitEditing={ this.onSubmit }
         />
         <TouchableOpacity onPress={ this.onSubmit }>
           <Image
