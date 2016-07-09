@@ -38,6 +38,24 @@ export default class HistoryScreen extends Component {
     );
   };
 
+  renderNotes(session) {
+    if (session.notes) {
+      return (
+        <Text style={ Constants.STYLES.text } numberOfLines={ 1 }>
+          { session.notes }
+        </Text>
+      );
+    }
+
+    return (
+      <Text
+        style={ [Constants.STYLES.text, styles.notesPlaceholderText] }
+        numberOfLines={ 1 }>
+        No notes.
+      </Text>
+    );
+  }
+
   renderRow = (session) => {
     return (
       <TouchableOpacity
@@ -47,10 +65,8 @@ export default class HistoryScreen extends Component {
           <Text style={ Constants.STYLES.text }>
             { formatRange(session.startTime, session.endTime) }
           </Text>
-          <Text style={ Constants.STYLES.text } numberOfLines={ 1 }>
-            { session.notes }
-          </Text>
-          <TagList tags={ session.tags } />
+          { this.renderNotes(session) }
+          { session.tags.length > 0 && <TagList tags={ session.tags } /> }
         </View>
       </TouchableOpacity>
     );
@@ -142,5 +158,9 @@ const styles = StyleSheet.create({
   },
   emptyState: {
     alignItems: 'center',
+  },
+  notesPlaceholderText: {
+    color: Constants.COLOR_GRAY,
+    fontStyle: 'italic',
   },
 });
