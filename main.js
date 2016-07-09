@@ -138,6 +138,7 @@ class QuickTick extends Component {
       case Constants.SCREENS.HISTORY:
         return (
           <HistoryScreen
+            navigator={ navigator }
             sessions={ this.state.sessions }
             onEdit={ (session) => this.onEditBegin(navigator, session) }
           />

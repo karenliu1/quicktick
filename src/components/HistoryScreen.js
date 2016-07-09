@@ -14,8 +14,13 @@ import { formatDate, formatRange } from '../Utilities';
 
 export default class HistoryScreen extends Component {
   static propTypes = {
+    navigator: PropTypes.object.isRequired,
     sessions: PropTypes.array.isRequired,
     onEdit: PropTypes.func.isRequired,
+  };
+
+  onNavigateToClock = () => {
+    this.props.navigator.push({ name: Constants.SCREENS.CLOCK });
   };
 
   renderSectionHeader = (session) => {
@@ -66,12 +71,34 @@ export default class HistoryScreen extends Component {
     return sessionMap;
   }
 
+  renderEmptyState() {
+    return (
+      <View style={ Constants.STYLES.screen }>
+        <View style={ [Constants.STYLES.section, styles.emptyState] }>
+          <Text style={ Constants.STYLES.text }>
+            There are no sessions.
+          </Text>
+          <TouchableOpacity onPress={ this.onNavigateToClock }>
+            <Text style={ Constants.STYLES.linkText }>
+              Start a Session
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
+
   render() {
     const datasource = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2,
       sectionHeaderHasChanged: (s1, s2) => s1 !== s2
     });
     const rows = datasource.cloneWithRowsAndSections(this.convertRowsToMap());
+
+    if (this.props.sessions.length === 0) {
+      return this.renderEmptyState();
+    }
+
     return (
       <View style={ Constants.STYLES.screen }>
         <ListView dataSource={ rows }
@@ -109,5 +136,8 @@ const styles = StyleSheet.create({
   },
   rowText: {
     flex: 1,
+  },
+  emptyState: {
+    alignItems: 'center',
   },
 });
