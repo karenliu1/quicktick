@@ -44,7 +44,7 @@ export default class ClockScreen extends Component {
     if (lastSession) {
       lastSessionEl = (
         <SectionText
-          style={ [Constants.STYLES.section, Constants.STYLES.sectionExpand] }
+          style={ Constants.STYLES.section }
           titleText="Last Session"
           sectionText={ formatRange(lastSession.startTime, lastSession.endTime) }
           onEdit={ () => {

@@ -26,7 +26,7 @@ export default class DatePickerScreen extends Component {
   render() {
     return (
       <View style={ Constants.STYLES.screen }>
-        <View style={ [Constants.STYLES.section, Constants.STYLES.sectionExpand] }>
+        <View style={ Constants.STYLES.section }>
           <DatePickerIOS
             date={ this.state.time }
             mode="datetime"
