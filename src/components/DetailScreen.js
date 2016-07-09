@@ -16,6 +16,7 @@ import { SessionPropType } from '../PropTypes';
 import { formatDate, formatRange, formatTime, formatTotal } from '../Utilities';
 
 import Button from './Button';
+import InputField from './InputField';
 import SectionText from './SectionText';
 import TagList from './TagList';
 import TitleText from './TitleText';
@@ -37,23 +38,15 @@ export default class DetailScreen extends Component {
       startTime: this.props.initialSession.startTime,
       endTime: this.props.initialSession.endTime,
       tags: this.props.initialSession.tags,
-      newTag: '',
     };
   }
 
   onChangeNotes = (notes) => this.setState({ notes });
-  onChangeNewTag = (newTag) => this.setState({ newTag });
 
-  onAddTag = () => {
-    const newTag = this.state.newTag.trim();
-    if (newTag) {
-      let tagSet = new Set(this.state.tags);
-      tagSet.add(newTag);
-      this.setState({
-        newTag: '',
-        tags: Array.from(tagSet),
-      });
-    }
+  onAddTag = (tag) => {
+    let tagSet = new Set(this.state.tags);
+    tagSet.add(tag);
+    this.setState({ tags: Array.from(tagSet) });
   };
 
   onDeleteTag = (tag) => {
@@ -163,21 +156,7 @@ export default class DetailScreen extends Component {
         <View style={ styles.section }>
           <TitleText text="Tags" />
           <TagList tags={ this.state.tags } onDeleteTag={ this.onDeleteTag } />
-          <View style={ [styles.row, styles.tagRow] }>
-            <TextInput
-              autoCapitalize="none"
-              style={ [Constants.STYLES.input, styles.tagInput] }
-              onChangeText={ this.onChangeNewTag }
-              value={ this.state.newTag }
-              returnKeyType="done"
-            />
-            <TouchableOpacity onPress={ this.onAddTag }>
-              <Image
-                source={ Constants.IMG_ADD }
-                style={ Constants.STYLES.icon }
-              />
-            </TouchableOpacity>
-          </View>
+          <InputField onSubmit={ this.onAddTag } icon={ Constants.IMG_ADD } />
         </View>
 
         <View style={ styles.section }>
@@ -218,13 +197,5 @@ const styles = StyleSheet.create({
   notesInput: {
     height: Constants.FONT_SIZE_MD * 4 + Constants.GUTTER_MD * 2,
     marginTop: Constants.GUTTER_MD,
-  },
-  tagRow: {
-    marginTop: Constants.GUTTER_MD,
-  },
-  tagInput: {
-    height: Constants.FONT_SIZE_MD + Constants.GUTTER_MD * 2,
-    flex: 1,
-    marginRight: Constants.GUTTER_MD,
   },
 });

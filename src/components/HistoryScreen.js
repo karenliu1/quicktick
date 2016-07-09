@@ -12,7 +12,9 @@ import {
 import * as Constants from '../Constants';
 import { formatDate, formatRange } from '../Utilities';
 
+import InputField from './InputField';
 import TagList from './TagList';
+import TitleText from './TitleText';
 
 export default class HistoryScreen extends Component {
   static propTypes = {
@@ -21,8 +23,18 @@ export default class HistoryScreen extends Component {
     onEdit: PropTypes.func.isRequired,
   };
 
+  constructor(props, context) {
+    super(props, context);
+
+    this.state = { filter: '' };
+  }
+
   onNavigateToClock = () => {
     this.props.navigator.push({ name: Constants.SCREENS.CLOCK });
+  };
+
+  onChangeFilter = (filter) => {
+    this.setState({ filter });
   };
 
   renderSectionHeader = (session) => {
@@ -107,6 +119,10 @@ export default class HistoryScreen extends Component {
     );
   }
 
+  renderFilter() {
+    return <InputField onSubmit={ this.onChangeFilter } icon={ Constants.IMG_SEARCH } />;
+  }
+
   render() {
     const datasource = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2,
@@ -120,6 +136,7 @@ export default class HistoryScreen extends Component {
 
     return (
       <View style={ Constants.STYLES.screen }>
+        { this.renderFilter() }
         <ListView dataSource={ rows }
           renderSectionHeader={ this.renderSectionHeader }
           renderRow={ this.renderRow }

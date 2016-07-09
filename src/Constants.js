@@ -17,11 +17,12 @@ export const GUTTER_SM = 10;
 export const GUTTER_MD = 20;
 export const GUTTER_LG = 40;
 
-export const IMG_MENU = require('../images/menu.png');
-export const IMG_SUN = require('../images/sun.png');
-export const IMG_EDIT = require('../images/edit.png');
-export const IMG_DELETE = require('../images/delete.png');
 export const IMG_ADD = require('../images/add.png');
+export const IMG_DELETE = require('../images/delete.png');
+export const IMG_EDIT = require('../images/edit.png');
+export const IMG_MENU = require('../images/menu.png');
+export const IMG_SEARCH = require('../images/search.png');
+export const IMG_SUN = require('../images/sun.png');
 export const IMG_X = require('../images/x.png');
 
 export const MENU_SIZE = 30;
@@ -46,7 +47,8 @@ export const STYLES = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     fontSize: FONT_SIZE_MD,
-    padding: GUTTER_MD,
+    padding: GUTTER_SM,
+    height: FONT_SIZE_MD + GUTTER_SM * 2,
   },
   screen: {
     flex: 1,
