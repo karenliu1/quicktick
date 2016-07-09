@@ -83,10 +83,11 @@ export default class ClockScreen extends Component {
           sectionText={ formatTime(this.props.startTime) }
         />
         <SectionText
+          color={ Constants.COLOR_DARK_GREEN }
           isLarge
+          sectionText={ formatTime(this.state.currentTime) }
           style={ Constants.STYLES.section }
           titleText="Now"
-          sectionText={ formatTime(this.state.currentTime) }
         />
         <SectionText
           isLarge

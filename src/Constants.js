@@ -8,6 +8,7 @@ export const FONT_SIZE_LG = 30;
 export const FONT_SIZE_XL = 50;
 
 export const COLOR_GREEN = '#82C686';
+export const COLOR_DARK_GREEN = '#519355';
 export const COLOR_RED = '#ED7272';
 export const COLOR_GRAY = '#B4B4B4';
 export const COLOR_DARK_GRAY = '#4A4A4A';

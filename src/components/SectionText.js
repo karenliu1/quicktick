@@ -12,11 +12,16 @@ import * as Constants from '../Constants';
 
 export default class SectionText extends Component {
   static propTypes = {
-    titleText: PropTypes.string.isRequired,
-    sectionText: PropTypes.string.isRequired,
+    color: PropTypes.string,
     isLarge: PropTypes.bool,
-    style: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     onEdit: PropTypes.func,
+    sectionText: PropTypes.string.isRequired,
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    titleText: PropTypes.string.isRequired,
+  };
+
+  static defaultProps = {
+    color: Constants.COLOR_DARK_GRAY,
   };
 
   renderEditLink() {
@@ -39,7 +44,11 @@ export default class SectionText extends Component {
           />
           { this.props.onEdit && this.renderEditLink() }
         </View>
-        <Text style={ [Constants.STYLES.text, this.props.isLarge && styles.largeText] }>
+        <Text style={ [
+          Constants.STYLES.text,
+          this.props.isLarge && styles.largeText,
+          { color: this.props.color },
+        ] }>
           { this.props.sectionText }
         </Text>
       </View>
