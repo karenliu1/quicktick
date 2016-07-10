@@ -18,16 +18,16 @@ export const GUTTER_SM = 10;
 export const GUTTER_MD = 20;
 export const GUTTER_LG = 40;
 
-export const IMG_ADD = require('../images/add.png');
-export const IMG_DELETE = require('../images/delete.png');
-export const IMG_EDIT = require('../images/edit.png');
-export const IMG_MENU = require('../images/menu.png');
-export const IMG_SEARCH = require('../images/search.png');
-export const IMG_SUN = require('../images/sun.png');
-export const IMG_X = require('../images/x.png');
-export const IMG_GRAY_X = require('../images/gray_x.png');
 export const IMG_DARKGRAY_CLOCK = require('../images/darkgray_clock.png');
 export const IMG_DARKGRAY_HISTORY = require('../images/darkgray_history.png');
+export const IMG_DARKGRAY_MENU = require('../images/darkgray_menu.png');
+export const IMG_GRAY_ADD = require('../images/gray_add.png');
+export const IMG_GRAY_EDIT = require('../images/gray_edit.png');
+export const IMG_GRAY_SEARCH = require('../images/gray_search.png');
+export const IMG_GRAY_X = require('../images/gray_x.png');
+export const IMG_RED_DELETE = require('../images/red_delete.png');
+export const IMG_WHITE_CIRCLE_X = require('../images/white_circle_x.png');
+export const IMG_YELLOW_SUN = require('../images/yellow_sun.png');
 
 export const MENU_SIZE = 30;
 export const MENU_TOTAL_HEIGHT = MENU_SIZE + GUTTER_MD + GUTTER_LG;

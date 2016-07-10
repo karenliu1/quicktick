@@ -40,7 +40,7 @@ export default class HistoryScreen extends Component {
   renderSectionHeader = (session) => {
     return (
       <View style={ styles.sectionHeader }>
-        <Image source={ Constants.IMG_SUN }
+        <Image source={ Constants.IMG_YELLOW_SUN }
           style={ Constants.STYLES.icon }
         />
         <Text style={ [Constants.STYLES.text, styles.sectionHeaderText] }>
@@ -137,7 +137,7 @@ export default class HistoryScreen extends Component {
     return (
       <View style={ styles.searchRow }>
         <Image
-          source={ Constants.IMG_SEARCH }
+          source={ Constants.IMG_GRAY_SEARCH }
           style={ styles.searchIcon }
         />
         <TextInput

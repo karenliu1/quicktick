@@ -48,7 +48,7 @@ export default class Menu extends Component {
       <TouchableOpacity style={ styles.menuTouchable }
         onPress={ this.props.onToggle }>
         <Image style={ styles.menuIcon }
-          source={ Constants.IMG_MENU }
+          source={ Constants.IMG_DARKGRAY_MENU }
         />
       </TouchableOpacity>
     );

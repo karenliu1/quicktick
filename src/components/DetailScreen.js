@@ -125,7 +125,7 @@ export default class DetailScreen extends Component {
           />
           <TouchableOpacity onPress={ this.onDelete }>
             <Image
-              source={ Constants.IMG_DELETE }
+              source={ Constants.IMG_RED_DELETE }
               style={ Constants.STYLES.icon }
             />
           </TouchableOpacity>
@@ -161,7 +161,7 @@ export default class DetailScreen extends Component {
         <View style={ styles.section }>
           <TitleText text="Tags" />
           <TagList tags={ this.state.tags } onDeleteTag={ this.onDeleteTag } />
-          <InputField onSubmit={ this.onAddTag } icon={ Constants.IMG_ADD } />
+          <InputField onSubmit={ this.onAddTag } icon={ Constants.IMG_GRAY_ADD } />
         </View>
 
         <View style={ styles.section }>
