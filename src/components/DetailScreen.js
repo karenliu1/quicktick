@@ -149,6 +149,8 @@ export default class DetailScreen extends Component {
           <TitleText text="Notes" />
           <TextInput
             multiline
+            blurOnSubmit
+            returnKeyType="done"
             numberOfLines={ 3 }
             style={ [Constants.STYLES.input, styles.notesInput] }
             onChangeText={ this.onChangeNotes }
