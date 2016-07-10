@@ -90,7 +90,6 @@ export default class ClockScreen extends Component {
           titleText="Now"
         />
         <SectionText
-          isLarge
           style={ Constants.STYLES.section }
           titleText="Total Time"
           sectionText={ total } />
