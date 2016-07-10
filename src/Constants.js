@@ -25,6 +25,7 @@ export const IMG_MENU = require('../images/menu.png');
 export const IMG_SEARCH = require('../images/search.png');
 export const IMG_SUN = require('../images/sun.png');
 export const IMG_X = require('../images/x.png');
+export const IMG_GRAY_X = require('../images/gray_x.png');
 
 export const MENU_SIZE = 30;
 export const MENU_TOTAL_HEIGHT = MENU_SIZE + GUTTER_MD + GUTTER_LG;

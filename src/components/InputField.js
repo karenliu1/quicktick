@@ -29,11 +29,8 @@ export default class InputField extends Component {
   onChangeText = (text) => this.setState({ text });
 
   onSubmit = () => {
-    const text = this.state.text.trim();
-    if (text) {
-      this.props.onSubmit(text);
-      this.setState({ text: '' });
-    }
+    this.props.onSubmit(this.state.text);
+    this.setState({ text: '' });
   };
 
   render() {

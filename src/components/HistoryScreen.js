@@ -5,6 +5,7 @@ import {
   ListView,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -33,9 +34,8 @@ export default class HistoryScreen extends Component {
     this.props.navigator.push({ name: Constants.SCREENS.CLOCK });
   };
 
-  onChangeFilter = (filter) => {
-    this.setState({ filter });
-  };
+  onChangeFilter = (filter) => this.setState({ filter });
+  onClearFilter = () => this.setState({ filter: '' });
 
   renderSectionHeader = (session) => {
     return (
@@ -87,8 +87,17 @@ export default class HistoryScreen extends Component {
   convertRowsToMap() {
     let sessionMap = {};
 
+    let sessions = this.props.sessions;
+    if (this.state.filter) {
+      sessions = sessions.filter((session) => (
+        session.tags.indexOf(this.state.filter) > -1 ||
+          session.notes && session.notes.toLowerCase().includes(
+            this.state.filter.toLowerCase())
+      ));
+    }
+
     // Map dates to sessions that begin on that date
-    this.props.sessions.forEach((session) => {
+    sessions.forEach((session) => {
       const key = moment(session.startTime).format('MMM D YY');
       if (!sessionMap[key]) { sessionMap[key] = []; }
       sessionMap[key].push(session);
@@ -121,11 +130,28 @@ export default class HistoryScreen extends Component {
 
   renderFilter() {
     return (
-      <InputField
-        onSubmit={ this.onChangeFilter }
-        icon={ Constants.IMG_SEARCH }
-        returnKeyType="search"
-      />
+      <View style={ styles.searchRow }>
+        <Image
+          source={ Constants.IMG_SEARCH }
+          style={ styles.searchIcon }
+        />
+        <TextInput
+          autoCapitalize="none"
+          style={ [Constants.STYLES.input, styles.searchInput] }
+          value={ this.state.filter }
+          onChangeText={ this.onChangeFilter }
+          returnKeyType="search"
+          placeholder="Search..."
+        />
+        { !!this.state.filter && (
+          <TouchableOpacity onPress={ this.onClearFilter }>
+            <Image
+              source={ Constants.IMG_GRAY_X }
+              style={ styles.searchClearIcon }
+            />
+          </TouchableOpacity>
+        )}
+      </View>
     );
   }
 
@@ -185,5 +211,24 @@ const styles = StyleSheet.create({
   notesPlaceholderText: {
     color: Constants.COLOR_GRAY,
     fontStyle: 'italic',
+  },
+  searchRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  searchIcon: {
+    width: 20,
+    height: 20,
+    resizeMode: 'contain',
+    marginRight: Constants.GUTTER_SM,
+  },
+  searchClearIcon: {
+    width: 20,
+    height: 20,
+    resizeMode: 'contain',
+    marginLeft: Constants.GUTTER_SM,
+  },
+  searchInput: {
+    flex: 1,
   },
 });

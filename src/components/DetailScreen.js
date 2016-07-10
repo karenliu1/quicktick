@@ -44,9 +44,12 @@ export default class DetailScreen extends Component {
   onChangeNotes = (notes) => this.setState({ notes });
 
   onAddTag = (tag) => {
-    let tagSet = new Set(this.state.tags);
-    tagSet.add(tag);
-    this.setState({ tags: Array.from(tagSet) });
+    tag = tag.trim();
+    if (tag) {
+      let tagSet = new Set(this.state.tags);
+      tagSet.add(tag);
+      this.setState({ tags: Array.from(tagSet) });
+    }
   };
 
   onDeleteTag = (tag) => {
