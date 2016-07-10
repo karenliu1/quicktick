@@ -29,11 +29,15 @@ export default class Menu extends Component {
     }
   }
 
-  renderRow(screen, label) {
+  renderRow(screen, label, icon) {
     return (
       <TouchableOpacity
         onPress={ () => this.onNavigateTo(screen) }
         style={ styles.row }>
+        <Image
+          source={ icon }
+          style={ [Constants.STYLES.icon, styles.rowIcon] }
+        />
         <Text style={ Constants.STYLES.text }>{ label }</Text>
       </TouchableOpacity>
     );
@@ -57,8 +61,8 @@ export default class Menu extends Component {
       <View style={ styles.container }>
         { menuIconEl }
         <View style={ styles.menu }>
-          { this.renderRow(Constants.SCREENS.CLOCK, 'Clock') }
-          { this.renderRow(Constants.SCREENS.HISTORY, 'Log') }
+          { this.renderRow(Constants.SCREENS.CLOCK, 'Clock', Constants.IMG_DARKGRAY_CLOCK) }
+          { this.renderRow(Constants.SCREENS.HISTORY, 'Log', Constants.IMG_DARKGRAY_HISTORY) }
         </View>
       </View>
     );
@@ -95,6 +99,10 @@ const styles = StyleSheet.create({
     padding: Constants.GUTTER_MD,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: Constants.COLOR_GRAY,
-    flexDirection: 'column',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  rowIcon: {
+    marginRight: Constants.GUTTER_MD,
   },
 });
