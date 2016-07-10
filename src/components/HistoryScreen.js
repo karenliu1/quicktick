@@ -89,11 +89,16 @@ export default class HistoryScreen extends Component {
 
     let sessions = this.props.sessions;
     if (this.state.filter) {
-      sessions = sessions.filter((session) => (
-        session.tags.indexOf(this.state.filter) > -1 ||
-          session.notes && session.notes.toLowerCase().includes(
-            this.state.filter.toLowerCase())
-      ));
+      sessions = sessions.filter((session) => {
+        const filterStr = this.state.filter.toLowerCase();
+        if (session.notes && session.notes.toLowerCase().includes(filterStr)) {
+          return true;
+        }
+        const matchedTags = session.tags.filter((tag) => (
+          tag.toLowerCase().includes(filterStr)
+        ));
+        return matchedTags.length > 0;
+      });
     }
 
     // Map dates to sessions that begin on that date
@@ -215,6 +220,7 @@ const styles = StyleSheet.create({
   searchRow: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginTop: Constants.GUTTER_SM,
   },
   searchIcon: {
     width: 20,
