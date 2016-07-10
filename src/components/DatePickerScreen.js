@@ -10,8 +10,12 @@ import Button from './Button';
 
 export default class DatePickerScreen extends Component {
   static propTypes = {
-    initialTime: PropTypes.instanceOf(Date).isRequired,
+    initialTime: PropTypes.instanceOf(Date),
     onSave: PropTypes.func.isRequired,
+  };
+
+  static defaultProps = {
+    initialTime: new Date(),
   };
 
   constructor(props, context) {

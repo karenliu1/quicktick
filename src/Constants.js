@@ -19,6 +19,7 @@ export const GUTTER_MD = 20;
 export const GUTTER_LG = 40;
 
 export const IMG_DARKGRAY_CLOCK = require('../images/darkgray_clock.png');
+export const IMG_DARKGRAY_GRAPH = require('../images/darkgray_graph.png');
 export const IMG_DARKGRAY_HISTORY = require('../images/darkgray_history.png');
 export const IMG_DARKGRAY_MENU = require('../images/darkgray_menu.png');
 export const IMG_GRAY_ADD = require('../images/gray_add.png');
@@ -83,4 +84,5 @@ export const SCREENS = {
   GRAPHS: 'GRAPHS',
   DETAIL: 'DETAIL',
   DATE_PICKER: 'DATE_PICKER',
+  TOTALS: 'TOTALS',
 };

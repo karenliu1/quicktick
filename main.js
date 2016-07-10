@@ -19,6 +19,7 @@ import DatePickerScreen from './src/components/DatePickerScreen';
 import DetailScreen from './src/components/DetailScreen';
 import HistoryScreen from './src/components/HistoryScreen';
 import Menu from './src/components/Menu';
+import TotalsScreen from './src/components/TotalsScreen';
 
 class QuickTick extends Component {
   state = {
@@ -163,6 +164,8 @@ class QuickTick extends Component {
             } }
           />
         );
+      case Constants.SCREENS.TOTALS:
+        return <TotalsScreen navigator={ navigator } sessions={ this.state.sessions } />;
     }
   }
 }

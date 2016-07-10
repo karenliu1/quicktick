@@ -63,6 +63,7 @@ export default class Menu extends Component {
         <View style={ styles.menu }>
           { this.renderRow(Constants.SCREENS.CLOCK, 'Clock', Constants.IMG_DARKGRAY_CLOCK) }
           { this.renderRow(Constants.SCREENS.HISTORY, 'Log', Constants.IMG_DARKGRAY_HISTORY) }
+          { this.renderRow(Constants.SCREENS.TOTALS, 'Analyze', Constants.IMG_DARKGRAY_GRAPH) }
         </View>
       </View>
     );
