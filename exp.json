@@ -5,7 +5,7 @@
 
   // The description is currently not used but may at some point be made
   // visible inside of the Exponent client to help users discover your app.
-  description: "A starter template",
+  description: "Clock in and out easily to track your time.",
 
   // The url-name of the app: https://exp.host/@your-username/slug
   slug: "quicktick",

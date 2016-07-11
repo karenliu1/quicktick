@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
   },
   menuIcon: {
     width: Constants.MENU_SIZE,
+    height: Constants.MENU_SIZE,
     resizeMode: 'contain',
   },
   menu: {

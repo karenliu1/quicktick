@@ -12,7 +12,7 @@ import * as Constants from '../Constants';
 export default class InputField extends Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
-    icon: PropTypes.number.isRequired,
+    icon: PropTypes.any.isRequired,
     returnKeyType: PropTypes.string,
   };
 

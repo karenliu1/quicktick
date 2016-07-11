@@ -1,5 +1,3 @@
-/*global require*/
-
 import { StyleSheet } from 'react-native';
 
 export const FONT_FAMILY = 'Avenir';
@@ -18,17 +16,28 @@ export const GUTTER_SM = 10;
 export const GUTTER_MD = 20;
 export const GUTTER_LG = 40;
 
-export const IMG_DARKGRAY_CLOCK = require('../images/darkgray_clock.png');
-export const IMG_DARKGRAY_GRAPH = require('../images/darkgray_graph.png');
-export const IMG_DARKGRAY_HISTORY = require('../images/darkgray_history.png');
-export const IMG_DARKGRAY_MENU = require('../images/darkgray_menu.png');
-export const IMG_GRAY_ADD = require('../images/gray_add.png');
-export const IMG_GRAY_EDIT = require('../images/gray_edit.png');
-export const IMG_GRAY_SEARCH = require('../images/gray_search.png');
-export const IMG_GRAY_X = require('../images/gray_x.png');
-export const IMG_RED_DELETE = require('../images/red_delete.png');
-export const IMG_WHITE_CIRCLE_X = require('../images/white_circle_x.png');
-export const IMG_YELLOW_SUN = require('../images/yellow_sun.png');
+export const IMG_DARKGRAY_CLOCK =
+  { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/darkgray_clock.png' };
+export const IMG_DARKGRAY_GRAPH =
+  { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/darkgray_graph.png' };
+export const IMG_DARKGRAY_HISTORY =
+  { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/darkgray_history.png' };
+export const IMG_DARKGRAY_MENU =
+  { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/darkgray_menu.png' };
+export const IMG_GRAY_ADD =
+  { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/gray_add.png' };
+export const IMG_GRAY_EDIT =
+  { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/gray_edit.png' };
+export const IMG_GRAY_SEARCH =
+  { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/gray_search.png' };
+export const IMG_GRAY_X =
+  { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/gray_x.png' };
+export const IMG_RED_DELETE =
+  { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/red_delete.png' };
+export const IMG_WHITE_CIRCLE_X =
+  { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/white_circle_x.png' };
+export const IMG_YELLOW_SUN =
+  { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/yellow_sun.png' };
 
 export const MENU_SIZE = 30;
 export const MENU_TOTAL_HEIGHT = MENU_SIZE + GUTTER_MD + GUTTER_LG;
