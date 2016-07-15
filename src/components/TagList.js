@@ -39,10 +39,15 @@ export default class TagList extends Component {
     );
   };
 
+  renderEmptyState() {
+    return <Text style={ Constants.STYLES.emptyPlaceholder }>No tags.</Text>;
+  }
+
   render() {
+    const hasTags = this.props.tags.length > 0;
     return (
       <View style={ styles.tagContainer }>
-        { this.props.tags.map(this.renderTag) }
+        { hasTags ? this.props.tags.map(this.renderTag) : this.renderEmptyState() }
       </View>
     );
   }

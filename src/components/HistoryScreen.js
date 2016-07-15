@@ -13,9 +13,7 @@ import {
 import * as Constants from '../Constants';
 import { formatDate, formatRange } from '../Utilities';
 
-import InputField from './InputField';
 import TagList from './TagList';
-import TitleText from './TitleText';
 
 export default class HistoryScreen extends Component {
   static propTypes = {
@@ -61,7 +59,7 @@ export default class HistoryScreen extends Component {
 
     return (
       <Text
-        style={ [Constants.STYLES.text, styles.notesPlaceholderText] }
+        style={ Constants.STYLES.emptyPlaceholder }
         numberOfLines={ 1 }>
         No notes.
       </Text>
@@ -212,10 +210,6 @@ const styles = StyleSheet.create({
   },
   emptyState: {
     alignItems: 'center',
-  },
-  notesPlaceholderText: {
-    color: Constants.COLOR_GRAY,
-    fontStyle: 'italic',
   },
   searchRow: {
     flexDirection: 'row',

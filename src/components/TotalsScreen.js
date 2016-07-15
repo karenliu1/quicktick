@@ -2,7 +2,6 @@ import moment from 'moment';
 import React, { Component, PropTypes } from 'react';
 import {
   StyleSheet,
-  Text,
   View,
 } from 'react-native';
 

@@ -19,6 +19,7 @@ import DatePickerScreen from './src/components/DatePickerScreen';
 import DetailScreen from './src/components/DetailScreen';
 import HistoryScreen from './src/components/HistoryScreen';
 import Menu from './src/components/Menu';
+import TagEditorScreen from './src/components/TagEditorScreen';
 import TotalsScreen from './src/components/TotalsScreen';
 
 class QuickTick extends Component {
@@ -166,6 +167,22 @@ class QuickTick extends Component {
         );
       case Constants.SCREENS.TOTALS:
         return <TotalsScreen navigator={ navigator } sessions={ this.state.sessions } />;
+      case Constants.SCREENS.TAG_EDITOR:
+        // TODO: Make this recent tags
+        const allTags = this.state.sessions.reduce((tagsSoFar, session) => (
+          tagsSoFar.concat(session.tags || [])
+        ), []);
+
+        return (
+          <TagEditorScreen
+            initialTags={ route.currentTags }
+            recentTags={ allTags }
+            onSelect={ (tags) => {
+              route.onSelect(tags);
+              navigator.pop();
+            } }
+          />
+        );
     }
   }
 }

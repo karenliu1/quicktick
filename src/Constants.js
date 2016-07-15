@@ -85,6 +85,11 @@ export const STYLES = StyleSheet.create({
     color: COLOR_BLUE,
     fontSize: FONT_SIZE_MD,
   },
+  emptyPlaceholder: {
+    color: COLOR_GRAY,
+    fontSize: FONT_SIZE_MD,
+    fontStyle: 'italic',
+  },
 });
 
 export const SCREENS = {
@@ -93,5 +98,6 @@ export const SCREENS = {
   GRAPHS: 'GRAPHS',
   DETAIL: 'DETAIL',
   DATE_PICKER: 'DATE_PICKER',
+  TAG_EDITOR: 'TAG_EDITOR',
   TOTALS: 'TOTALS',
 };

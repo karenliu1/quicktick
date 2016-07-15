@@ -15,9 +15,10 @@ export default class SectionText extends Component {
     color: PropTypes.string,
     isLarge: PropTypes.bool,
     onEdit: PropTypes.func,
-    sectionText: PropTypes.string.isRequired,
+    sectionText: PropTypes.string,
     style: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     titleText: PropTypes.string.isRequired,
+    children: PropTypes.node,
   };
 
   static defaultProps = {
@@ -44,14 +45,23 @@ export default class SectionText extends Component {
           />
           { this.props.onEdit && this.renderEditLink() }
         </View>
-        <Text style={ [
-          Constants.STYLES.text,
-          this.props.isLarge && styles.largeText,
-          { color: this.props.color },
-        ] }>
-          { this.props.sectionText }
-        </Text>
+        { this.renderSectionText() }
+        { this.props.children }
       </View>
+    );
+  }
+
+  renderSectionText() {
+    if (!this.props.sectionText) { return null; }
+
+    return (
+      <Text style={ [
+        Constants.STYLES.text,
+        this.props.isLarge && styles.largeText,
+        { color: this.props.color },
+      ] }>
+        { this.props.sectionText }
+      </Text>
     );
   }
 }

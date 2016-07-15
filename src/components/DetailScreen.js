@@ -16,7 +16,6 @@ import { SessionPropType } from '../PropTypes';
 import { formatDate, formatRange, formatTime, formatTotal } from '../Utilities';
 
 import Button from './Button';
-import InputField from './InputField';
 import SectionText from './SectionText';
 import TagList from './TagList';
 import TitleText from './TitleText';
@@ -43,26 +42,6 @@ export default class DetailScreen extends Component {
 
   onChangeNotes = (notes) => this.setState({ notes });
 
-  onAddTag = (tag) => {
-    tag = tag.trim();
-    if (tag) {
-      let tagSet = new Set(this.state.tags);
-      tagSet.add(tag);
-      this.setState({ tags: Array.from(tagSet) });
-    }
-  };
-
-  onDeleteTag = (tag) => {
-    const { tags } = this.state;
-    const tagIndex = tags.indexOf(tag);
-    this.setState({
-      tags: [
-        ...tags.slice(0, tagIndex),
-        ...tags.slice(tagIndex + 1),
-      ],
-    });
-  };
-
   onChangeStartTime = () => {
     this.props.navigator.push({
       name: Constants.SCREENS.DATE_PICKER,
@@ -78,6 +57,14 @@ export default class DetailScreen extends Component {
       name: Constants.SCREENS.DATE_PICKER,
       initialTime: this.state.endTime,
       onSave: (time) => this.setState({ endTime: new Date(time) }),
+    });
+  }
+
+  onChangeTags = () => {
+    this.props.navigator.push({
+      name: Constants.SCREENS.TAG_EDITOR,
+      currentTags: this.state.tags,
+      onSelect: (tags) => this.setState({ tags }),
     });
   }
 
@@ -158,11 +145,12 @@ export default class DetailScreen extends Component {
           />
         </View>
 
-        <View style={ styles.section }>
-          <TitleText text="Tags" />
-          <TagList tags={ this.state.tags } onDeleteTag={ this.onDeleteTag } />
-          <InputField onSubmit={ this.onAddTag } icon={ Constants.IMG_GRAY_ADD } />
-        </View>
+        <SectionText
+          titleText="Tags"
+          style={ styles.section }
+          onEdit={ this.onChangeTags }>
+          <TagList tags={ this.state.tags } />
+        </SectionText>
 
         <View style={ styles.section }>
           <Button type="primary" text="Save" onPress={ this.onSave } />
