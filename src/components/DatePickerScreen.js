@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import {
   DatePickerIOS,
+  StyleSheet,
   View,
 } from 'react-native';
 
@@ -29,7 +30,7 @@ export default class DatePickerScreen extends Component {
 
   render() {
     return (
-      <View style={ Constants.STYLES.screen }>
+      <View style={ [Constants.STYLES.screen, styles.screen] }>
         <View style={ Constants.STYLES.section }>
           <DatePickerIOS
             date={ this.state.time }
@@ -39,10 +40,20 @@ export default class DatePickerScreen extends Component {
           />
         </View>
 
-        <View style={ Constants.STYLES.section }>
+        <View style={ [Constants.STYLES.section, styles.button] }>
           <Button type="primary" text="Done" onPress={ this.onSave } />
         </View>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  screen: {
+    marginHorizontal: 0, // Make space for the date picker
+    alignSelf: 'center',
+  },
+  button: {
+    marginHorizontal: Constants.GUTTER_LG,
+  },
+});
