@@ -1,8 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import {
+  Image,
   ScrollView,
   StatusBar,
   StyleSheet,
+  Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 
@@ -11,7 +14,10 @@ import * as Constants from '../Constants';
 import Button from './Button';
 import InputField from './InputField';
 import SectionText from './SectionText';
+import TitleText from './TitleText';
 import TagList from './TagList';
+
+const MAX_RECENT_TAGS = 5;
 
 export default class TagEditorScreen extends Component {
   static propTypes = {
@@ -66,9 +72,13 @@ export default class TagEditorScreen extends Component {
           <TagList tags={ this.state.tags } onDeleteTag={ this.onDeleteTag } />
         </SectionText>
 
-        <View style={ styles.section }>
+        <SectionText
+          titleText="Add a Tag"
+          style={ styles.section }>
           <InputField onSubmit={ this.onAddTag } icon={ Constants.IMG_GRAY_ADD } />
-        </View>
+        </SectionText>
+
+        { this.renderRecentTags() }
 
         <View style={ styles.section }>
           <Button type="primary" text="Done" onPress={ this.onSelect } />
@@ -76,10 +86,57 @@ export default class TagEditorScreen extends Component {
       </ScrollView>
     );
   }
+
+  getRecentTagsToShow() {
+    // Only show tags that have not already been applied
+    return this.props.recentTags.filter((tag) => (
+      this.state.tags.indexOf(tag) === -1
+    )).slice(0, MAX_RECENT_TAGS);
+  }
+
+  renderRecentTags() {
+    const tags = this.getRecentTagsToShow();
+    if (tags.length === 0) { return null; }
+    return (
+      <View style={ styles.section }>
+        <View style={ styles.recentTagsHeader }>
+          <TitleText text="Recent Tags" />
+        </View>
+        { tags.map(this.renderRecentTag) }
+      </View>
+    );
+  }
+
+  renderRecentTag = (tag) => {
+    return (
+      <View style={ styles.recentTagRow } key={ tag }>
+        <Text style={ Constants.STYLES.text }>{ tag }</Text>
+
+        <TouchableOpacity onPress={ () => this.onAddTag(tag) }>
+          <Image
+            source={ Constants.IMG_GRAY_ADD }
+            style={ Constants.STYLES.icon }
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
   section: {
     marginTop: Constants.GUTTER_LG,
+  },
+  recentTagsHeader: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: Constants.COLOR_GRAY,
+    paddingBottom: Constants.GUTTER_MD,
+  },
+  recentTagRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: Constants.GUTTER_SM,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: Constants.COLOR_GRAY,
   },
 });
