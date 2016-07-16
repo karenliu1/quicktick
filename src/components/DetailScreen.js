@@ -24,7 +24,6 @@ export default class DetailScreen extends Component {
   static propTypes = {
     navigator: PropTypes.object.isRequired,
     initialSession: SessionPropType.isRequired,
-    onCancel: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
   };
@@ -40,14 +39,14 @@ export default class DetailScreen extends Component {
     };
   }
 
-  onChangeNotes = (notes) => this.setState({ notes });
+  onChangeNotes = (notes) => this.setState({ notes }, this.onSave);
 
   onChangeStartTime = () => {
     this.props.navigator.push({
       name: Constants.SCREENS.DATE_PICKER,
       initialTime: this.state.startTime,
       onSave: (time) => {
-        this.setState({ startTime: new Date(time) });
+        this.setState({ startTime: new Date(time) }, this.onSave);
       },
     });
   }
@@ -56,7 +55,9 @@ export default class DetailScreen extends Component {
     this.props.navigator.push({
       name: Constants.SCREENS.DATE_PICKER,
       initialTime: this.state.endTime,
-      onSave: (time) => this.setState({ endTime: new Date(time) }),
+      onSave: (time) => {
+        this.setState({ endTime: new Date(time) }, this.onSave);
+      },
     });
   }
 
@@ -64,7 +65,9 @@ export default class DetailScreen extends Component {
     this.props.navigator.push({
       name: Constants.SCREENS.TAG_EDITOR,
       currentTags: this.state.tags,
-      onSelect: (tags) => this.setState({ tags }),
+      onSelect: (tags) => {
+        this.setState({ tags }, this.onSave);
+      },
     });
   }
 
@@ -88,6 +91,10 @@ export default class DetailScreen extends Component {
         this.props.onDelete();
       }
     });
+  };
+
+  onDone = () => {
+    this.props.navigator.pop();
   };
 
   render() {
@@ -153,10 +160,7 @@ export default class DetailScreen extends Component {
         </SectionText>
 
         <View style={ styles.section }>
-          <Button type="primary" text="Save" onPress={ this.onSave } />
-        </View>
-        <View style={ styles.section }>
-          <Button type="subdued" text="Cancel" onPress={ this.props.onCancel } />
+          <Button type="primary" text="Done" onPress={ this.onDone } />
         </View>
       </ScrollView>
     );

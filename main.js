@@ -67,12 +67,7 @@ class QuickTick extends Component {
   }
 
   async onEditSave(navigator, session) {
-    try {
-      await Storage.editSession(session);
-    } catch (error) {
-      // TODO: Display this error
-      throw error;
-    }
+    // Optimistically update
     const sessionIndex = this.state.sessions.findIndex((s) => s.id === session.id);
     this.setState({
       sessions: [
@@ -81,7 +76,13 @@ class QuickTick extends Component {
         ...this.state.sessions.slice(sessionIndex + 1)
       ],
     });
-    navigator.pop();
+
+    try {
+      await Storage.editSession(session);
+    } catch (error) {
+      // TODO: Display this error
+      throw error;
+    }
   }
 
   async onEditDelete(navigator, session) {
