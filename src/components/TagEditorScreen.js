@@ -22,7 +22,7 @@ const MAX_RECENT_TAGS = 5;
 export default class TagEditorScreen extends Component {
   static propTypes = {
     initialTags: PropTypes.arrayOf(PropTypes.string).isRequired,
-    recentTags: PropTypes.arrayOf(PropTypes.string).isRequired,
+    allTags: PropTypes.arrayOf(PropTypes.string).isRequired,
 
     // This function gets called with all the final applied tags.
     onSelect: PropTypes.func.isRequired,
@@ -89,7 +89,7 @@ export default class TagEditorScreen extends Component {
 
   getRecentTagsToShow() {
     // Only show tags that have not already been applied
-    return this.props.recentTags.filter((tag) => (
+    return this.props.allTags.filter((tag) => (
       this.state.tags.indexOf(tag) === -1
     )).slice(0, MAX_RECENT_TAGS);
   }

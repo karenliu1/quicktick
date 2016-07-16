@@ -168,7 +168,6 @@ class QuickTick extends Component {
       case Constants.SCREENS.TOTALS:
         return <TotalsScreen navigator={ navigator } sessions={ this.state.sessions } />;
       case Constants.SCREENS.TAG_EDITOR:
-        // TODO: Make this recent tags
         const allTags = this.state.sessions.reduce((tagsSoFar, session) => (
           tagsSoFar.concat(session.tags || [])
         ), []);
@@ -176,7 +175,7 @@ class QuickTick extends Component {
         return (
           <TagEditorScreen
             initialTags={ route.currentTags }
-            recentTags={ allTags }
+            allTags={ allTags }
             onSelect={ (tags) => {
               route.onSelect(tags);
               navigator.pop();

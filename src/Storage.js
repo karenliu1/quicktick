@@ -26,7 +26,10 @@ export default class Storage {
       throw new Error('Could not get sessions:', error);
     }
 
-    return sessions ? JSON.parse(sessions).map(parseSession) : [];
+    if (!sessions) { return []; }
+    return JSON.parse(sessions)
+        .map(parseSession)
+        .sort((s1, s2) => s2.startTime - s1.startTime); // Sort descending time
   }
 
   static async createSession(startTime, endTime) {
