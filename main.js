@@ -169,9 +169,10 @@ class QuickTick extends Component {
       case Constants.SCREENS.TOTALS:
         return <TotalsScreen navigator={ navigator } sessions={ this.state.sessions } />;
       case Constants.SCREENS.TAG_EDITOR:
-        const allTags = this.state.sessions.reduce((tagsSoFar, session) => (
+        let allTags = this.state.sessions.reduce((tagsSoFar, session) => (
           tagsSoFar.concat(session.tags || [])
         ), []);
+        allTags = Array.from(new Set(allTags))
 
         return (
           <TagEditorScreen
