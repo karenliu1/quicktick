@@ -17,6 +17,10 @@ function parseSession(session) {
   };
 }
 
+function sortCallback(s1, s2) {
+  return s2.startTime - s1.startTime; // Sort descending time
+}
+
 export default class Storage {
   static async getSessions() {
     let sessions;
@@ -27,9 +31,7 @@ export default class Storage {
     }
 
     if (!sessions) { return []; }
-    return JSON.parse(sessions)
-        .map(parseSession)
-        .sort((s1, s2) => s2.startTime - s1.startTime); // Sort descending time
+    return JSON.parse(sessions).map(parseSession);
   }
 
   static async createSession(startTime, endTime) {
@@ -41,10 +43,7 @@ export default class Storage {
       tags: [],
     };
 
-    const newSessions = [
-      ...sessions,
-      session
-    ];
+    const newSessions = [ ...sessions, session ].sort(sortCallback);
 
     try {
       await AsyncStorage.setItem(SESSIONS_KEY, JSON.stringify(newSessions));
@@ -68,7 +67,7 @@ export default class Storage {
       ...sessions.slice(0, sessionIndex),
       session,
       ...sessions.slice(sessionIndex + 1),
-    ];
+    ].sort(sortCallback);
 
     try {
       await AsyncStorage.setItem(SESSIONS_KEY, JSON.stringify(newSessions));
