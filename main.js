@@ -8,6 +8,7 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   Navigator,
+  StatusBar,
   StyleSheet,
   View,
 } from 'react-native';
@@ -24,8 +25,6 @@ import TotalsScreen from './src/components/TotalsScreen';
 
 class QuickTick extends Component {
   state = {
-    isMenuExpanded: false,
-
     // Times for the current session (if any)
     startTime: null,
     sessions: [],
@@ -55,8 +54,6 @@ class QuickTick extends Component {
     this.state.sessions.push(session);
     this.setState({ startTime: null });
   }
-
-  onToggleMenu = () => this.setState({ isMenuExpanded: !this.state.isMenuExpanded });
 
   onEditBegin(navigator, session) {
     navigator.push({ name: Constants.SCREENS.DETAIL, session: session });
@@ -103,23 +100,14 @@ class QuickTick extends Component {
   }
 
   render() {
-    const menuEl = (
-      <Menu
-        onToggle={ this.onToggleMenu }
-        isExpanded={ this.state.isMenuExpanded }
-      />
-    );
-    return (
-      <Navigator
-        initialRoute={{ name: Constants.SCREENS.CLOCK }}
-        renderScene={(route, navigator) => (
-          <View style={ styles.background }>
-            { this.renderScreen(route, navigator) }
-          </View>
-        )}
-        navigationBar={ menuEl }
-      />
-    );
+    return <Navigator
+      style={ styles.container }
+      initialRoute={{ name: Constants.SCREENS.CLOCK }}
+      navigationBar={ <Menu /> }
+      renderScene={(route, navigator) => (
+        this.renderScreen(route, navigator)
+      )}
+    />;
   }
 
   renderScreen(route, navigator) {
@@ -189,9 +177,9 @@ class QuickTick extends Component {
 }
 
 const styles = StyleSheet.create({
-  background: {
+  container: {
     flex: 1,
-    backgroundColor: 'white',
+    top: 25, // status bar :(
   },
 });
 

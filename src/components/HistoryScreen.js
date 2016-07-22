@@ -22,18 +22,9 @@ export default class HistoryScreen extends Component {
     onEdit: PropTypes.func.isRequired,
   };
 
-  constructor(props, context) {
-    super(props, context);
-
-    this.state = { filter: '' };
-  }
-
   onNavigateToClock = () => {
     this.props.navigator.push({ name: Constants.SCREENS.CLOCK });
   };
-
-  onChangeFilter = (filter) => this.setState({ filter });
-  onClearFilter = () => this.setState({ filter: '' });
 
   renderSectionHeader = (session) => {
     return (
@@ -86,18 +77,18 @@ export default class HistoryScreen extends Component {
     let sessionMap = {};
 
     let sessions = this.props.sessions;
-    if (this.state.filter) {
-      sessions = sessions.filter((session) => {
-        const filterStr = this.state.filter.toLowerCase();
-        if (session.notes && session.notes.toLowerCase().includes(filterStr)) {
-          return true;
-        }
-        const matchedTags = session.tags.filter((tag) => (
-          tag.toLowerCase().includes(filterStr)
-        ));
-        return matchedTags.length > 0;
-      });
-    }
+    // if (this.state.filter) {
+    //   sessions = sessions.filter((session) => {
+    //     const filterStr = this.state.filter.toLowerCase();
+    //     if (session.notes && session.notes.toLowerCase().includes(filterStr)) {
+    //       return true;
+    //     }
+    //     const matchedTags = session.tags.filter((tag) => (
+    //       tag.toLowerCase().includes(filterStr)
+    //     ));
+    //     return matchedTags.length > 0;
+    //   });
+    // }
 
     // Map dates to sessions that begin on that date
     sessions.forEach((session) => {
@@ -131,33 +122,6 @@ export default class HistoryScreen extends Component {
     );
   }
 
-  renderFilter() {
-    return (
-      <View style={ styles.searchRow }>
-        <Image
-          source={ Constants.IMG_GRAY_SEARCH }
-          style={ styles.searchIcon }
-        />
-        <TextInput
-          autoCapitalize="none"
-          style={ [Constants.STYLES.input, styles.searchInput] }
-          value={ this.state.filter }
-          onChangeText={ this.onChangeFilter }
-          returnKeyType="search"
-          placeholder="Search..."
-        />
-        { !!this.state.filter && (
-          <TouchableOpacity onPress={ this.onClearFilter }>
-            <Image
-              source={ Constants.IMG_GRAY_X }
-              style={ styles.searchClearIcon }
-            />
-          </TouchableOpacity>
-        )}
-      </View>
-    );
-  }
-
   render() {
     const datasource = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2,
@@ -170,8 +134,7 @@ export default class HistoryScreen extends Component {
     }
 
     return (
-      <View style={ Constants.STYLES.screen }>
-        { this.renderFilter() }
+      <View style={ [Constants.STYLES.screen, Constants.STYLES.screenReducedPadding] }>
         <ListView dataSource={ rows }
           renderSectionHeader={ this.renderSectionHeader }
           renderRow={ this.renderRow }
@@ -210,25 +173,5 @@ const styles = StyleSheet.create({
   },
   emptyState: {
     alignItems: 'center',
-  },
-  searchRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: Constants.GUTTER_SM,
-  },
-  searchIcon: {
-    width: 20,
-    height: 20,
-    resizeMode: 'contain',
-    marginRight: Constants.GUTTER_SM,
-  },
-  searchClearIcon: {
-    width: 20,
-    height: 20,
-    resizeMode: 'contain',
-    marginLeft: Constants.GUTTER_SM,
-  },
-  searchInput: {
-    flex: 1,
   },
 });

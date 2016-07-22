@@ -63,8 +63,7 @@ export default class TagEditorScreen extends Component {
   render() {
     return (
       <ScrollView style={[
-        Constants.STYLES.scrollableScreen,
-        { top: StatusBar.currentHeight },
+        Constants.STYLES.scrollableScreen, Constants.STYLES.screenReducedPadding
       ]}>
         <SectionText
           titleText="Tags"

@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 export const FONT_FAMILY = 'Avenir';
+export const FONT_SIZE_SM = 16;
 export const FONT_SIZE_MD = 20;
 export const FONT_SIZE_LG = 30;
 export const FONT_SIZE_XL = 50;
@@ -39,9 +40,6 @@ export const IMG_WHITE_CIRCLE_X =
 export const IMG_YELLOW_SUN =
   { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/yellow_sun.png' };
 
-export const MENU_SIZE = 30;
-export const MENU_TOTAL_HEIGHT = MENU_SIZE + GUTTER_MD + GUTTER_LG;
-
 export const STYLES = StyleSheet.create({
   text: {
     color: COLOR_DARK_GRAY,
@@ -66,20 +64,16 @@ export const STYLES = StyleSheet.create({
   },
   screen: {
     flex: 1,
+    backgroundColor: 'white',
     justifyContent: 'space-between',
-
-    marginHorizontal: GUTTER_LG,
-    marginBottom: GUTTER_LG,
-    marginTop: MENU_TOTAL_HEIGHT,
+    padding: GUTTER_LG,
   },
   scrollableScreen: {
     flex: 1,
-
-    // Use padding so scrollbar hits the edge
-    paddingHorizontal: GUTTER_LG,
-
-    marginBottom: GUTTER_LG,
-    marginTop: MENU_TOTAL_HEIGHT,
+    backgroundColor: 'white',
+  },
+  screenReducedPadding: {
+    padding: GUTTER_MD,
   },
   linkText: {
     color: COLOR_BLUE,

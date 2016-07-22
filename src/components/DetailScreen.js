@@ -100,8 +100,7 @@ export default class DetailScreen extends Component {
   render() {
     return (
       <ScrollView style={[
-        Constants.STYLES.scrollableScreen,
-        { top: StatusBar.currentHeight },
+        Constants.STYLES.scrollableScreen, Constants.STYLES.screenReducedPadding
       ]}>
         <View style={ styles.title }>
           <Text style={ [Constants.STYLES.text, styles.date] }>
