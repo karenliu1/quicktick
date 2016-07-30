@@ -11,9 +11,12 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
+import { connect } from 'react-redux';
 
 import * as Constants from '../Constants';
 import Storage from '../Storage';
+import { editSession, deleteSession } from '../actions/sessions';
+
 import ClockScreen from './ClockScreen';
 import DatePickerScreen from './DatePickerScreen';
 import DetailScreen from './DetailScreen';
@@ -22,63 +25,17 @@ import Menu from './Menu';
 import TagEditorScreen from './TagEditorScreen';
 import TotalsScreen from './TotalsScreen';
 
-export default class App extends Component {
-  state = {
-    sessions: [],
-  };
-
-  constructor(props, context) {
-    super(props, context);
-    this.fetchSessions();
-  }
-
-  async fetchSessions() {
-    try {
-      const sessions = await Storage.getSessions();
-      this.setState({ sessions });
-    } catch (error) {
-      // TODO: Display this error
-      throw error;
-    }
-  }
-
+class App extends Component {
   onEditCancel(navigator) {
     navigator.pop();
   }
 
   async onEditSave(navigator, session) {
-    // Optimistically update
-    const sessionIndex = this.state.sessions.findIndex((s) => s.id === session.id);
-    this.setState({
-      sessions: [
-        ...this.state.sessions.slice(0, sessionIndex),
-        session,
-        ...this.state.sessions.slice(sessionIndex + 1)
-      ],
-    });
-
-    try {
-      await Storage.editSession(session);
-    } catch (error) {
-      // TODO: Display this error
-      throw error;
-    }
+    this.props.dispatch(editSession(session));
   }
 
   async onEditDelete(navigator, session) {
-    try {
-      await Storage.deleteSession(session);
-    } catch (error) {
-      // TODO: Display this error
-      throw error;
-    }
-    const sessionIndex = this.state.sessions.findIndex((s) => s.id === session.id);
-    this.setState({
-      sessions: [
-        ...this.state.sessions.slice(0, sessionIndex),
-        ...this.state.sessions.slice(sessionIndex + 1)
-      ],
-    });
+    this.props.dispatch(deleteSession(session));
     navigator.pop();
   }
 
@@ -94,7 +51,7 @@ export default class App extends Component {
   }
 
   renderScreen(route, navigator) {
-    const sessions = this.state.sessions;
+    const sessions = this.props.sessions;
     const lastSession = sessions && sessions.length > 0 ?
       sessions[sessions.length - 1] : null;
 
@@ -110,7 +67,7 @@ export default class App extends Component {
         return (
           <HistoryScreen
             navigator={ navigator }
-            sessions={ this.state.sessions }
+            sessions={ this.props.sessions }
             onEdit={ (session) => this.onEditBegin(navigator, session) }
           />
         );
@@ -135,9 +92,9 @@ export default class App extends Component {
           />
         );
       case Constants.SCREENS.TOTALS:
-        return <TotalsScreen navigator={ navigator } sessions={ this.state.sessions } />;
+        return <TotalsScreen navigator={ navigator } sessions={ this.props.sessions } />;
       case Constants.SCREENS.TAG_EDITOR:
-        let allTags = this.state.sessions.reduce((tagsSoFar, session) => (
+        let allTags = this.props.sessions.reduce((tagsSoFar, session) => (
           tagsSoFar.concat(session.tags || [])
         ), []);
         allTags = Array.from(new Set(allTags))
@@ -162,3 +119,11 @@ const styles = StyleSheet.create({
     top: 25, // status bar :(
   },
 });
+
+const mapStateToProps = (state) => {
+  return {
+    sessions: state.sessions,
+  };
+};
+
+export default connect(mapStateToProps)(App);
