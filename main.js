@@ -5,6 +5,7 @@
  */
 
 import React, { Component } from 'react';
+import { Provider } from 'react-redux'
 import {
   AppRegistry,
   Navigator,
@@ -12,6 +13,9 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
+import { createStore } from 'redux';
+
+import appReducer from './src/reducers';
 
 import * as Constants from './src/Constants';
 import Storage from './src/Storage';
@@ -22,6 +26,8 @@ import HistoryScreen from './src/components/HistoryScreen';
 import Menu from './src/components/Menu';
 import TagEditorScreen from './src/components/TagEditorScreen';
 import TotalsScreen from './src/components/TotalsScreen';
+
+const store = createStore(appReducer);
 
 class QuickTick extends Component {
   state = {
@@ -53,10 +59,6 @@ class QuickTick extends Component {
     const session = await Storage.createSession(this.state.startTime, endTime);
     this.state.sessions.push(session);
     this.setState({ startTime: null });
-  }
-
-  onEditBegin(navigator, session) {
-    navigator.push({ name: Constants.SCREENS.DETAIL, session: session });
   }
 
   onEditCancel(navigator) {
@@ -100,14 +102,16 @@ class QuickTick extends Component {
   }
 
   render() {
-    return <Navigator
-      style={ styles.container }
-      initialRoute={{ name: Constants.SCREENS.CLOCK }}
-      navigationBar={ <Menu /> }
-      renderScene={(route, navigator) => (
-        this.renderScreen(route, navigator)
-      )}
-    />;
+    return <Provider store={ store }>
+      <Navigator
+        style={ styles.container }
+        initialRoute={{ name: Constants.SCREENS.CLOCK }}
+        navigationBar={ <Menu /> }
+        renderScene={(route, navigator) => (
+          this.renderScreen(route, navigator)
+        )}
+      />
+    </Provider>;
   }
 
   renderScreen(route, navigator) {

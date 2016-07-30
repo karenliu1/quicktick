@@ -11,7 +11,9 @@
   "dependencies": {
     "moment": "^2.13.0",
     "react": "15.2.0",
-    "react-native": "exponentjs/react-native#sdk-6.0.0"
+    "react-native": "exponentjs/react-native#sdk-6.0.0",
+    "react-redux": "^4.4.5",
+    "redux": "^3.5.2"
   },
   "devDependencies": {
     "babel-eslint": "^6.1.0",
