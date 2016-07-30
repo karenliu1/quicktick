@@ -14,7 +14,6 @@ import {
 import { connect } from 'react-redux';
 
 import * as Constants from '../Constants';
-import Storage from '../Storage';
 import { editSession, deleteSession } from '../actions/sessions';
 
 import ClockScreen from './ClockScreen';
@@ -26,10 +25,6 @@ import TagEditorScreen from './TagEditorScreen';
 import TotalsScreen from './TotalsScreen';
 
 class App extends Component {
-  onEditCancel(navigator) {
-    navigator.pop();
-  }
-
   async onEditSave(navigator, session) {
     this.props.dispatch(editSession(session));
   }
@@ -68,7 +63,7 @@ class App extends Component {
           <HistoryScreen
             navigator={ navigator }
             sessions={ this.props.sessions }
-            onEdit={ (session) => this.onEditBegin(navigator, session) }
+            onEdit={ (session) => navigator.push({ name: Constants.SCREENS.DETAIL, session }) }
           />
         );
       case Constants.SCREENS.DETAIL:
@@ -76,7 +71,6 @@ class App extends Component {
           <DetailScreen
             navigator={ navigator }
             initialSession={ route.session }
-            onCancel={ () => this.onEditCancel(navigator) }
             onSave={ (session) => this.onEditSave(navigator, session) }
             onDelete={ () => this.onEditDelete(navigator, route.session) }
           />
