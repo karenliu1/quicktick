@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import {
   View,
 } from 'react-native';
+import { connect } from 'react-redux'
 
 import Button from './Button';
 import SectionText from './SectionText';
@@ -10,14 +11,12 @@ import * as Constants from '../Constants';
 import { SessionPropType } from '../PropTypes';
 import { formatRange, formatTime, formatTotal } from '../Utilities';
 
-export default class ClockScreen extends Component {
+class ClockScreen extends Component {
   static propTypes = {
     navigator: PropTypes.object.isRequired,
     lastSession: SessionPropType,
     startTime: PropTypes.instanceOf(Date),
     endTime: PropTypes.instanceOf(Date),
-    onClockIn: PropTypes.func.isRequired,
-    onClockOut: PropTypes.func.isRequired,
   };
 
   state = {
@@ -36,7 +35,15 @@ export default class ClockScreen extends Component {
     clearInterval(this.updateInterval);
   }
 
-  onChangeNotes = (notes) => this.setState({ notes });
+  onClockIn = () => this.props.dispatch({ type: 'CLOCK_IN', now: new Date() });
+
+  // TODO: Display any errors from this operation
+  onClockOut = () => {
+    // const endTime = new Date();
+    this.props.dispatch({ type: 'CLOCK_OUT' });
+    // const session = await Storage.createSession(this.state.startTime, endTime);
+    // this.state.sessions.push(session);
+  }
 
   renderClockIn() {
     let { lastSession } = this.props;
@@ -65,7 +72,7 @@ export default class ClockScreen extends Component {
           titleText="Now"
           sectionText={ formatTime(this.state.currentTime) } />
         <View style={ Constants.STYLES.section }>
-          <Button type="primary" text="Clock In" onPress={ this.props.onClockIn } />
+          <Button type="primary" text="Clock In" onPress={ this.onClockIn } />
         </View>
       </View>
     );
@@ -94,7 +101,7 @@ export default class ClockScreen extends Component {
           titleText="Total Time"
           sectionText={ total } />
         <View style={ Constants.STYLES.section }>
-          <Button type="warning" text="Clock Out" onPress={ this.props.onClockOut } />
+          <Button type="warning" text="Clock Out" onPress={ this.onClockOut } />
         </View>
       </View>
     );
@@ -104,3 +111,11 @@ export default class ClockScreen extends Component {
     return this.props.startTime ? this.renderClockOut() : this.renderClockIn();
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    startTime: state.currentSession.startTime,
+  };
+}
+
+export default connect(mapStateToProps)(ClockScreen);
