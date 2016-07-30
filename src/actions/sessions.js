@@ -11,6 +11,17 @@ export function loadSessions() {
   };
 }
 
+export function createSession(startTime, endTime) {
+  return async (dispatch) => {
+    try {
+      const session = await Storage.createSession(startTime, endTime);
+      dispatch({ type: 'SESSION_CREATE', session });
+    } catch (error) {
+      dispatch({ type: 'ERROR', error });
+    }
+  };
+}
+
 // The existing session is identified by ID. All other fields subject to change.
 export function editSession(session) {
   return async (dispatch) => {

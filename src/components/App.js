@@ -47,8 +47,7 @@ class App extends Component {
 
   renderScreen(route, navigator) {
     const sessions = this.props.sessions;
-    const lastSession = sessions && sessions.length > 0 ?
-      sessions[sessions.length - 1] : null;
+    const lastSession = sessions && sessions.length > 0 ? sessions[0] : null;
 
     switch (route.name) {
       case Constants.SCREENS.CLOCK:

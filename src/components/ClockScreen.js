@@ -9,17 +9,18 @@ import SectionText from './SectionText';
 
 import * as Constants from '../Constants';
 import { SessionPropType } from '../PropTypes';
+import { createSession } from '../actions/sessions';
 import { formatRange, formatTime, formatTotal } from '../Utilities';
 
 class ClockScreen extends Component {
   static propTypes = {
+    dispatch: PropTypes.func.isRequired,
     navigator: PropTypes.object.isRequired,
     lastSession: SessionPropType,
-    startTime: PropTypes.instanceOf(Date),
-    endTime: PropTypes.instanceOf(Date),
   };
 
   state = {
+    startTime: null,
     currentTime: null,
     notes: null,
   };
@@ -35,14 +36,11 @@ class ClockScreen extends Component {
     clearInterval(this.updateInterval);
   }
 
-  onClockIn = () => this.props.dispatch({ type: 'CLOCK_IN', now: new Date() });
+  onClockIn = () => this.setState({ startTime: new Date() });
 
-  // TODO: Display any errors from this operation
   onClockOut = () => {
-    // const endTime = new Date();
-    this.props.dispatch({ type: 'CLOCK_OUT' });
-    // const session = await Storage.createSession(this.state.startTime, endTime);
-    // this.state.sessions.push(session);
+    this.props.dispatch(createSession(this.state.startTime, new Date()));
+    this.setState({ startTime: null });
   }
 
   renderClockIn() {
@@ -79,7 +77,7 @@ class ClockScreen extends Component {
   }
 
   renderClockOut() {
-    const total = formatTotal(this.props.startTime, this.state.currentTime);
+    const total = formatTotal(this.state.startTime, this.state.currentTime);
 
     return (
       <View style={ Constants.STYLES.screen }>
@@ -87,7 +85,7 @@ class ClockScreen extends Component {
           isLarge
           style={ Constants.STYLES.section }
           titleText="Clocked In"
-          sectionText={ formatTime(this.props.startTime) }
+          sectionText={ formatTime(this.state.startTime) }
         />
         <SectionText
           color={ Constants.COLOR_DARK_GREEN }
@@ -108,14 +106,8 @@ class ClockScreen extends Component {
   }
 
   render() {
-    return this.props.startTime ? this.renderClockOut() : this.renderClockIn();
+    return this.state.startTime ? this.renderClockOut() : this.renderClockIn();
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    startTime: state.currentSession.startTime,
-  };
-}
-
-export default connect(mapStateToProps)(ClockScreen);
+export default connect()(ClockScreen);
