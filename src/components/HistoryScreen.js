@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { Actions } from 'react-native-router-flux'
 import { connect } from 'react-redux';
 
 import * as Constants from '../Constants';
@@ -18,13 +19,7 @@ import TagList from './TagList';
 
 class HistoryScreen extends Component {
   static propTypes = {
-    navigator: PropTypes.object.isRequired,
     sessions: PropTypes.array.isRequired,
-    onEdit: PropTypes.func.isRequired,
-  };
-
-  onNavigateToClock = () => {
-    this.props.navigator.push({ name: Constants.SCREENS.CLOCK });
   };
 
   renderSectionHeader = (session) => {
@@ -61,7 +56,7 @@ class HistoryScreen extends Component {
   renderRow = (session) => {
     return (
       <TouchableOpacity
-        onPress={ () => this.props.onEdit(session) }
+        onPress={ () => Actions.detailScreen({ initialSession: session }) }
         style={ styles.row }>
         <View style={ styles.rowText }>
           <Text style={ Constants.STYLES.text }>
@@ -113,7 +108,7 @@ class HistoryScreen extends Component {
           <Text style={ Constants.STYLES.text }>
             There are no sessions.
           </Text>
-          <TouchableOpacity onPress={ this.onNavigateToClock }>
+          <TouchableOpacity onPress={ Actions.clockScreen }>
             <Text style={ Constants.STYLES.linkText }>
               Start a Session
             </Text>

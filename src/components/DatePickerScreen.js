@@ -4,6 +4,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 import * as Constants from '../Constants';
 
@@ -26,7 +27,10 @@ export default class DatePickerScreen extends Component {
   }
 
   onChangeTime = (time) => this.setState({ time });
-  onSave = () => this.props.onSave(this.state.time);
+  onSave = () => {
+    this.props.onSave(this.state.time);
+    Actions.pop();
+  }
 
   render() {
     return (

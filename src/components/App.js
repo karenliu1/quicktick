@@ -6,98 +6,81 @@
 
 import React, { Component } from 'react';
 import {
+  Image,
   Navigator,
   StatusBar,
   StyleSheet,
+  Text,
   View,
 } from 'react-native';
-import { connect } from 'react-redux';
+import { Scene, Router } from 'react-native-router-flux';
 
 import * as Constants from '../Constants';
-import { editSession, deleteSession } from '../actions/sessions';
 
 import ClockScreen from './ClockScreen';
 import DatePickerScreen from './DatePickerScreen';
 import DetailScreen from './DetailScreen';
 import HistoryScreen from './HistoryScreen';
-import Menu from './Menu';
 import TagEditorScreen from './TagEditorScreen';
 import TotalsScreen from './TotalsScreen';
 
-class App extends Component {
-  async onEditSave(navigator, session) {
-    this.props.dispatch(editSession(session));
-  }
-
-  async onEditDelete(navigator, session) {
-    this.props.dispatch(deleteSession(session));
-    navigator.pop();
-  }
-
+class ClockIcon extends Component {
   render() {
-    return <Navigator
-      style={ styles.container }
-      initialRoute={{ name: Constants.SCREENS.CLOCK }}
-      navigationBar={ <Menu /> }
-      renderScene={(route, navigator) => (
-        this.renderScreen(route, navigator)
-      )}
-    />;
+    return <View>
+      <Image
+        source={ Constants.IMG_DARKGRAY_CLOCK }
+        style={ Constants.STYLES.icon }
+      />
+      <Text>Clock</Text>
+    </View>;
   }
+}
 
-  renderScreen(route, navigator) {
-    switch (route.name) {
-      case Constants.SCREENS.CLOCK:
-        return (
-          <ClockScreen
-            navigator={ navigator }
-          />
-        );
-      case Constants.SCREENS.HISTORY:
-        return (
-          <HistoryScreen
-            navigator={ navigator }
-            onEdit={ (session) => navigator.push({ name: Constants.SCREENS.DETAIL, session }) }
-          />
-        );
-      case Constants.SCREENS.DETAIL:
-        return (
-          <DetailScreen
-            navigator={ navigator }
-            initialSession={ route.session }
-            onSave={ (session) => this.onEditSave(navigator, session) }
-            onDelete={ () => this.onEditDelete(navigator, route.session) }
-          />
-        );
-      case Constants.SCREENS.DATE_PICKER:
-        return (
-          <DatePickerScreen
-            initialTime={ route.initialTime }
-            onSave={ (time) => {
-              route.onSave(time);
-              navigator.pop();
-            } }
-          />
-        );
-      case Constants.SCREENS.TOTALS:
-        return <TotalsScreen navigator={ navigator } />;
-      case Constants.SCREENS.TAG_EDITOR:
-        let allTags = this.props.sessions.reduce((tagsSoFar, session) => (
-          tagsSoFar.concat(session.tags || [])
-        ), []);
-        allTags = Array.from(new Set(allTags))
+class HistoryIcon extends Component {
+  render() {
+    return <View>
+      <Image
+        source={ Constants.IMG_DARKGRAY_HISTORY }
+        style={ Constants.STYLES.icon }
+      />
+      <Text>Log</Text>
+    </View>;
+  }
+}
 
-        return (
-          <TagEditorScreen
-            initialTags={ route.currentTags }
-            allTags={ allTags }
-            onSelect={ (tags) => {
-              route.onSelect(tags);
-              navigator.pop();
-            } }
-          />
-        );
-    }
+class AnalyzeIcon extends Component {
+  render() {
+    return <View>
+      <Image
+        source={ Constants.IMG_DARKGRAY_GRAPH }
+        style={ Constants.STYLES.icon }
+      />
+      <Text>Analyze</Text>
+    </View>;
+  }
+}
+
+export default class App extends Component {
+  render() {
+    return <Router>
+      <Scene key="root">
+        <Scene
+          key="tabbar"
+          tabs
+          tabBarSelectedItemStyle={ styles.tabBarSelectedItemStyle }>
+          <Scene key="clockTab" icon={ ClockIcon } component={ ClockScreen } hideNavBar />
+          <Scene key="historyTab" icon={ HistoryIcon }>
+            <Scene key="historyScreen" component={ HistoryScreen } hideNavBar />
+            <Scene key="detailScreen" component={ DetailScreen }  hideNavBar />
+            <Scene key="tagEditorScreen" component={ TagEditorScreen } hideNavBar />
+          </Scene>
+          <Scene key="analyzeTab" icon={ AnalyzeIcon }>
+            <Scene key="analyzeScreen" component={ TotalsScreen } hideNavBar />
+          </Scene>
+        </Scene>
+        <Scene key="datePickerScreen" component={ DatePickerScreen } hideNavBar />
+      </Scene>
+    </Router>;
   }
 }
 
@@ -106,12 +89,7 @@ const styles = StyleSheet.create({
     flex: 1,
     top: 25, // status bar :(
   },
+  tabBarSelectedItemStyle: {
+    backgroundColor: '#ccc',
+  },
 });
-
-const mapStateToProps = (state) => {
-  return {
-    sessions: state.sessions,
-  };
-};
-
-export default connect(mapStateToProps)(App);

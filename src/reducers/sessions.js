@@ -21,7 +21,7 @@ export default function(state = [], action) {
       ].sort(sortCallback);
     }
     case 'SESSION_DELETE': {
-      const sessionIndex = state.findIndex((s) => s.id === action.session.id);
+      const sessionIndex = state.findIndex((s) => s.id === action.sessionId);
       if (sessionIndex < 0) { return state; }
       return [
           ...state.slice(0, sessionIndex),

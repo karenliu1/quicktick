@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
 
 import * as Constants from '../Constants';
 
@@ -19,7 +21,7 @@ import TagList from './TagList';
 
 const MAX_RECENT_TAGS = 5;
 
-export default class TagEditorScreen extends Component {
+class TagEditorScreen extends Component {
   static propTypes = {
     initialTags: PropTypes.arrayOf(PropTypes.string).isRequired,
     allTags: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -58,6 +60,7 @@ export default class TagEditorScreen extends Component {
 
   onSelect = () => {
     this.props.onSelect(this.state.tags);
+    Actions.pop();
   };
 
   render() {
@@ -139,3 +142,13 @@ const styles = StyleSheet.create({
     borderColor: Constants.COLOR_GRAY,
   },
 });
+
+const mapStateToProps = (state) => {
+  let allTags = [];
+  state.sessions.forEach((session) => allTags = allTags.concat(session.tags));
+  return {
+    allTags: Array.from(new Set(allTags)),
+  };
+};
+
+export default connect(mapStateToProps)(TagEditorScreen);

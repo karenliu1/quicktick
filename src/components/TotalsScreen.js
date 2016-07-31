@@ -5,6 +5,7 @@ import {
   View,
 } from 'react-native';
 import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
 
 import * as Constants from '../Constants';
 import { SessionPropType } from '../PropTypes';
@@ -14,7 +15,6 @@ import SectionText from './SectionText';
 
 class TotalsScreen extends Component {
   static propTypes = {
-    navigator: PropTypes.object.isRequired,
     sessions: PropTypes.arrayOf(SessionPropType).isRequired,
   };
 
@@ -29,8 +29,7 @@ class TotalsScreen extends Component {
   }
 
   onChangeStartTime = () => {
-    this.props.navigator.push({
-      name: Constants.SCREENS.DATE_PICKER,
+    Actions.datePickerScreen({
       initialTime: this.state.startTime,
       onSave: (time) => {
         this.setState({ startTime: new Date(time) });
@@ -39,8 +38,7 @@ class TotalsScreen extends Component {
   }
 
   onChangeEndTime = () => {
-    this.props.navigator.push({
-      name: Constants.SCREENS.DATE_PICKER,
+    Actions.datePickerScreen({
       initialTime: this.state.endTime,
       onSave: (time) => this.setState({ endTime: new Date(time) }),
     });

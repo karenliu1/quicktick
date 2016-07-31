@@ -76,9 +76,9 @@ export default class Storage {
     }
   }
 
-  static async deleteSession(session) {
+  static async deleteSession(sessionId) {
     const sessions = await Storage.getSessions();
-    const sessionIndex = sessions.findIndex((s) => s.id === session.id);
+    const sessionIndex = sessions.findIndex((s) => s.id === sessionId);
 
     if (sessionIndex < 0) {
       throw new Error(`Could not find session ${session.id}`);

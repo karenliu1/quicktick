@@ -34,11 +34,11 @@ export function editSession(session) {
   };
 }
 
-export function deleteSession(session) {
+export function deleteSession(sessionId) {
   return async (dispatch) => {
     try {
-      await Storage.deleteSession(session);
-      dispatch({ type: 'SESSION_DELETE', session });
+      await Storage.deleteSession(sessionId);
+      dispatch({ type: 'SESSION_DELETE', sessionId });
     } catch (error) {
       dispatch({ type: 'ERROR', error });
     }

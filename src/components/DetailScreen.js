@@ -10,22 +10,23 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
 
 import * as Constants from '../Constants';
 import { SessionPropType } from '../PropTypes';
 import { formatDate, formatRange, formatTime, formatTotal } from '../Utilities';
+import { editSession, deleteSession } from '../actions/sessions';
 
 import Button from './Button';
 import SectionText from './SectionText';
 import TagList from './TagList';
 import TitleText from './TitleText';
 
-export default class DetailScreen extends Component {
+class DetailScreen extends Component {
   static propTypes = {
-    navigator: PropTypes.object.isRequired,
+    dispatch: PropTypes.func.isRequired,
     initialSession: SessionPropType.isRequired,
-    onSave: PropTypes.func.isRequired,
-    onDelete: PropTypes.func.isRequired,
   };
 
   constructor(props, context) {
@@ -42,8 +43,7 @@ export default class DetailScreen extends Component {
   onChangeNotes = (notes) => this.setState({ notes }, this.onSave);
 
   onChangeStartTime = () => {
-    this.props.navigator.push({
-      name: Constants.SCREENS.DATE_PICKER,
+    Actions.datePickerScreen({
       initialTime: this.state.startTime,
       onSave: (time) => {
         this.setState({ startTime: new Date(time) }, this.onSave);
@@ -52,8 +52,7 @@ export default class DetailScreen extends Component {
   }
 
   onChangeEndTime = () => {
-    this.props.navigator.push({
-      name: Constants.SCREENS.DATE_PICKER,
+    Actions.datePickerScreen({
       initialTime: this.state.endTime,
       onSave: (time) => {
         this.setState({ endTime: new Date(time) }, this.onSave);
@@ -62,9 +61,8 @@ export default class DetailScreen extends Component {
   }
 
   onChangeTags = () => {
-    this.props.navigator.push({
-      name: Constants.SCREENS.TAG_EDITOR,
-      currentTags: this.state.tags,
+    Actions.tagEditorScreen({
+      initialTags: this.state.tags,
       onSelect: (tags) => {
         this.setState({ tags }, this.onSave);
       },
@@ -72,13 +70,13 @@ export default class DetailScreen extends Component {
   }
 
   onSave = () => {
-    this.props.onSave({
+    this.props.dispatch(editSession({
       id: this.props.initialSession.id,
       startTime: this.state.startTime,
       endTime: this.state.endTime,
       notes: this.state.notes,
       tags: this.state.tags,
-    });
+    }));
   };
 
   onDelete = () => {
@@ -88,13 +86,14 @@ export default class DetailScreen extends Component {
       cancelButtonIndex: 1,
     }, (buttonIndex) => {
       if (buttonIndex === 0) {
-        this.props.onDelete();
+        this.props.dispatch(deleteSession(this.props.initialSession.id));
+        Actions.pop();
       }
     });
   };
 
   onDone = () => {
-    this.props.navigator.pop();
+    Actions.pop();
   };
 
   render() {
@@ -195,3 +194,5 @@ const styles = StyleSheet.create({
     marginTop: Constants.GUTTER_MD,
   },
 });
+
+export default connect()(DetailScreen);
