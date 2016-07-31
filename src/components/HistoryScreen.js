@@ -9,13 +9,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { connect } from 'react-redux';
 
 import * as Constants from '../Constants';
 import { formatDate, formatRange } from '../Utilities';
 
 import TagList from './TagList';
 
-export default class HistoryScreen extends Component {
+class HistoryScreen extends Component {
   static propTypes = {
     navigator: PropTypes.object.isRequired,
     sessions: PropTypes.array.isRequired,
@@ -175,3 +176,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+
+const mapStateToProps = (state) => {
+  return {
+    sessions: state.sessions,
+  };
+};
+
+export default connect(mapStateToProps)(HistoryScreen);

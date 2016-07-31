@@ -46,22 +46,17 @@ class App extends Component {
   }
 
   renderScreen(route, navigator) {
-    const sessions = this.props.sessions;
-    const lastSession = sessions && sessions.length > 0 ? sessions[0] : null;
-
     switch (route.name) {
       case Constants.SCREENS.CLOCK:
         return (
           <ClockScreen
             navigator={ navigator }
-            lastSession={ lastSession }
           />
         );
       case Constants.SCREENS.HISTORY:
         return (
           <HistoryScreen
             navigator={ navigator }
-            sessions={ this.props.sessions }
             onEdit={ (session) => navigator.push({ name: Constants.SCREENS.DETAIL, session }) }
           />
         );
@@ -85,7 +80,7 @@ class App extends Component {
           />
         );
       case Constants.SCREENS.TOTALS:
-        return <TotalsScreen navigator={ navigator } sessions={ this.props.sessions } />;
+        return <TotalsScreen navigator={ navigator } />;
       case Constants.SCREENS.TAG_EDITOR:
         let allTags = this.props.sessions.reduce((tagsSoFar, session) => (
           tagsSoFar.concat(session.tags || [])

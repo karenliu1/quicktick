@@ -110,4 +110,11 @@ class ClockScreen extends Component {
   }
 }
 
-export default connect()(ClockScreen);
+const mapStateToProps = (state) => {
+  const sessions = state.sessions;
+  return {
+    lastSession: sessions && sessions.length > 0 ? sessions[0] : null,
+  };
+};
+
+export default connect(mapStateToProps)(ClockScreen);

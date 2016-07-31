@@ -4,6 +4,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
+import { connect } from 'react-redux';
 
 import * as Constants from '../Constants';
 import { SessionPropType } from '../PropTypes';
@@ -11,7 +12,7 @@ import { formatDateTime, formatTotalFromDuration } from '../Utilities';
 
 import SectionText from './SectionText';
 
-export default class TotalsScreen extends Component {
+class TotalsScreen extends Component {
   static propTypes = {
     navigator: PropTypes.object.isRequired,
     sessions: PropTypes.arrayOf(SessionPropType).isRequired,
@@ -88,3 +89,11 @@ const styles = StyleSheet.create({
     marginBottom: Constants.GUTTER_MD,
   },
 });
+
+const mapStateToProps = (state) => {
+  return {
+    sessions: state.sessions,
+  };
+};
+
+export default connect(mapStateToProps)(TotalsScreen);
