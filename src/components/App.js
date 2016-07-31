@@ -4,7 +4,7 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
   Image,
   Navigator,
@@ -21,44 +21,9 @@ import ClockScreen from './ClockScreen';
 import DatePickerScreen from './DatePickerScreen';
 import DetailScreen from './DetailScreen';
 import HistoryScreen from './HistoryScreen';
+import TabBarIcon from './TabBarIcon';
 import TagEditorScreen from './TagEditorScreen';
 import TotalsScreen from './TotalsScreen';
-
-class ClockIcon extends Component {
-  render() {
-    return <View>
-      <Image
-        source={ Constants.IMG_DARKGRAY_CLOCK }
-        style={ Constants.STYLES.icon }
-      />
-      <Text>Clock</Text>
-    </View>;
-  }
-}
-
-class HistoryIcon extends Component {
-  render() {
-    return <View>
-      <Image
-        source={ Constants.IMG_DARKGRAY_HISTORY }
-        style={ Constants.STYLES.icon }
-      />
-      <Text>Log</Text>
-    </View>;
-  }
-}
-
-class AnalyzeIcon extends Component {
-  render() {
-    return <View>
-      <Image
-        source={ Constants.IMG_DARKGRAY_GRAPH }
-        style={ Constants.STYLES.icon }
-      />
-      <Text>Analyze</Text>
-    </View>;
-  }
-}
 
 export default class App extends Component {
   render() {
@@ -67,14 +32,29 @@ export default class App extends Component {
         <Scene
           key="tabbar"
           tabs
-          tabBarSelectedItemStyle={ styles.tabBarSelectedItemStyle }>
-          <Scene key="clockTab" icon={ ClockIcon } component={ ClockScreen } hideNavBar />
-          <Scene key="historyTab" icon={ HistoryIcon }>
+          tabBarStyle={ styles.tabBar }>
+          <Scene
+            key="historyTab"
+            icon={ TabBarIcon }
+            iconUrl={ Constants.IMG_DARKGRAY_HISTORY }
+            title="Log">
             <Scene key="historyScreen" component={ HistoryScreen } hideNavBar />
             <Scene key="detailScreen" component={ DetailScreen }  hideNavBar />
             <Scene key="tagEditorScreen" component={ TagEditorScreen } hideNavBar />
           </Scene>
-          <Scene key="analyzeTab" icon={ AnalyzeIcon }>
+          <Scene
+            key="clockTab"
+            icon={ TabBarIcon }
+            iconUrl={ Constants.IMG_DARKGRAY_CLOCK }
+            title="Clock"
+            component={ ClockScreen }
+            hideNavBar initial
+          />
+          <Scene
+            key="analyzeTab"
+            icon={ TabBarIcon }
+            iconUrl={ Constants.IMG_DARKGRAY_GRAPH }
+            title="Analyze">
             <Scene key="analyzeScreen" component={ TotalsScreen } hideNavBar />
           </Scene>
         </Scene>
@@ -85,11 +65,9 @@ export default class App extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    top: 25, // status bar :(
-  },
-  tabBarSelectedItemStyle: {
-    backgroundColor: '#ccc',
+  tabBar: {
+    height: Constants.TABBAR_SIZE,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderColor: Constants.COLOR_GRAY,
   },
 });

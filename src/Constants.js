@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 export const FONT_FAMILY = 'Avenir';
+export const FONT_SIZE_XS = 12;
 export const FONT_SIZE_SM = 16;
 export const FONT_SIZE_MD = 20;
 export const FONT_SIZE_LG = 30;
@@ -16,6 +17,8 @@ export const COLOR_BLUE = '#54B6EE';
 export const GUTTER_SM = 10;
 export const GUTTER_MD = 20;
 export const GUTTER_LG = 40;
+
+export const TABBAR_SIZE = 60;
 
 export const IMG_DARKGRAY_CLOCK =
   { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/darkgray_clock.png' };
@@ -66,14 +69,20 @@ export const STYLES = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     justifyContent: 'space-between',
-    padding: GUTTER_LG,
+    marginBottom: TABBAR_SIZE,
+    paddingHorizontal: GUTTER_LG,
+    paddingTop: GUTTER_LG,
   },
   scrollableScreen: {
     flex: 1,
     backgroundColor: 'white',
+    marginBottom: TABBAR_SIZE,
+    paddingHorizontal: GUTTER_LG,
+    paddingTop: GUTTER_LG,
   },
   screenReducedPadding: {
-    padding: GUTTER_MD,
+    paddingHorizontal: GUTTER_MD,
+    paddingTop: GUTTER_MD,
   },
   linkText: {
     color: COLOR_BLUE,
