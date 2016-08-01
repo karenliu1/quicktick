@@ -43,7 +43,7 @@ class DetailScreen extends Component {
   onChangeNotes = (notes) => this.setState({ notes }, this.onSave);
 
   onChangeStartTime = () => {
-    Actions.datePickerScreen({
+    Actions.historyDatePickerScreen({
       initialTime: this.state.startTime,
       onSave: (time) => {
         this.setState({ startTime: new Date(time) }, this.onSave);
@@ -52,7 +52,7 @@ class DetailScreen extends Component {
   }
 
   onChangeEndTime = () => {
-    Actions.datePickerScreen({
+    Actions.historyDatePickerScreen({
       initialTime: this.state.endTime,
       onSave: (time) => {
         this.setState({ endTime: new Date(time) }, this.onSave);

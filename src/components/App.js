@@ -29,10 +29,7 @@ export default class App extends Component {
   render() {
     return <Router>
       <Scene key="root">
-        <Scene
-          key="tabbar"
-          tabs
-          tabBarStyle={ styles.tabBar }>
+        <Scene key="tabbar" tabs tabBarStyle={ styles.tabBar }>
           <Scene
             key="historyTab"
             icon={ TabBarIcon }
@@ -41,6 +38,7 @@ export default class App extends Component {
             <Scene key="historyScreen" component={ HistoryScreen } hideNavBar />
             <Scene key="detailScreen" component={ DetailScreen }  hideNavBar />
             <Scene key="tagEditorScreen" component={ TagEditorScreen } hideNavBar />
+            <Scene key="historyDatePickerScreen" component={ DatePickerScreen } hideNavBar />
           </Scene>
           <Scene
             key="clockTab"
@@ -56,9 +54,9 @@ export default class App extends Component {
             iconUrl={ Constants.IMG_DARKGRAY_GRAPH }
             title="Analyze">
             <Scene key="analyzeScreen" component={ TotalsScreen } hideNavBar />
+            <Scene key="analyzeDatePickerScreen" component={ DatePickerScreen } hideNavBar />
           </Scene>
         </Scene>
-        <Scene key="datePickerScreen" component={ DatePickerScreen } hideNavBar />
       </Scene>
     </Router>;
   }

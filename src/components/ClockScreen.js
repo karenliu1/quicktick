@@ -51,7 +51,10 @@ class ClockScreen extends Component {
           style={ Constants.STYLES.section }
           titleText="Last Session"
           sectionText={ formatRange(lastSession.startTime, lastSession.endTime) }
-          onEdit={ () => Actions.detailScreen({ initialSession: lastSession }) }
+          onEdit={() => {
+            Actions.historyTab();
+            Actions.detailScreen({ initialSession: lastSession });
+          }}
         />
       );
     }

@@ -29,7 +29,7 @@ class TotalsScreen extends Component {
   }
 
   onChangeStartTime = () => {
-    Actions.datePickerScreen({
+    Actions.analyzeDatePickerScreen({
       initialTime: this.state.startTime,
       onSave: (time) => {
         this.setState({ startTime: new Date(time) });
@@ -38,7 +38,7 @@ class TotalsScreen extends Component {
   }
 
   onChangeEndTime = () => {
-    Actions.datePickerScreen({
+    Actions.analyzeDatePickerScreen({
       initialTime: this.state.endTime,
       onSave: (time) => this.setState({ endTime: new Date(time) }),
     });

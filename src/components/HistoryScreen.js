@@ -108,7 +108,7 @@ class HistoryScreen extends Component {
           <Text style={ Constants.STYLES.text }>
             There are no sessions.
           </Text>
-          <TouchableOpacity onPress={ Actions.clockScreen }>
+          <TouchableOpacity onPress={ Actions.clockTab }>
             <Text style={ Constants.STYLES.linkText }>
               Start a Session
             </Text>
