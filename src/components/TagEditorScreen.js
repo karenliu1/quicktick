@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import {
   Image,
   ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,

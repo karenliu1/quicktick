@@ -5,11 +5,10 @@ import {
   ListView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Actions } from 'react-native-router-flux'
+import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 
 import * as Constants from '../Constants';

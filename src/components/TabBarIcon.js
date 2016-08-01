@@ -5,7 +5,6 @@ import {
   Text,
   View,
 } from 'react-native';
-import { Scene, Router } from 'react-native-router-flux';
 
 import * as Constants from '../Constants';
 

@@ -81,7 +81,7 @@ export default class Storage {
     const sessionIndex = sessions.findIndex((s) => s.id === sessionId);
 
     if (sessionIndex < 0) {
-      throw new Error(`Could not find session ${session.id}`);
+      throw new Error(`Could not find session ${sessionId}`);
     }
 
     const newSessions = [
@@ -92,7 +92,7 @@ export default class Storage {
     try {
       await AsyncStorage.setItem(SESSIONS_KEY, JSON.stringify(newSessions));
     } catch (error) {
-      throw new Error(`Could not save session ${session.id}:`, error);
+      throw new Error(`Could not save session ${sessionId}:`, error);
     }
   }
 }

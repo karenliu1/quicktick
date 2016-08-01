@@ -3,7 +3,6 @@ import {
   ActionSheetIOS,
   Image,
   ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
   TextInput,

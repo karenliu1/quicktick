@@ -24,8 +24,8 @@ export default function(state = [], action) {
       const sessionIndex = state.findIndex((s) => s.id === action.sessionId);
       if (sessionIndex < 0) { return state; }
       return [
-          ...state.slice(0, sessionIndex),
-          ...state.slice(sessionIndex + 1)
+        ...state.slice(0, sessionIndex),
+        ...state.slice(sessionIndex + 1)
       ];
     }
     default:

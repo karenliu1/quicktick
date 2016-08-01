@@ -4,14 +4,9 @@
  * @flow
  */
 
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import {
-  Image,
-  Navigator,
-  StatusBar,
   StyleSheet,
-  Text,
-  View,
 } from 'react-native';
 import { Scene, Router } from 'react-native-router-flux';
 
