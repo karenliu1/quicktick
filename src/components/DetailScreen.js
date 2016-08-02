@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
   },
   notesInput: {
     height: Constants.FONT_SIZE_MD * 4 + Constants.GUTTER_MD * 2,
-    marginTop: Constants.GUTTER_MD,
+    marginTop: Constants.GUTTER_SM,
   },
 });
 
