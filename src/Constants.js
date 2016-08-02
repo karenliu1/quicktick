@@ -26,14 +26,6 @@ export const IMG_DARKGRAY_GRAPH =
   { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/darkgray_graph.png' };
 export const IMG_DARKGRAY_HISTORY =
   { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/darkgray_history.png' };
-export const IMG_DARKGRAY_MENU =
-  { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/darkgray_menu.png' };
-export const IMG_GRAY_ADD =
-  { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/gray_add.png' };
-export const IMG_GRAY_EDIT =
-  { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/gray_edit.png' };
-export const IMG_GRAY_SEARCH =
-  { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/gray_search.png' };
 export const IMG_GRAY_X =
   { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/gray_x.png' };
 export const IMG_RED_DELETE =

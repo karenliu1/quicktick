@@ -1,10 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import {
-  Image,
   ScrollView,
   StyleSheet,
-  Text,
-  TouchableOpacity,
+  TextInput,
   View,
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
@@ -13,7 +11,6 @@ import { connect } from 'react-redux';
 import * as Constants from '../Constants';
 
 import Button from './Button';
-import InputField from './InputField';
 import SectionText from './SectionText';
 import TitleText from './TitleText';
 import TagList from './TagList';
@@ -34,6 +31,7 @@ class TagEditorScreen extends Component {
 
     this.state = {
       tags: this.props.initialTags,
+      inputText: '',
     };
   }
 
@@ -62,6 +60,12 @@ class TagEditorScreen extends Component {
     Actions.pop();
   };
 
+  onChangeText = (inputText) => this.setState({ inputText });
+  onSubmitText = () => {
+    this.onAddTag(this.state.inputText);
+    this.setState({ inputText: '' });
+  };
+
   render() {
     return (
       <ScrollView style={[
@@ -76,7 +80,15 @@ class TagEditorScreen extends Component {
         <SectionText
           titleText="Add a Tag"
           style={ styles.section }>
-          <InputField onSubmit={ this.onAddTag } icon={ Constants.IMG_GRAY_ADD } />
+          <TextInput
+            autoCapitalize="none"
+            clearButtonMode="while-editing"
+            style={ Constants.STYLES.input }
+            onChangeText={ this.onChangeText }
+            returnKeyType="go"
+            onSubmitEditing={ this.onSubmitText }
+            value={ this.state.inputText }
+          />
         </SectionText>
 
         { this.renderRecentTags() }
