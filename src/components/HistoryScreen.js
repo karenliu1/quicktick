@@ -35,19 +35,10 @@ class HistoryScreen extends Component {
   };
 
   renderNotes(session) {
-    if (session.notes) {
-      return (
-        <Text style={ Constants.STYLES.text } numberOfLines={ 1 }>
-          { session.notes }
-        </Text>
-      );
-    }
-
+    if (!session.notes) { return null; }
     return (
-      <Text
-        style={ Constants.STYLES.emptyPlaceholder }
-        numberOfLines={ 1 }>
-        No notes.
+      <Text style={ Constants.STYLES.text } numberOfLines={ 1 }>
+        { session.notes }
       </Text>
     );
   }
@@ -145,7 +136,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: Constants.COLOR_GRAY,
-    paddingVertical: Constants.GUTTER_MD,
+    paddingVertical: Constants.GUTTER_SM,
 
     flexDirection: 'row',
     alignItems: 'center',
