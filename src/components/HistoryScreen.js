@@ -5,6 +5,7 @@ import {
   ListView,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -19,6 +20,10 @@ import TagList from './TagList';
 class HistoryScreen extends Component {
   static propTypes = {
     sessions: PropTypes.array.isRequired,
+  };
+
+  state = {
+    searchText: '',
   };
 
   renderSectionHeader = (session) => {
@@ -63,18 +68,18 @@ class HistoryScreen extends Component {
     let sessionMap = {};
 
     let sessions = this.props.sessions;
-    // if (this.state.filter) {
-    //   sessions = sessions.filter((session) => {
-    //     const filterStr = this.state.filter.toLowerCase();
-    //     if (session.notes && session.notes.toLowerCase().includes(filterStr)) {
-    //       return true;
-    //     }
-    //     const matchedTags = session.tags.filter((tag) => (
-    //       tag.toLowerCase().includes(filterStr)
-    //     ));
-    //     return matchedTags.length > 0;
-    //   });
-    // }
+    if (this.state.searchText) {
+      sessions = sessions.filter((session) => {
+        const filterStr = this.state.searchText.toLowerCase();
+        if (session.notes && session.notes.toLowerCase().includes(filterStr)) {
+          return true;
+        }
+        const matchedTags = session.tags.filter((tag) => (
+          tag.toLowerCase().includes(filterStr)
+        ));
+        return matchedTags.length > 0;
+      });
+    }
 
     // Map dates to sessions that begin on that date
     sessions.forEach((session) => {
@@ -90,6 +95,8 @@ class HistoryScreen extends Component {
 
     return sessionMap;
   }
+
+  onChangeSearch = (searchText) => this.setState({ searchText });
 
   renderEmptyState() {
     return (
@@ -121,6 +128,12 @@ class HistoryScreen extends Component {
 
     return (
       <View style={ [Constants.STYLES.screen, Constants.STYLES.screenReducedPadding] }>
+        <TextInput
+          autoCapitalize="none"
+          style={ styles.searchInput }
+          placeholder="Search…"
+          onChangeText={ this.onChangeSearch }
+        />
         <ListView dataSource={ rows }
           renderSectionHeader={ this.renderSectionHeader }
           renderRow={ this.renderRow }
@@ -159,6 +172,14 @@ const styles = StyleSheet.create({
   },
   emptyState: {
     alignItems: 'center',
+  },
+  searchInput: {
+    height: 40,
+    borderColor: Constants.COLOR_GRAY,
+    borderRadius: 2,
+    borderWidth: StyleSheet.hairlineWidth,
+    padding: Constants.GUTTER_SM,
+    marginTop: Constants.GUTTER_SM,
   },
 });
 
