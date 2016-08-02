@@ -130,9 +130,11 @@ class HistoryScreen extends Component {
       <View style={ [Constants.STYLES.screen, Constants.STYLES.screenReducedPadding] }>
         <TextInput
           autoCapitalize="none"
-          style={ styles.searchInput }
-          placeholder="Search…"
+          clearButtonMode="while-editing"
           onChangeText={ this.onChangeSearch }
+          placeholder="Search…"
+          returnKeyType="search"
+          style={ styles.searchInput }
         />
         <ListView dataSource={ rows }
           renderSectionHeader={ this.renderSectionHeader }
