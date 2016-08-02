@@ -100,25 +100,8 @@ class TagEditorScreen extends Component {
     if (tags.length === 0) { return null; }
     return (
       <View style={ styles.section }>
-        <View style={ styles.recentTagsHeader }>
-          <TitleText text="Recent Tags" />
-        </View>
-        { tags.map(this.renderRecentTag) }
-      </View>
-    );
-  }
-
-  renderRecentTag = (tag) => {
-    return (
-      <View style={ styles.recentTagRow } key={ tag }>
-        <Text style={ Constants.STYLES.text }>{ tag }</Text>
-
-        <TouchableOpacity onPress={ () => this.onAddTag(tag) }>
-          <Image
-            source={ Constants.IMG_GRAY_ADD }
-            style={ Constants.STYLES.icon }
-          />
-        </TouchableOpacity>
+        <TitleText text="Recent Tags" />
+        <TagList tags={ tags } onPressTag={ this.onAddTag } />
       </View>
     );
   }
@@ -127,11 +110,6 @@ class TagEditorScreen extends Component {
 const styles = StyleSheet.create({
   section: {
     marginTop: Constants.GUTTER_LG,
-  },
-  recentTagsHeader: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: Constants.COLOR_GRAY,
-    paddingBottom: Constants.GUTTER_MD,
   },
   recentTagRow: {
     flexDirection: 'row',

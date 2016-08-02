@@ -13,9 +13,14 @@ import * as Constants from '../Constants';
 export default class TagList extends Component {
   static propTypes = {
     tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+    onPressTag: PropTypes.func,
 
     // If not specified, no delete buttons are rendered
     onDeleteTag: PropTypes.func,
+  };
+
+  static defaultProps = {
+    onPressTag: () => {},
   };
 
   renderDeleteButton(tag) {
@@ -31,11 +36,13 @@ export default class TagList extends Component {
 
   renderTag = (tag) => {
     return (
-      <View style={ styles.tag } key={ tag }>
+      <TouchableOpacity
+        onPress={ () => this.props.onPressTag(tag) }
+        style={ styles.tag } key={ tag }>
         <Text style={ styles.tagText }>{ tag }</Text>
 
         { this.props.onDeleteTag && this.renderDeleteButton(tag) }
-      </View>
+      </TouchableOpacity>
     );
   };
 
