@@ -32,7 +32,7 @@ export default class App extends Component {
             title="Log">
             <Scene key="historyScreen" component={ HistoryScreen } hideNavBar />
             <Scene key="detailScreen" component={ DetailScreen }  hideNavBar />
-            <Scene key="tagEditorScreen" component={ TagEditorScreen } hideNavBar />
+            <Scene key="historyTagEditorScreen" component={ TagEditorScreen } hideNavBar />
             <Scene key="historyDatePickerScreen" component={ DatePickerScreen } hideNavBar />
           </Scene>
           <Scene
@@ -49,6 +49,7 @@ export default class App extends Component {
             iconUrl={ Constants.IMG_DARKGRAY_GRAPH }
             title="Analyze">
             <Scene key="analyzeScreen" component={ TotalsScreen } hideNavBar />
+            <Scene key="analyzeTagEditorScreen" component={ TagEditorScreen } hideNavBar />
             <Scene key="analyzeDatePickerScreen" component={ DatePickerScreen } hideNavBar />
           </Scene>
         </Scene>

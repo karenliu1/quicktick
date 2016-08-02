@@ -60,7 +60,7 @@ class DetailScreen extends Component {
   }
 
   onChangeTags = () => {
-    Actions.tagEditorScreen({
+    Actions.historyTagEditorScreen({
       initialTags: this.state.tags,
       onSelect: (tags) => {
         this.setState({ tags }, this.onSave);

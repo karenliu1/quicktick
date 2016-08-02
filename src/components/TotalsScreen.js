@@ -46,7 +46,7 @@ class TotalsScreen extends Component {
   }
 
   onChangeTags = () => {
-    Actions.tagEditorScreen({
+    Actions.analyzeTagEditorScreen({
       initialTags: this.state.tagsFilter,
       onSelect: (tagsFilter) => this.setState({ tagsFilter }),
     });
