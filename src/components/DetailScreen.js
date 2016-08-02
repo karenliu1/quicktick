@@ -116,8 +116,8 @@ class DetailScreen extends Component {
           />
           <TouchableOpacity onPress={ this.onDelete }>
             <Image
-              source={ Constants.IMG_RED_DELETE }
-              style={ Constants.STYLES.icon }
+              source={ Constants.IMG_DELETE }
+              style={ [Constants.STYLES.icon, styles.deleteIcon] }
             />
           </TouchableOpacity>
         </View>
@@ -187,6 +187,9 @@ const styles = StyleSheet.create({
   },
   range: {
     flex: 1,
+  },
+  deleteIcon: {
+    tintColor: Constants.COLOR_RED,
   },
   notesInput: {
     height: Constants.FONT_SIZE_MD * 4 + Constants.GUTTER_MD * 2,

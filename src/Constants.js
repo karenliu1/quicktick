@@ -7,12 +7,13 @@ export const FONT_SIZE_MD = 20;
 export const FONT_SIZE_LG = 30;
 export const FONT_SIZE_XL = 50;
 
-export const COLOR_GREEN = '#82C686';
-export const COLOR_DARK_GREEN = '#519355';
-export const COLOR_RED = '#ED7272';
-export const COLOR_GRAY = '#B4B4B4';
-export const COLOR_DARK_GRAY = '#4A4A4A';
 export const COLOR_BLUE = '#54B6EE';
+export const COLOR_DARK_GRAY = '#4A4A4A';
+export const COLOR_DARK_GREEN = '#519355';
+export const COLOR_GRAY = '#B4B4B4';
+export const COLOR_GREEN = '#82C686';
+export const COLOR_RED = '#ED7272';
+export const COLOR_YELLOW = '#F8E71C';
 
 export const GUTTER_SM = 10;
 export const GUTTER_MD = 20;
@@ -20,20 +21,20 @@ export const GUTTER_LG = 40;
 
 export const TABBAR_SIZE = 60;
 
-export const IMG_DARKGRAY_CLOCK =
-  { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/darkgray_clock.png' };
-export const IMG_DARKGRAY_GRAPH =
-  { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/darkgray_graph.png' };
-export const IMG_DARKGRAY_HISTORY =
-  { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/darkgray_history.png' };
-export const IMG_GRAY_X =
-  { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/gray_x.png' };
-export const IMG_RED_DELETE =
-  { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/red_delete.png' };
-export const IMG_WHITE_CIRCLE_X =
-  { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/white_circle_x.png' };
-export const IMG_YELLOW_SUN =
-  { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/yellow_sun.png' };
+export const IMG_CLOCK =
+  { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/clock.png' };
+export const IMG_GRAPH =
+  { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/analyze.png' };
+export const IMG_HISTORY =
+  { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/history.png' };
+export const IMG_X =
+  { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/x.png' };
+export const IMG_DELETE =
+  { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/delete.png' };
+export const IMG_CIRCLE_X =
+  { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/circle-x.png' };
+export const IMG_SUN =
+  { uri: 'http://s3-us-west-1.amazonaws.com/quicktick/sun.png' };
 
 export const STYLES = StyleSheet.create({
   text: {
@@ -48,6 +49,7 @@ export const STYLES = StyleSheet.create({
     width: 30,
     height: 30,
     resizeMode: 'contain',
+    tintColor: COLOR_DARK_GRAY,
   },
   input: {
     borderColor: COLOR_GRAY,

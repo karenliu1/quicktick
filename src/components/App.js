@@ -28,7 +28,7 @@ export default class App extends Component {
           <Scene
             key="historyTab"
             icon={ TabBarIcon }
-            iconUrl={ Constants.IMG_DARKGRAY_HISTORY }
+            iconUrl={ Constants.IMG_HISTORY }
             title="Log">
             <Scene key="historyScreen" component={ HistoryScreen } hideNavBar />
             <Scene key="detailScreen" component={ DetailScreen }  hideNavBar />
@@ -38,7 +38,7 @@ export default class App extends Component {
           <Scene
             key="clockTab"
             icon={ TabBarIcon }
-            iconUrl={ Constants.IMG_DARKGRAY_CLOCK }
+            iconUrl={ Constants.IMG_CLOCK }
             title="Clock"
             component={ ClockScreen }
             hideNavBar initial
@@ -46,7 +46,7 @@ export default class App extends Component {
           <Scene
             key="analyzeTab"
             icon={ TabBarIcon }
-            iconUrl={ Constants.IMG_DARKGRAY_GRAPH }
+            iconUrl={ Constants.IMG_GRAPH }
             title="Analyze">
             <Scene key="analyzeScreen" component={ TotalsScreen } hideNavBar />
             <Scene key="analyzeTagEditorScreen" component={ TagEditorScreen } hideNavBar />

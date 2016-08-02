@@ -29,8 +29,8 @@ class HistoryScreen extends Component {
   renderSectionHeader = (session) => {
     return (
       <View style={ styles.sectionHeader }>
-        <Image source={ Constants.IMG_YELLOW_SUN }
-          style={ Constants.STYLES.icon }
+        <Image source={ Constants.IMG_SUN }
+          style={ [Constants.STYLES.icon, styles.sectionHeaderIcon] }
         />
         <Text style={ [Constants.STYLES.text, styles.sectionHeaderText] }>
           { formatDate(session[0].startTime) }
@@ -155,6 +155,9 @@ const styles = StyleSheet.create({
 
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  sectionHeaderIcon: {
+    tintColor: Constants.COLOR_YELLOW,
   },
   sectionHeaderText: {
     flex: 1,

@@ -27,7 +27,7 @@ export default class TagList extends Component {
     return (
       <TouchableOpacity onPress={ () => this.props.onDeleteTag(tag) }>
         <Image
-          source={ Constants.IMG_WHITE_CIRCLE_X }
+          source={ Constants.IMG_CIRCLE_X }
           style={ styles.tagDeleteIcon }
         />
       </TouchableOpacity>
@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 5,
     borderBottomRightRadius: 5,
     marginLeft: Constants.GUTTER_SM,
+    tintColor: 'white',
 
     height: Constants.FONT_SIZE_MD,
     width: Constants.FONT_SIZE_MD,
