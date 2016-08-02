@@ -19,15 +19,12 @@ export function formatTotal(startTime, endTime) {
 }
 
 export function formatTotalFromDuration(duration) {
-  const hours = duration.hours();
+  const hours = Math.floor(duration.asHours());
   const minutes = duration.minutes();
-  const days = duration.days();
 
-  let total = '';
-  if (days > 0) { total = `${days}d`; }
-  if (hours > 0) { total = `${total} ${hours}hr`; }
-  total = `${total} ${minutes}m`;
-  return total.trim();
+  let total = `${minutes}m`;
+  if (hours > 0) { total = `${hours}hr ${total}`; }
+  return total;
 }
 
 export function formatRange(startTime, endTime) {
