@@ -25,7 +25,7 @@
   primaryColor: "#cccccc",
 
   // The icon image to use on your home screen
-  iconUrl: "https://s3.amazonaws.com/exp-brand-assets/ExponentEmptyManifest_192.png",
+  iconUrl: "http://s3-us-west-1.amazonaws.com/quicktick/clock.png",
 
   // Push notification configuration: currently Android only
   notification: {
@@ -38,6 +38,6 @@
 
   loading: {
     // The image to display in the center of the splash screen while loading the app
-    iconUrl: "https://s3.amazonaws.com/exp-brand-assets/ExponentEmptyManifest_192.png",
+    iconUrl: "http://s3-us-west-1.amazonaws.com/quicktick/clock.png",
   }
 }
