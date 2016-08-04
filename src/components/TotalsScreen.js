@@ -65,7 +65,7 @@ class TotalsScreen extends Component {
       }
 
       // Check that at least one session tag matches at least one filter tag
-      for (tag of this.state.tagsFilter) {
+      for (let tag of this.state.tagsFilter) {
         if (session.tags.indexOf(tag) !== -1) {
           return true;
         }
