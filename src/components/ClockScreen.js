@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import {
+  StyleSheet,
   View,
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
@@ -7,21 +8,26 @@ import { connect } from 'react-redux';
 
 import Button from './Button';
 import SectionText from './SectionText';
+import Tag from './Tag';
 
 import * as Constants from '../Constants';
 import { SessionPropType } from '../PropTypes';
 import { createSession } from '../actions/sessions';
 import { formatRange, formatTime, formatTotal } from '../Utilities';
 
+const MAX_RECENT_TAGS = 5;
+
 class ClockScreen extends Component {
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
+    allTags: PropTypes.array.isRequired,
     lastSession: SessionPropType,
   };
 
   state = {
     startTime: null,
     currentTime: null,
+    tags: new Set(),
   };
 
   updateTime = () => this.setState({ currentTime: new Date() });
@@ -38,8 +44,9 @@ class ClockScreen extends Component {
   onClockIn = () => this.setState({ startTime: new Date() });
 
   onClockOut = () => {
-    this.props.dispatch(createSession(this.state.startTime, new Date()));
-    this.setState({ startTime: null });
+    this.props.dispatch(createSession(
+      this.state.startTime, new Date(), Array.from(this.state.tags)));
+    this.setState({ startTime: null, tags: new Set() });
   }
 
   renderClockIn() {
@@ -65,12 +72,38 @@ class ClockScreen extends Component {
           isLarge
           style={ Constants.STYLES.section }
           titleText="Now"
-          sectionText={ formatTime(this.state.currentTime) } />
+          sectionText={ formatTime(this.state.currentTime) }
+        />
+
+        { this.renderRecentTags() }
+
         <View style={ Constants.STYLES.section }>
           <Button type="primary" text="Clock In" onPress={ this.onClockIn } />
         </View>
       </View>
     );
+  }
+
+  renderRecentTags() {
+    if (this.props.allTags.length === 0) { return null; }
+
+    return <SectionText
+      titleText="Add Recent Tags"
+      style={ Constants.STYLES.section }>
+      <View style={ styles.tagContainer }>
+        { this.props.allTags.slice(0, MAX_RECENT_TAGS).map((tag) => (
+          <Tag
+            tag={ tag } key={ tag }
+            isHighlighted={ this.state.tags.has(tag) }
+            onPress={() => {
+              const tags = this.state.tags;
+              tags.has(tag) ? tags.delete(tag) : tags.add(tag);
+              this.setState({ tags });
+            }}
+          />
+        )) }
+      </View>
+    </SectionText>;
   }
 
   renderClockOut() {
@@ -107,9 +140,21 @@ class ClockScreen extends Component {
   }
 }
 
+const styles = StyleSheet.create({
+  tagContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+});
+
 const mapStateToProps = (state) => {
   const sessions = state.sessions;
+
+  let allTags = [];
+  sessions.forEach((session) => allTags = allTags.concat(session.tags));
+
   return {
+    allTags: Array.from(new Set(allTags)),
     lastSession: sessions && sessions.length > 0 ? sessions[0] : null,
   };
 };

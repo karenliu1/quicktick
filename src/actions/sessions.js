@@ -11,10 +11,10 @@ export function loadSessions() {
   };
 }
 
-export function createSession(startTime, endTime) {
+export function createSession(startTime, endTime, tags) {
   return async (dispatch) => {
     try {
-      const session = await Storage.createSession(startTime, endTime);
+      const session = await Storage.createSession(startTime, endTime, tags);
       dispatch({ type: 'SESSION_CREATE', session });
     } catch (error) {
       dispatch({ type: 'ERROR', error });

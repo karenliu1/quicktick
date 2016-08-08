@@ -34,13 +34,13 @@ export default class Storage {
     return JSON.parse(sessions).map(parseSession);
   }
 
-  static async createSession(startTime, endTime) {
+  static async createSession(startTime, endTime, tags) {
     const sessions = await Storage.getSessions();
     const session = {
       id: getUniqueId(sessions),
       startTime,
       endTime,
-      tags: [],
+      tags,
     };
 
     const newSessions = [ ...sessions, session ].sort(sortCallback);
